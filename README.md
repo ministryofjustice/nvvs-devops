@@ -1,4 +1,15 @@
-# Template Documentation Site
+# Ministry of Justice Cloud Operations
+
+## About this Repository
+
+This is the MoJ Cloud Ops repository for public facing
+documentation.
+
+## Website
+
+This repository is published via Github Pages [here](https://ministryofjustice.github.io/cloud-operations/#cloud-operations)
+
+## Using this repo
 
 Use this template to create a documentation website using the [gov.uk tech-docs-template].
 
