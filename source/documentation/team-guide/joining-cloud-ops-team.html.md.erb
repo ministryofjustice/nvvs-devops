@@ -10,33 +10,35 @@ Welcome to the team! Below is some information that you might find useful.
 
 ## General information
 
-- Our standups are currently at 10.00am every morning
-- We have our sprint ceremonies every fortnight on a Tuesday afternoon
-- We plan our sprints through [Jira](https://dsdmoj.atlassian.net/secure/RapidBoard.jspa?rapidView=432&projectKey=PTTP&selectedIssue=PTTP-2970&quickFilter=1066)
+- Our standups are currently at 09.30am every morning.
+- We have our sprint ceremonies every fortnight on a Tuesday afternoon.
+- We plan our sprints through [Jira](https://dsdmoj.atlassian.net/secure/RapidBoard.jspa?rapidView=432&projectKey=PTTP&selectedIssue=PTTP-2970&quickFilter=1066).
 
 ### Team
 
-- our alliance
-- our roadmap
-- our vision
-- who's in the team
+Please see our [team information](/#general-information) for:
+
+- Who's in the team
+- Our alliance
+- Our roadmap
+- Our ceremonies
 
 ### Your first sprint ceremonies
 
 When you join the team, we want you to feel welcome and included. With your input, we'll collectively update our [team alliance], and you'll be able to meet the team if you haven't done so already.
 
-## Team tools
+## Tools
 
-### Microsoft Teams, Slack, Google Meet!
+### Communication
 
-Our main chat platform is Slack.
 
 We use Microsoft Teams and Google Meet for team calls, and use Slack for direct calls.
 
+Our main chat platform is Slack, and this is our preferred method of communication.
 
-### Slack channels to join
+Download Slack from the [Company Portal](companyportal:ApplicationId=5b3a3776-9335-4994-b940-edb324794764) on your MoJ issued laptop. 
 
-We have three main Slack channels.
+We have three main Slack channels listed below.
 
 #### #mojo-cloud-ops
 
@@ -57,15 +59,13 @@ The [#ask-cloud-ops](https://mojdt.slack.com/archives/C026AFE617T) channel is fo
 - ask questions about the services we run
 - get advice from the team
 
-#### #cloud-ops-notifications
+#### #mojo-cloud-ops-notifications
 
-The [#mojo-cloud-ops-notifications](https://mojdt.slack.com/archives/C023F6BDH2S) channel is where we:
-
-- direct notifications from GitHub, such as pull requests or issues
+The [#mojo-cloud-ops-notifications](https://mojdt.slack.com/archives/C023F6BDH2S) channel is where we direct notifications from GitHub, such as pull requests or issues.
 
 It's a noisy channel, so it's up to you whether to join it.
 
-### GitHub teams to join (optional)
+#### GitHub teams to join (optional)
 
 To add or close issues in our GitHub Project, you need to join the [MOJ-Official-Techops](https://github.com/orgs/ministryofjustice/teams/moj-official-techops) team on GitHub.
 
@@ -73,9 +73,72 @@ The team memberships are [defined in code](). If you're comfortable doing so, pl
 
 If you're not comfortable updating Terraform files, send a message in the [#mojo-cloud-ops](https://mojdt.slack.com/archives/C01J2L0SC0P) channel and someone in the team will help you.
 
+### Windows Subsystem for Linux (WSL)
+
+Download the Ubuntu subsytem from the [Company Portal](companyportal:ApplicationId=59ecb0a7-0f6b-45fc-8242-1135bc2b538b).
+
+To successfully start the Windows Subsystem for Linux (WSL) here and update the package (if you don't starting Ubuntu will fail)
+https://aka.ms/wsl2kernel as detailed [here](https://docs.microsoft.com/en-gb/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package)
+
+#### Ubuntu
+- In Start search for 'Ubuntu' and start the Ubuntu system.
+
+- This will prompt you to create a User, do so. You will use this username later.
+
+#### Windows Terminal
+To access Settings open Windows Terminal and click the V arrow on the Taskbar:
+
+- Change Default Profile to Ubuntu
+
+- In the Ubuntu Profile, edit the Startup Directory to \\wsl$\Ubuntu\home\*your-ubuntu-username*/
+
+- Save your settings
+
+- Restart the app and confirm you can access your Ubuntu subsystem
+
+- (optional) Change your colour scheme. Save your eyes! 👀
+
+
+### VSCode 
+
+The team uses [VSCode](https://code.visualstudio.com/) on a daily basis. 
+
+Some of our preferred extensions are listed below, to install these extensions on VSCode (_Ctrl + Shift + P; "Install Extensions"_):
+
+- [Remote WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) (Open any folder in the Windows Subsystem for Linux (WSL) and take advantage of Visual Studio Code's full feature set, install the requested updates for Ubuntu when prompted)
+
+- [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens) (Visualize code authorship at a glance via Git blame annotations and code lens, seamlessly navigate and explore Git repositories, gain valuable insights via powerful comparison commands, and so much more)
+
+- [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare) (Real-time collaborative development from the comfort of your favorite tools.)
+
+- [HashiCorp Terraform](https://marketplace.visualstudio.com/items?itemName=HashiCorp.terraform) (Syntax highlighting and autocompletion for Terraform)
+
+- [Gitmoji](https://marketplace.visualstudio.com/items?itemName=Vtrois.gitmoji-vscode) 😎 (An emoji tool for your git commit messages)
+
+- [Ruby](https://marketplace.visualstudio.com/items?itemName=bung87.rails) (Ruby on Rails support for Visual Studio Code)
+
+- [Tabnine](https://marketplace.visualstudio.com/items?itemName=TabNine.tabnine-vscode) (👩‍💻🤖 JavaScript, Python, Java, Typescript & all other languages - AI Code completion plugin. Tabnine makes developers more productive by auto-completing their code.)
+
+- (optional) Change your colour scheme. Save your eyes! 👀 
+[Dracula](https://marketplace.visualstudio.com/items?itemName=dracula-theme.theme-dracula) 🧛 is a good one. 
+
+If you've installed any Extensions prior to installing Remote WSL, re-install them on the WSL Ubuntu. To do this an 'Install' button should appear on these extensions when viewed on the Extensions (under WSL:
+Ubuntu) submenu on the left hand side of VS Code.
+
+
 ### Learning and development
 
-- [Lean Tech Trello Board](https://trello.com/b/r7ntXcC6/learn-tech) for questions that you have about our Friday learning sessions
+- [Pluralsight](https://www.pluralsight.com/), ask for a pluralsight license in the [#pluralsight](https://mojdt.slack.com/archives/CBK9KER8E) Slack channel.
+
+- AWS Training. You can access the OGVA schedule via logging into [here](https://ogva.embrace.tools.aws.dev) using you organisation email address.
+    You can access the schedule directly [here](https://ogva.embrace.tools.aws.dev/front-page-quicklink-1/index.html).
+    For the courses, a reminder:
+    -	if you can no longer attend, please do withdraw from the course through your AWS training account - it will then become available to others
+    -	if your team has a need for training not listed here (or is fully booked), please do let me know and I can enquire about an MOJ-only course
+    -	if a class or course has a cost or isn't part of the OGVA schedule, it is likely not part of the OGVA agreement
+
+- [Learn Tech Trello Board](https://trello.com/b/r7ntXcC6/learn-tech) for questions that you have about our Friday learning sessions
+
 
 ## Further information
 
