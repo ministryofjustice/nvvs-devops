@@ -1,0 +1,33 @@
+# Developing on a branch
+
+
+Provided the repository is not already pulled locally: 
+
+`git clone git@github.com:ministryofjustice/\<your-repo-name>.git` 
+
+`cd \<your-repo-name>`
+
+Confirm you are on the main branch:
+
+`git status`
+
+Update the repository with any changes to the main branch (if the repository already exists locally):
+
+`git pull` 
+
+Create and checkout a new branch:
+
+`git checkout -b <your-branch-name>`
+
+_At this stage the team works collaboratively to edit the code, to complete the ticket as illustrated in its Definition of Done._
+
+Running `git status` reflects all changes made to files in the preceding step.
+
+Stage all altered files:
+
+`git add -A`
+
+Commit the newly stages files:
+
+`git commit -m ":gitmoji: <your meaningful commit message> `
+
