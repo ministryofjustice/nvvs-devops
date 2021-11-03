@@ -1,1 +1,53 @@
 # Our Best Practices
+
+## Jira
+
+
+The team uses JIRA to manage our workload. 
+
+The lifecycle of a ticket is as follows. A user realises a need in the system. This can be a Story, Bug or Task. 
+
+#### Story
+
+A requirement or request which is written from the perspective of a end user.  Most of our work can be ticketed as a story.
+
+#### Bug
+
+Anything detrimental to the system.  Bugs affecting service are pulled into sprint and dealt with as a matter of priority.
+
+#### Task
+
+Something that can be completed by one person and is of limited complexity.  A task doesn't have to hold clear value for an end-user.
+
+
+Once a ticket is in our backlog it will first go to [Backlog Refinement](../../documentation/general-information/our-ceremonies.html#backlog-refinement), where it will become 'Ready for Development' then prioritised in [Backlog Grooming](../../documentation/general-information/our-ceremonies.html#backlog-grooming). 
+
+The ticket will then either be pulled into a Sprint during a [Sprint Planning](../../documentation/general-information/our-ceremonies.html#sprint-planning) session or it can remain indefinitely in 'Ready for Development' until the backlog is cleared out. 
+
+If a ticket is Ready For Development, this does not necessarily mean the ticket will be ever be done. Tickets are pulled into Sprint based on their value and alignment to the current Roadmap. 
+
+## Test Driven Development
+
+We follow [TDD](https://en.wikipedia.org/wiki/Test-driven_development) whenever it's possible to do so.
+
+## Github
+
+The cloud ops team follows a GitOps style workflow.  Any changes to the system should be made via a pull request against the appropriate repository.  
+
+### All changes via Pull Request
+
+All work undertaken by a member of the cloud ops team will take place in a branch. Branches are named after the corresponding ticket in Jira. Native integrations allow browsing straight to the branch from within Jira (if named correctly). An example of this is listed [here](developing-on-a-branch.html).
+
+### Commit Early, Commit Often
+
+If you're asking yourself "should I commit now"? then the answer is probably yes!  Committing regularly helps with avoiding conflicts.  It is especially helpful when you're pulled away to another task and need a little reminder of where you were.
+
+### Main Branch  
+
+As GitHubs default practice our main branch is named 'main' and not 'master'. More information [here](https://github.com/github/renaming).
+
+### Gitmoji 😎
+
+Yes, it made it to our best practices!  [Gitmoji](https://gitmoji.dev/) is a great way to tag commits according to what they're doing. It's a great suppliment to your commit messages and can help identify key commits quickly.   
+
+Most of all - [have fun 🥚](https://www.youtube.com/watch?v=dQw4w9WgXcQ) . 
