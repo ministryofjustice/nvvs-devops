@@ -8,7 +8,7 @@ This is the Ministry of Justice [Cloud Operations teams](https://ministryofjusti
 ### Core repositories
 | Name | Description |
 |-|-|
-| [cloud-operations-team](https://ministryofjustice.github.io/cloud-operations) | Our repository for documentation, scripts and ways of working |
+| [cloud-operations-team](https://github.com/ministryofjustice/cloud-operations) | Our repository for documentation, scripts and ways of working |
 
 ### Shared Services
 
