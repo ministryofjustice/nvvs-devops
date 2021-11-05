@@ -11,15 +11,18 @@ This is the Ministry of Justice [Cloud Operations teams](https://ministryofjusti
 | [cloud-operations-team](https://github.com/ministryofjustice/cloud-operations) | Our repository for documentation, scripts and ways of working |
 
 ### Shared Services
-
 | Name | Description |
 |-|-|
 | [shared-services-infrastructure](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure) | Create infrastructure from the main AWS shared account into Development, Pre Production and Production via AWS CodePipelines. |
 | [infrastructure-network-services](https://github.com/ministryofjustice/staff-infrastructure-network-services) | Infrastructure deployment for networking services including SMTP |
 | [docker-base-images](https://github.com/ministryofjustice/staff-device-docker-base-images) | Repository for base container images used across multiple services. Created as the solution to DockerHub rate limits as suggested by AWS. |
 
-### DHCP / DNS
+### Certificate Services
+| Name | Description |
+|-|-|
+| [infrastructure-certificate-services](https://github.com/ministryofjustice/staff-infrastructure-certificate-services) | Public Key Infrastructure for devices and users. This repository can redeploy the EC2 instances which Entrust build their managed service on. |
 
+### DHCP / DNS
 | Name | Description |
 |-|-|
 | [dns-dhcp-infrastructure](https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure) | This repository contains the Terraform code to build the AWS infrastructure for the Ministry of Justice's DNS and DHCP platform. |
@@ -42,7 +45,6 @@ This is the Ministry of Justice [Cloud Operations teams](https://ministryofjusti
 | [infrastructure-monitoring](https://github.com/ministryofjustice/staff-infrastructure-monitoring) | Terraform module that deploys the staff infrastructure monitoring solution. It has support for components like: Grafana, Prometheus, etc.
 | [metric-aggregation-server](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) | Prometheus ECS
 | [metric-aggregator-cloud](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregator-cloud) | Prometheus EKS
-
 
 ### Security Log Aggregation and Shipping
 | Name | Description |
