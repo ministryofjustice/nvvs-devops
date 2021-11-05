@@ -22,9 +22,10 @@ This is the Ministry of Justice [Cloud Operations teams](https://ministryofjusti
 
 | Name | Description |
 |-|-|
+| [dns-dhcp-infrastructure](https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure) | This repository contains the Terraform code to build the AWS infrastructure for the Ministry of Justice's DNS and DHCP platform. |
+| [dns-dhcp-admin](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin) | Portal for managing staff device site dhcp and dns. |
 | [dhcp-server](https://github.com/ministryofjustice/staff-device-dhcp-server) | This repository contains the Dockerfile to create the ISC Kea DHCP server docker image. The configuration for this server is managed in the Admin Portal. |
 | [dns-server](https://github.com/ministryofjustice/staff-device-dns-server) | This repository contains the Dockerfile to create the BIND DNS server Docker image. The configuration for this server is managed in the Admin Portal. |
-| [dns-dhcp-admin](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin) | Portal for managing staff device site dhcp and dns. |
 | [private-dns-zone](https://github.com/ministryofjustice/staff-device-private-dns-zone) | Add private DNS zones into Route53 |
 | [dns-dhcp-disaster-recovery](https://github.com/ministryofjustice/staff-device-dns-dhcp-disaster-recovery) | This repo contains an interactive script which can be used to roll back a corrupt config file for the DNS or DHCP services. |
 | [logging-dns-dhcp-integration-tests](ministryofjustice/staff-device-logging-dns-dhcp-integration-tests) | These scripts emulate UDP traffic for both DHCP and Syslog requests. They are run from the Corsham VM to test the services over the network. |
