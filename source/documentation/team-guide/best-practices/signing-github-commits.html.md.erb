@@ -1,0 +1,75 @@
+# Signing GitHub Commits
+
+## Generate a new GPG key
+
+1. Download and install the GPG command line tools for your operating system.  
+`sudo apt-get install gnupg`
+
+1. Generate a GPG key pair.  
+`gpg --full-generate-key`
+
+1. At the prompt, specify the kind of key you want, or press `Enter` to accept the default.
+
+1. At the prompt, specify the key size you want, or press `Enter` to accept the default. Your key must be at least `4096` bits.
+
+1. Enter the length of time the key should be valid. Press `Enter` to specify the default selection, indicating that the key doesn't expire.
+
+1. Verify that your selections are correct.
+
+1. Enter your user ID information.
+
+1. List the long form of the GPG keys for which you have both a public and private key.  
+`gpg --list-secret-keys --keyid-format=long`
+
+1. From the list of GPG keys, copy the long form of the GPG key ID you'd like to use.<br />In this example, the GPG key ID is `3AA5C34371567BD2`:  
+`sec   rsa4096/3AA5C34371567BD2 2021-11-08 [SC]`
+
+1. Paste the text below, substituting in the GPG key ID you'd like to use. In this example, the GPG key ID is `3AA5C34371567BD2`:  
+`gpg --armor --export 3AA5C34371567BD2`
+
+1. Copy your GPG key, beginning with `-----BEGIN PGP PUBLIC KEY BLOCK-----` and ending with `-----END PGP PUBLIC KEY BLOCK-----`.
+
+## Add the GPG key to GitHub
+
+1. In the upper-right corner of any page, click your profile photo, then click **Settings**.  
+
+1. In the user settings sidebar, click **SSH and GPG keys**.  
+
+1. Click **New GPG key**.
+
+1. In the "Key" field, paste the GPG key you copied earlier
+
+1. Click **Add GPG key**.
+
+## Configure Git with the GPG key  
+
+1. List the long form of the GPG keys for which you have both a public and private key.  
+`gpg --list-secret-keys --keyid-format=long`
+
+1. From the list of GPG keys, copy the long form of the GPG key ID you'd like to use.<br />In this example, the GPG key ID is `3AA5C34371567BD2`:  
+`sec   rsa4096/3AA5C34371567BD2 2021-11-08 [SC]`
+
+1. To set your GPG signing key in Git, paste the text below, substituting in the GPG key ID you'd like to use. In this example, the GPG key ID is `3AA5C34371567BD2`:  
+`git config --global user.signingkey 3AA5C34371567BD2`
+
+## Export GPG_TTY variable  
+
+Add the below in your `.bashrc` or `.zshrc` file:  
+`# git gpg signing`  
+`export GPG_TTY=$(tty)`  
+
+## Sign your commits
+
+>**Tips**:
+>
+>To configure your Git client to sign commits by default for a local repository,  
+>run `git config commit.gpgsign true`.  
+>
+>To sign all commits by default in any local repository on your computer,  
+>run `git config --global commit.gpgsign true`.
+
+1. When committing changes in your local branch, add the -S flag to the git commit command:  
+`git commit -S -m "your commit message"`  
+
+1. When you've finished creating commits locally, push them to your remote repository on GitHub:  
+`git push`
