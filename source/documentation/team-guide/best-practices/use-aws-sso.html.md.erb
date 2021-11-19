@@ -108,16 +108,16 @@ output = json
 
 [profile mojo-shared-services-cli]  
 region = eu-west-2  
-credential_process = /usr/local/bin/aws-vault exec mojo-shared-services --backend=pass --prompt=pass  
+credential_process = /usr/local/bin/aws-vault exec mojo-shared-services --json --backend=pass --prompt=pass  
 
 [profile mojo-development-cli]  
-credential_process = /usr/local/bin/aws-vault exec mojo-development --backend=pass --prompt=pass  
+credential_process = /usr/local/bin/aws-vault exec mojo-development --json --backend=pass --prompt=pass  
 
 [profile mojo-pre-production-cli]  
-credential_process = /usr/local/bin/aws-vault exec mojo-pre-production --backend=pass --prompt=pass  
+credential_process = /usr/local/bin/aws-vault exec mojo-pre-production --json --backend=pass --prompt=pass  
 
 [profile mojo-production-cli]  
-credential_process = /usr/local/bin/aws-vault exec mojo-production --backend=pass --prompt=pass  
+credential_process = /usr/local/bin/aws-vault exec mojo-production --json --backend=pass --prompt=pass  
 ````  
 
 ## Test your AWS Cli  
