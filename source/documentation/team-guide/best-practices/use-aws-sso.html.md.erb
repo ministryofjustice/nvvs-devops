@@ -8,7 +8,8 @@ review_in: 3 month
 
 Follow this guide to re-configure your [AWS Vault](https://github.com/99designs/aws-vault) to work with [AWS SSO](https://aws.amazon.com/single-sign-on/).  
 
-> **Note**  
+> **Note:**  
+>
 > This guide is for re-configuring AWS Vault running on **Ubuntu**.  
 
 ## Prerequisites
@@ -43,7 +44,16 @@ Finally, confirm all by typing `O` to accept Okay.
 
 It will prompt for a `Passphrase`. Create a new passphrase to protect the GPG key.  
 
-A new GPG key is now created.
+A new GPG key is now created.  
+
+## Export GPG_TTY variable  
+
+If you do not already have, add the below in your `.bashrc` or `.zshrc` file:  
+
+````  
+# git gpg signing  
+export GPG_TTY=$(tty)  
+```` 
 
 ## Install and initialise pass
 
