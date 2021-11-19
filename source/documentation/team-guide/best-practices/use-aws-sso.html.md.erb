@@ -1,0 +1,151 @@
+---
+title: Re-configure AWS Vault
+last_reviewed_on: 2021-11-19
+review_in: 3 month
+---
+
+# Re-configure AWS Vault
+
+Follow this guide to re-configure your [AWS Vault](https://github.com/99designs/aws-vault) to work with [AWS SSO](https://aws.amazon.com/single-sign-on/).  
+
+> **Note**  
+> This guide is for re-configuring AWS Vault running on **Ubuntu**.  
+
+## Prerequisites
+
+To be able to follow this guide to setup the AWS SSO, you need to have the following already:  
+
+- [GPG](https://gnupg.org/index.html) installed.  
+- [AWS Vault](https://github.com/99designs/aws-vault#installing) set up.  
+- Access to [Moj AWS SSO](https://moj.awsapps.com/start#/).  
+
+## Generate a GPG key  
+
+We will need a GPG key to encrypt credentials in a password store later. So, let's start by generating a GPG key. Run the following command:  
+
+`gpg --full-generate-key`  
+
+Press `Enter` for `Please select what kind of key you want:`, to select the default value.  
+
+Press `Enter` again for `What keysize do you want? (3072)`, to select the given size.  
+
+Press `Enter` again for `Key is valid for? (0)`, to set the key to never expire.  
+
+Confirm this by typing `Y` for `Is this correct? (y/N)` in next step and then press `Enter`.  
+
+Provide a ID for the key in the next step as below:  
+
+Type `<your username> Password Storage Key` for `Real name:`  
+
+You may leave `Email address:` and `Comment:` blank.  
+
+Finally, confirm all by typing `O` to accept Okay.  
+
+It will prompt for a `Passphrase`. Create a new passphrase to protect the GPG key.  
+
+A new GPG key is now created.
+
+## Install and initialise pass
+
+We will use [pass](https://www.passwordstore.org/) as the `backend` for `aws-vault` later. So, let's install it.  
+
+### Install  
+
+Run the below command:  
+
+`sudo apt-get install pass` 
+
+### Setting it up  
+
+To begin, run the following command:  
+
+`pass init "<your username> Password Storage Key"`  
+
+Here, `<your username> Password Storage Key` is the ID of the GPG key that you created in the previous step.  
+
+A new Password Store is now created in `~/.password-store`.  
+
+## Finally, update the config file
+
+Add to / replace with the below, your `~/.aws/config` file and save.  
+
+````
+[default]  
+region=eu-west-2  
+output=json  
+ 
+[profile mojo-shared-services]  
+sso_start_url = https://moj.awsapps.com/start  
+sso_region = eu-west-2  
+sso_account_id = <shared services AWS account ID>  
+sso_role_name = AdministratorAccess  
+region = eu-west-2  
+output = json  
+
+[profile mojo-development]  
+sso_start_url = https://moj.awsapps.com/start  
+sso_region = eu-west-2  
+sso_account_id = <development AWS account ID>   
+sso_role_name = AdministratorAccess  
+region = eu-west-2  
+output = json  
+
+[profile mojo-pre-production]  
+sso_start_url = https://moj.awsapps.com/start  
+sso_region = eu-west-2  
+sso_account_id = <pre production AWS account ID>   
+sso_role_name = AdministratorAccess  
+region = eu-west-2  
+output = json  
+
+[profile mojo-production]  
+sso_start_url = https://moj.awsapps.com/start  
+sso_region = eu-west-2  
+sso_account_id = <production AWS account ID>   
+sso_role_name = AdministratorAccess  
+region = eu-west-2  
+output = json  
+
+[profile mojo-shared-services-cli]  
+region = eu-west-2  
+credential_process = /usr/local/bin/aws-vault exec mojo-shared-services --backend=pass --prompt=pass  
+
+[profile mojo-development-cli]  
+credential_process = /usr/local/bin/aws-vault exec mojo-development --backend=pass --prompt=pass  
+
+[profile mojo-pre-production-cli]  
+credential_process = /usr/local/bin/aws-vault exec mojo-pre-production --backend=pass --prompt=pass  
+
+[profile mojo-production-cli]  
+credential_process = /usr/local/bin/aws-vault exec mojo-production --backend=pass --prompt=pass  
+````  
+
+## Test your AWS Cli  
+
+Run the below, to set the `AWS_PROFILE` to use the shared services account:  
+
+`export AWS_PROFILE=mojo-shared-services-cli`  
+
+Then, run the below aws command:  
+
+`aws sts get-caller-identity`  
+
+When prompted, provide the passphrase for GPG key you created earlier.  
+
+You will then see web page on your browser to authorise a request:  
+
+![AWS SSO authorisation prompt](images/aws_sso_auth_prompt.png)  
+
+Click `Allow`.  
+
+You should see the below in the terminal:
+
+````
+{  
+    "UserId": "<your username>@digital.justice.gov.uk",  
+    "Account": "<shared services AWS account id>",  
+    "Arn": "arn:aws:sts::<shared services AWS account id>:assumed-role/<your username>@digital.justice.gov.uk"  
+}  
+````  
+
+Congratulations, you have successfully configured your AWS Vault to work with AWS SSO.
