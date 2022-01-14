@@ -4,7 +4,7 @@ last_reviewed_on: 2021-11-19
 review_in: 3 month
 ---
 
-# Re-configure AWS Vault
+# Configure AWS Vault
 
 Follow this guide to re-configure your [AWS Vault](https://github.com/99designs/aws-vault) to work with [AWS SSO](https://aws.amazon.com/single-sign-on/).  
 
@@ -159,3 +159,62 @@ You should see the below in the terminal:
 ````  
 
 Congratulations, you have successfully configured your AWS Vault to work with AWS SSO.
+
+## Forgotten GPG Key Password
+
+In the event you forget the password of your GPG Key you will need to delete it and create another. 
+
+List the key. You will need the string under 'pub' later.
+
+```
+username@laptop:~$ gpg -k
+/home/username/.gnupg/pubring.kbx
+-----------------------------------
+pub   rsa3072 2021-11-19 [SC]
+      DDE8C445795E88ABB4CBCE49C3F2562BD
+uid           [ultimate] Gyour username> Password Storage Key
+sub   rsa3072 2021-11-19 [E]
+```
+
+Now delete the secret key:
+
+```
+username@laptop:~$ gpg  --delete-secret-keys DDE8C445795E88ABB4CBCE49C3F2562BD
+gpg (GnuPG) 2.2.19; Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+
+sec  rsa3072/C3F2562BD768D6DC 2021-11-19 <your username> Password Storage Key
+
+Delete this key from the keyring? (y/N) y
+This is a secret key! - really delete? (y/N) y
+```
+
+Now delete the key itself: 
+
+```
+username@laptop:~$ gpg  --delete-keys DDE8C445795E88ABB4CBCE49C3F2562BD
+gpg (GnuPG) 2.2.19; Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+
+pub  rsa3072/C3F2562BD768D6DC 2021-11-19 <your username> Password Storage Key
+
+Delete this key from the keyring? (y/N) y
+
+### You can now check the key has been deleted with the following command
+```
+
+Confirm the key has been deleted with the following command:
+
+```
+username@laptop:~$ gpg -k
+gpg: checking the trustdb
+gpg: no ultimately trusted keys found
+```
+
+Now you must generate a new GPG Key as per the documentation above. 
+
+### 
