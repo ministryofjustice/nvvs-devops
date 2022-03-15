@@ -10,12 +10,12 @@ This is the Ministry of Justice [Cloud Operations teams](https://ministryofjusti
 ### Core repositories
 | Name | Description |
 |-|-|
-| [cloud-operations-team](https://github.com/ministryofjustice/cloud-operations) | Our repository for documentation, scripts and ways of working |
+| [cloud-operations-team](https://github.com/ministryofjustice/cloud-operations) | Our repository for documentation, scripts and ways of working (this repository) |
 
 ### Shared Services
 | Name | Description |
 |-|-|
-| [infra-shared](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure) | Create infrastructure from the main AWS shared account into Development, Pre Production and Production via AWS CodePipelines. |
+| [shared-services-infrastructure](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure) | Creates infrastructure in the shared services account, including continuous integration and delivery pipelines |
 | [docker-base-images](https://github.com/ministryofjustice/staff-device-docker-base-images) | Repository for base container images used across multiple services. Created as the solution to DockerHub rate limits as suggested by AWS. |
 
 ### Certificate Services
