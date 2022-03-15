@@ -5,7 +5,7 @@
 This is the Ministry of Justice [Cloud Operations teams](https://ministryofjustice.github.io/cloud-operations) public repository for our documentation.
 
 ## Contents
-- [Architecture Decision Record (ADR)](architecture-decision-record)
+- [Architecture Decision Record (ADR)](architecture-decision-record) A record of the technical decisions made by the team.
 
 ### Core repositories
 | Name | Description |
