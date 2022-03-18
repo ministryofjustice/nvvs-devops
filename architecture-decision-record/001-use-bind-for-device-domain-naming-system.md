@@ -10,7 +10,8 @@ Staff devices while connected to our network will require DNS or Domain Naming S
 
 There is a requirement that this service is able to automatically scale (both up and down) to cope with varying load levels during the course of the day.
 
-There is a limitation around using the fully managed AWS Route53 DNS service as it does not support DNS forwarding. 
+There is a limitation around using the fully managed AWS Route53 DNS service as it does not support DNS forwarding.  
+
 **Dec 2021 Update** Route53 can now forward DNS requests e.g. [PDNS](https://www.ncsc.gov.uk/information/pdns)
 
 ## Decision
