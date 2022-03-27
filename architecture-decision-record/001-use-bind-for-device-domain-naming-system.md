@@ -6,7 +6,7 @@ Status
 
 ## Context
 
-Staff devices while connected to our network will require DNS or Domain Naming Services. This service will be responsible for resolving both internal and external DNS queries for staff devices connected at a site or remotely. Any requests not dealt with by the MoJ DNS service are required to be forwarded to the National Cyber Security Centre (NCSC) Protective DNS [PDNS](https://www.ncsc.gov.uk/information/pdns) service for resolution.
+Devices, while connected to our network, will need [DNS](https://en.wikipedia.org/wiki/Domain_Name_System) or Domain Naming Services. The service will be responsible for resolving both internal and external DNS queries. DNS requests not resolved internally will be forwarded to the National Cyber Security Centre (NCSC) Protective DNS [PDNS](https://www.ncsc.gov.uk/information/pdns) service for resolution.
 
 There is a requirement that this service is able to automatically scale (both up and down) to cope with varying load levels during the course of the day.
 
@@ -24,6 +24,6 @@ There is a limitation around using the fully managed AWS Route53 DNS service as 
 - we will need to run our own infrastructure rather than using a managed DNS service, due limitations in the managed Route53 service with forwarding requests.
 - since the BIND9 DNS service has no user interface, we will need to provide a way for onsite support engineers to add new Zones to the service.
 ### Advantages
-- BIND9 provides a lot of customisation and flexibility that may fill requirements as this service is used further in MoJ.
+- BIND9 DNS service is flexible and can adapt to requirements if needed.
 ### Disadvantages
   - need to build, operate and maintain the service somewhere
