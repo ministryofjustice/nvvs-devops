@@ -6,7 +6,7 @@ Status
 
 ## Context
 
-Devices, while connected to our network, will need [DNS](https://en.wikipedia.org/wiki/Domain_Name_System) or Domain Naming Services. The service will be responsible for resolving both internal and external DNS queries. DNS requests not resolved internally will be forwarded to the National Cyber Security Centre (NCSC) Protective DNS [PDNS](https://www.ncsc.gov.uk/information/pdns) service for resolution.
+Staff devices e.g. laptops and desktops connected to our network will need [DNS](https://en.wikipedia.org/wiki/Domain_Name_System) or Domain Naming Services to lookup internal and external resources e.g. www.google.com. DNS requests not resolved internally will be forwarded to the National Cyber Security Centre (NCSC) Protective DNS [PDNS](https://www.ncsc.gov.uk/information/pdns) where requests to sites known to be hosting malware, ransomware and spyware will be blocked.
 
 There is a requirement that this service is able to automatically scale (both up and down) to cope with varying load levels during the course of the day.
 
