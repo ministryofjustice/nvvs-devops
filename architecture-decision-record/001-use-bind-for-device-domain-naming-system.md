@@ -6,11 +6,11 @@ Status
 
 ## Context
 
-Staff devices while connected to our network will require DNS or Domain Naming Services. This service will be responsible for resolving both internal and external DNS queries for staff devices connected at a site or remotely. Any requests not dealt with by the MoJ DNS service are required to be forwarded to the National Cyber Security Centre (NCSC) Protective DNS [PDNS](https://www.ncsc.gov.uk/information/pdns) service for resolution.
+Staff devices e.g. laptops and desktops connected to our network will need [DNS](https://en.wikipedia.org/wiki/Domain_Name_System) or Domain Naming Services to lookup internal and external resources e.g. www.google.com. DNS requests not resolved internally will be forwarded to the National Cyber Security Centre (NCSC) Protective DNS [PDNS](https://www.ncsc.gov.uk/information/pdns) where requests to sites known to be hosting malware, ransomware and spyware will be blocked.
 
 There is a requirement that this service is able to automatically scale (both up and down) to cope with varying load levels during the course of the day.
 
-There is a limitation around using the fully managed AWS Route53 DNS service as it does not support DNS forwarding.  
+There is a limitation around using the fully managed AWS Route53 DNS service as it does not support DNS forwarding. 
 
 **Dec 2021 Update** Route53 can now forward DNS requests e.g. [PDNS](https://www.ncsc.gov.uk/information/pdns)
 
@@ -25,6 +25,7 @@ There is a limitation around using the fully managed AWS Route53 DNS service as 
 - we will need to run our own infrastructure rather than using a managed DNS service, due limitations in the managed Route53 service with forwarding requests.
 - since the BIND9 DNS service has no user interface, we will need to provide a way for onsite support engineers to add new Zones to the service.
 ### Advantages
-- BIND9 provides a lot of customisation and flexibility that may fill requirements as this service is used further in MoJ.
+
+- BIND9 DNS service is flexible and can adapt to requirements if needed.
 ### Disadvantages
   - need to build, operate and maintain the service somewhere
