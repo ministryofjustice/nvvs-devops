@@ -10,7 +10,21 @@ We will need to run our [DHCP](https://en.wikipedia.org/wiki/Dynamic_Host_Config
 
 ## Decision
 
-After investigations by Cloud Platform team (see GitHub issue [here](https://github.com/ministryofjustice/cloud-platform/issues/1897#issuecomment-632592093)), there are [issues]((https://github.com/kubernetes/kubernetes/issues/79523#issuecomment-595405745)) with Network Load Balancers passing both UDP and TCP, this is a requirement for running DHCP and DNS services.
+After investigations by Cloud Platform team [here](https://github.com/ministryofjustice/cloud-platform/issues/1897#issuecomment-632592093), there are [issues](https://github.com/kubernetes/kubernetes/issues/79523#issuecomment-595405745) with Network Load Balancers passing both UDP and TCP. This is a requirement for running DHCP and DNS services.
+
+**Update 6th January 2021**
+
+The Cloud Platform `live` cluster is now running on Kubernetes 1.20 which should allow mixed TCP/UDP on the network load balancer 
+
+([see issue here](https://github.com/ministryofjustice/cloud-platform/issues/1897#issuecomment-1006539120))
+
+**Update 7th January 2021**
+
+There is an outstanding Cloud Platform issue to look at the CP CIDR overlap with the wider connected networks on the Transit Gateway. This will need to be resoled before moving any services. 
+
+([see issue here](https://github.com/ministryofjustice/cloud-platform/issues/3454))
+
+We will use Cloud Platform to host any of our other services.
 
 ## Consequences
 
