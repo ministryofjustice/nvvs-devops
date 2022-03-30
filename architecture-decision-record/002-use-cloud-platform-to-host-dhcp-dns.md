@@ -1,4 +1,4 @@
-2. Use Cloud Platform for hosting
+2. Use Cloud Platform to host DHCP and DNS
 Date: 2020-05-22
 
 ## Status 
@@ -14,18 +14,17 @@ After investigations by Cloud Platform team [here](https://github.com/ministryof
 
 **Update 6th January 2021**
 
-The Cloud Platform `live` cluster is now running on Kubernetes 1.20 which should allow mixed TCP/UDP on the network load balancer 
+The Cloud Platform `live` cluster is now running on Kubernetes 1.20 which should allow TCP and UDP on the network load balancer 
 
 ([see issue here](https://github.com/ministryofjustice/cloud-platform/issues/1897#issuecomment-1006539120))
 
-**Update 7th January 2021**
+**Update 7th January 2022**
 
-There is an outstanding Cloud Platform issue to look at the CP CIDR overlap with the wider connected networks on the Transit Gateway. This will need to be resoled before moving any services. 
+There is an outstanding Cloud Platform issue to look at the CP CIDR overlap with the wider connected networks on the Transit Gateway. This will need to be resolved before migration of services.
 
 ([see issue here](https://github.com/ministryofjustice/cloud-platform/issues/3454))
 
-We will use Cloud Platform to host any of our other services.
-
 ## Consequences
 
-- We will need to build and run our own infrastructure to host these services.
+- Build, maintain our own infrastructure to host these services.
+- Increased costs, knowledge required to 
