@@ -10,7 +10,7 @@ We will need to run our [DHCP](https://en.wikipedia.org/wiki/Dynamic_Host_Config
 
 ## Decision
 
-After investigations by Cloud Platform team [here](https://github.com/ministryofjustice/cloud-platform/issues/1897#issuecomment-632592093), there are [issues](https://github.com/kubernetes/kubernetes/issues/79523#issuecomment-595405745) with Network Load Balancers passing both UDP and TCP. This is a requirement for running DHCP and DNS services.
+After [investigations](https://github.com/ministryofjustice/cloud-platform/issues/1897#issuecomment-632592093) by Cloud Platform team, there are [issues](https://github.com/kubernetes/kubernetes/issues/79523#issuecomment-595405745) with Network Load Balancers passing both UDP and TCP. This is a requirement for running DHCP and DNS services.
 
 **Update 6th January 2021**
 
