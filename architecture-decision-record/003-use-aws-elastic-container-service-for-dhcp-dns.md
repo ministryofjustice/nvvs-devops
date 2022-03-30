@@ -1,4 +1,4 @@
-  3. Use AWS Elastic Container Service for DHCP DNS
+  # 3. Use AWS Elastic Container Service for DHCP DNS
   Date: 2020-05-27
 
   Status

@@ -1,4 +1,4 @@
-2. Use Cloud Platform to host DHCP and DNS
+# 2. Use Cloud Platform to host DHCP and DNS
 Date: 2020-05-22
 
 ## Status 
