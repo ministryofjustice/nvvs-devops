@@ -22,4 +22,4 @@ We have decided to use AWS Elastic Container Services. ECS is a fully managed co
 
   ### Disadvantages
 
-Still need to provision the service and will need CI/CD tooling, operational documentation and forever maintaining those things.
+Still need to provision the service, require CI/CD tooling, operational documentation and forever maintaining those things.
