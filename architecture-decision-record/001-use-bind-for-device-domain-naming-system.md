@@ -1,7 +1,7 @@
-2. Use BIND DNS for device name resolution
+# 2. Use BIND DNS for device name resolution
 Date: 2020-05-14
 
-Status
+## Status
 ✅ Accepted
 
 ## Context

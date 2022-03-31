@@ -1,7 +1,7 @@
-1. Record architecture decisions
+# 1. Record architecture decisions
 Date: 2022-03-14
 
-Status
+## Status
 ✅ Accepted
 
 ## Context
