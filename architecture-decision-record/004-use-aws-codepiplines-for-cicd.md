@@ -10,7 +10,7 @@ We need a [CI/CD](https://en.wikipedia.org/wiki/CI/CD)​ solution to support [P
 
   ## Decision
 
-We have decided to use AWS CodeBuild and CodePipeline for [CI/CD](https://en.wikipedia.org/wiki/CI/CD)​. It’s a managed service from Amazon Web Services.
+We have decided to use AWS CodeBuild and CodePipeline for [CI/CD](https://en.wikipedia.org/wiki/CI/CD)​. It’s a fully managed service from Amazon Web Services and provides the following benefits.
 
 - Native integration with AWS cloud estate SDK and CDK.
 - Cross AWS account support
