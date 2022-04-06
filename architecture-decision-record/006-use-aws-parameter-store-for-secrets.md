@@ -6,7 +6,7 @@
 
   ## Context
 
-There is a need to store infrastructure secrets securely in the [PTTP](https://ministry-of-justice-acronyms.service.justice.gov.uk/#:~:text=Info-,PTTP,-Prison%20Technology%20Transformation) programme. Typical examples of secrets include API keys to reference external services, and AWS account IDs.
+There is a need to store infrastructure secrets securely in the [PTTP](https://ministry-of-justice-acronyms.service.justice.gov.uk/#:~:text=Prison%20Technology%20Transformation%20Programme) programme. Typical examples of secrets include API keys to reference external services, and AWS account IDs.
 
   ## Decision
 
