@@ -1,0 +1,23 @@
+  # 6. Use AWS Parameter Store for Secrets
+  Date: 2020-07-01
+
+  ## Status
+  ✅ Accepted
+
+  ## Context
+
+There is a need to store infrastructure secrets securely in the [PTTP](https://ministry-of-justice-acronyms.service.justice.gov.uk/#:~:text=Info-,PTTP,-Prison%20Technology%20Transformation) programme. Typical examples of secrets include API keys to reference external services, and AWS account IDs.
+
+  ## Decision
+
+Use AWS SSM Parameter Store. 
+- Aligned with [MoJ Security Guidance](https://ministryofjustice.github.io/security-guidance/standards/secrets-management/#application--infrastructure-secrets)
+- Compatible with AWS services e.g. [CodePipelines](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html#build-spec-ref-example)
+- The use of AWS Secrets Manager can easily be extended if required.
+
+### Alternative Considerations: 
+#### AWS Secrets Manager
+AWS Secrets Manager has ability to automatically rotate secrets for AWS RDS access. AWS Secrets Manager has a higher cost than AWS SSM Parameter Store.
+
+#### HashiCorp Vault
+HashiCorp Vault is an open-source secret management solution. In order to use it we would have to host and manage an instance of the service ourselves. The cost of hosting, as well as the time to ensure data has appropriate backups, gives this service a high maintenance cost and overhead.
