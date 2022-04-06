@@ -11,7 +11,7 @@ There is a need to store infrastructure secrets securely in the [PTTP](https://m
   ## Decision
 
 Use AWS SSM Parameter Store. 
-- Aligned with [MoJ Security Guidance](https://ministryofjustice.github.io/security-guidance/standards/secrets-management/#application--infrastructure-secrets)
+- Aligned with [MoJ Security Guidance](https://security-guidance.service.justice.gov.uk/secrets-management/#application--infrastructure-secrets)
 - Compatible with AWS services e.g. [CodePipelines](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html#build-spec-ref-example)
 - The use of AWS Secrets Manager can easily be extended if required.
 
