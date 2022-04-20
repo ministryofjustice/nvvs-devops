@@ -14,4 +14,5 @@ Created issue [here](https://github.com/ministryofjustice/cloud-operations/issue
 
   ## Decision
 
-We will use AWS Elastic Container Registry to store our images as it integrates with CodePipelines and existing workflows and will remove the limits we have been hitting..
+We will use AWS Elastic Container Registry to store our images.
+- It integrates with CodePipelines and existing workflows and will remove the limits we have been hitting..
