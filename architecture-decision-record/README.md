@@ -10,6 +10,7 @@ This is our architecture decision log, made during the design and build of Cloud
 4. ✅ [Use AWS CodePipelines for CI/CD](004-use-aws-codepiplines-for-cicd.md)
 5.  ✅ [Use Log Aggregation Platform for logging](005-use-log-aggregration-platform-for-logging.md)
 6.  ✅ [Use AWS Parameter Store for secrets](006-use-aws-parameter-store-for-secrets.md)
+7.  ✅ [Use Prometheus and Grafana for monitoring and alerting](007-use-prometheus-and-grafana-for-metrics-alerting.md)
 
 ## Statuses
 - ✅ Accepted
