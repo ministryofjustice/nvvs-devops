@@ -1,0 +1,17 @@
+  # 8. Use AWS Elastic Container Registry
+  Date: 2020-11-01
+
+  ## Status
+  ✅ Accepted
+
+  ## Context
+
+Docker has announced that the DockerHub service will begin limiting the rate at which images are pulled under their anonymous and free plans. We have been hutting there limits when developing our systems.
+
+**Update November 2021**
+MoJ have purchased Docker licenses [see conversation here](https://mojdt.slack.com/archives/C02D2NEF9CJ/p1637332813003100)
+Created issue [here](https://github.com/ministryofjustice/cloud-operations/issues/96) to use dockerhub.
+
+  ## Decision
+
+We will use AWS Elastic Container Registry to store our images as it integrates with CodePipelines and existing workflows and will remove the limits we have been hitting..
