@@ -1,0 +1,17 @@
+# Add a runbook
+
+To add a new runbook:
+
+* Create a new `*.html.md.erb` file in the `source/runbooks` directory of this repository, containing the runbook information
+* Add a corresponding list item in the `source/index.html.md.erb` file under the title `Runbooks` title.
+
+```
+## Runbooks
+- [Add a runbook](runbooks/add-a-runbook.html)
+- [Dependabot Process](runbooks/dependabot-process.html)
+...
+```
+
+> The link target should be `runbooks/[filename].html` i.e. if the runbook file is `source/runbooks/foobar.html.md.erb` then the link target should be `runbooks/foobar.html`
+
+* Raise and merge a PR to add your changes to the `main` branch of this repository
