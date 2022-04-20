@@ -1,0 +1,121 @@
+# DNS/DHCP Admin Portal - Dependabot 
+
+Repositories required: 
+- [DNS DHCP Admin Repository](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin)
+- [DHCP Server Repository](https://github.com/ministryofjustice/staff-device-dhcp-server)
+
+```
+git clone https://github.com/ministryofjustice/staff-device-dns-dhcp-admin
+git clone https://github.com/ministryofjustice/staff-device-dhcp-server
+```
+## Dependabot Example 
+
+We will use the [`omniauth-rails_csrf_protection`](https://github.com/cookpad/omniauth-rails_csrf_protection) dependabot PR listed [here](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin/pull/461) to describe the steps taken when working on a dependabot PR. This will include _local_ setup of both the portal and DHCP server, the latter however is not required in this specific example, given the nature of the upgrade.
+
+### omniauth-rails_csrf_protection
+
+Dependabot monitors repository gem files and creates pull requests on respective repositories with out-of-date gems. 
+
+If you do not have the repository in question: `git clone https://github.com/ministryofjustice/staff-device-dhcp-server` 
+
+Presuming you already have the repository, start on the `main branch`.
+
+1. `git pull` - to pull the latest updates to main.
+
+2. `git switch dependabot/bundler/omniauth-rails_csrf_protection-1.0.1` - to switch to the dependant branch.
+
+3. `make authenticate-docker` to authenticate to our AWS ECR. 
+
+4. `make build-dev` to locally build the containers.
+
+5. `make test` to run rspec tests.
+
+6. `make serve` to locally serve the front-end for any additional testing requirements.
+
+7. Merge dependabot PR and monitor pipeline for errors.
+
+### DNS DHCP Admin Repository
+
+1. `export SHARED_SERVICES_ACCOUNT_ID=<shared services account ID>`  
+This step is required so the following step knows which AWS account to query.
+1. `make authenticate-docker` to authenticate to our AWS ECR.  
+```
+./scripts/check_container_registry_account_id.sh
+./scripts/authenticate_docker.sh
+Login Succeeded
+```
+3. `make build-dev` to locally build the containers.  
+```
+env ENV=development UID=1000 docker-compose -f docker-compose.yml build
+admin-db uses an image, skipping
+Building app
+[+] Building 172.9s (19/19) FINISHED                                    <----- NOTE THE TIME THIS CAN TAKE
+=> [internal] load build definition from Dockerfile  0.1s
+ => => transferring dockerfile: 38B  0.0s
+ => [internal] load .dockerignore 0.0s
+ => => transferring context: 35B  0.0s
+ => [internal] load metadata for ############.dkr.ecr.eu-west-2.amazonaws.com/admin:ruby-2-7-1-alpine3-12 22.4s
+ => [auth] sharing credentials for ############.dkr.ecr.eu-west-2.amazonaws.com  0.0s
+ => [ 1/12] FROM ############.dkr.ecr.eu-west-2.amazonaws.com/admin:ruby-2-7-1-alpine3-12@sha256:############################# 0.0s
+...
+...
+...
+ => [12/12] RUN if [ true = 'true' ]; then   ASSET_PRECOMPILATION_ONLY=true RAILS_ENV=production bundle exec rails assets:precompile;   fi 10.3s
+...
+Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
+```
+4. `make serve` to locally serve the front-end.  
+```
+env ENV=development UID=1000 docker-compose -f docker-compose.yml down
+Removing staff-device-dns-dhcp-admin_app_1      ... done
+Removing staff-device-dns-dhcp-admin_admin-db_1 ... done
+...
+...
+...
+app_1       | *  Max threads: 5
+app_1       | *  Environment: development
+app_1       | *          PID: 1
+app_1       | * Listening on http://0.0.0.0:3000     <----- Ctrl/Cmd + Left Click here to open the page in a browser
+```
+ 
+### DHCP Server Repository
+
+It is not required to run the DHCP server as part of the `omniauth-rails_csrf_protection` upgrade example. The process is listed below however for completeness.
+
+(Output from the below commands is omitted as it is largely the same as above )
+
+1. `export SHARED_SERVICES_ACCOUNT_ID=<shared services account ID>`
+1. `make authenticate-docker` to authenticate to our AWS ECR.
+1. `make build-dev` to locally build the containers.
+1. `make run` 
+1. `make test`
+
+### Errors 
+
+If you are in doubt as to the state of your container images `make implode`.
+
+###  Conflicts
+If Dependabot creates PR for `omniauth-rails_csrf_protection` gem - for [example](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin/pull/461).  
+The PR is not merged by the team for a period of time, this can result in numerous PRs that are merged into the `main` branch _before_ the PR is merged.
+
+As a result the PR has diverged from the main branch, that is to say, the newly merged changes in `main` are _not_ included in the dependabot PR.
+To combine the changes previously made to `main` into the `omniauth-rails_csrf_protection` PR complete the `git` steps below.
+
+1. `git pull` - to pull the latest updates to main.
+
+2. `git switch dependabot/bundler/omniauth-rails_csrf_protection-1.0.1` - to switch to the dependant branch.
+
+3. `git status` - to confirm which branch you are currently on.
+
+4. `git rebase main` - this command combines the current dependabot PR branch with the  up-to-date main branch. More information [here](https://git-scm.com/book/en/v2/Git-Branching-Rebasing).
+
+5. `bundle install` - to install the dependencies specified in your Gemfile. i.e. the newly updated `omniauth-rails_csrf_protection-1.0.1` gem
+```
+...
+Fetching omniauth-rails_csrf_protection 1.0.1
+Installing omniauth-rails_csrf_protection 1.0.1
+Fetching parallel 1.21.0
+...
+Bundle complete! 36 Gemfile dependencies, 145 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+```
