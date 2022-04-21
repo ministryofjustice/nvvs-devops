@@ -1,4 +1,4 @@
-  # 8. Use AWS SSO for AWS Account Access
+  # 9. Use AWS SSO for AWS Account Access
   Date: 2021-05-01
 
   ## Status
