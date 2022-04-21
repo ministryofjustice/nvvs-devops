@@ -13,6 +13,7 @@ This is our architecture decision log, made during the design and build of Cloud
 7.  ✅ [Use Prometheus and Grafana for monitoring and alerting](007-use-prometheus-and-grafana-for-metrics-alerting.md)
 8.  ✅ [Use AWS Elastic Container Registry](008-use-aws-elastic-container-registry.md)
 
+
 ## Statuses
 - ✅ Accepted
 - ❌ Rejected
