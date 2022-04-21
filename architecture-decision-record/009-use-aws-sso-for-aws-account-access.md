@@ -1,0 +1,18 @@
+  # 9. Use AWS SSO for AWS Account Access
+  Date: 2021-05-01
+
+  ## Status
+  ✅ Accepted
+
+  ## Context
+
+We need to use Single Sign On to access all our AWS accounts. 
+We currently use AzureAD for securing access to many of our services.
+
+  ## Decision
+
+We will use the [Modernisation Platforms](https://github.com/ministryofjustice/modernisation-platform) implementation of  [AWS Single Sign On](https://user-guide.modernisation-platform.service.justice.gov.uk/concepts/environments/single-sign-on.html#single-sign-on). It is being used by many teams already so means less development time forour growing team. It does require the use of a MoJ Org GitHub account, but that requirement only further facilitates using [infrastructure as code](https://en.wikipedia.org/wiki/Infrastructure_as_code) within our AWS accounts.
+
+### Alternative Considerations: 
+#### AzureAD
+AzureAD is currently managed externally, this means that automating user and groups is not possible which limits its potential.
