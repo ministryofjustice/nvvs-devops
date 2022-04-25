@@ -1,0 +1,65 @@
+---
+title: Disaster recovery
+last_reviewed_on: 2022-04-25
+review_in: 6 months
+---
+# Disaster recovery
+This runbook outlines the steps to take in the event of a major incident and links to individual product recovery
+
+# General incident Scenarios
+Types of incident that would be considered major are:
+
+- Complete loss of a product
+- Loss of an AWS account
+- Loss of networking
+
+Other failures which will not affect the availability of an application, but will impact a teams ability to deploy:
+
+- Loss of Terraform state
+- Loss of access
+- Loss of AWS CodePipelines and Github Actions
+- Loss of Github
+
+## Identification of an incident
+
+This may come from various sources, users, alerts or other.
+
+## Gather information
+
+Gather all the information on the incident that you can and record it.
+
+- Who is affected?
+- What is affected?
+- What is the impact?
+- When did this start?
+- Were there any changes recently? (link to pull request or commit)
+- Are there any [AWS health dashboard issues](https://phd.aws.amazon.com/phd/home#/account/dashboard/open-issues)
+
+## Communicate with the team
+
+Post in the [#mojo-cloud-ops](https://mojdt.slack.com/archives/C01J2L0SC0P) channel using `@cloud-ops` to make all team members aware.
+
+Communicate regularly with users, even if there is no resolution to keep them aware of progress.
+
+If the incident is a security incident [report it to the security team](https://intranet.justice.gov.uk/guidance/security/report-a-security-incident/).
+
+## Log a support ticket
+
+If the incident cannot be resolved within the team or if the issue lies with a 3rd party log a support ticket with the 3rd party.
+For AWS support, log a call in the AWS account affected.
+
+3rd Party | How to log a support ticket | Escalation process
+---|---|---
+AWS| [Creating a support case](https://docs.aws.amazon.com/awssupport/latest/user/case-management.html)| On the case, or post in #ext-awssupport
+
+## Resolution
+- When the incident is resolved let users know.
+- Arrange a time for an incident retro so that any lessons from the incident can be learned.
+
+# Product recovery
+
+This section includes information specific to recovering each of our products.
+
+## [DHCP DNS recovery](https://github.com/ministryofjustice/staff-device-dns-dhcp-disaster-recovery#readme)
+
+This repo contains an interactive script which can be used to roll back a corrupt config file for the [DNS](https://github.com/ministryofjustice/staff-device-dns-server) or [DHCP](https://github.com/ministryofjustice/staff-device-dhcp-server) services.
