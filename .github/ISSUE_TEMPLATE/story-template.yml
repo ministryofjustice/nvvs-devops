@@ -1,6 +1,6 @@
-name: Story Template
-description:  Create new Cloud Operations story
-title: "[gitmoji] "
+name: Cloud Operations Story
+description: 📖 Create new Cloud Operations story
+title: "[gitmoji] <title>"
 labels: ["enhancement"]
 body:
   - type: markdown
@@ -11,11 +11,15 @@ body:
     id: user-story
     attributes:
       label: User Story
-      placeholder: "As a… *[who is the user?]*  
-                    I need/want/expect to… *[what does the user want to do?]*  
+      placeholder: "As a… *[who is the user?]*
+
+                    I need/want/expect to… *[what does the user want to do?]*
+
                     So that… *[why does the user want to do this?]*"
       value: "As a…  
+
               I need/want/expect to… 
+
               So that…"
     validations:
       required: true
@@ -27,10 +31,11 @@ body:
       value:
     validations:
       required: false
-  - type: textarea
+  - type: input
     id: useful-contacts
     attributes:
       description: Please add any useful contacts, these may include; Stakeholders, SME’s or 3rd Parties.
+      placeholder: Joe Bloggs
       label: Useful Contacts
       value:
     validations:
@@ -64,3 +69,7 @@ body:
         - [ ] Tests are green
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        [How to write good user stories](https://www.gov.uk/service-manual/agile-delivery/writing-user-stories)
