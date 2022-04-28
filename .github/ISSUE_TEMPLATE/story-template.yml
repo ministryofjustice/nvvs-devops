@@ -64,10 +64,3 @@ body:
         - [ ] Tests are green
     validations:
       required: false
-  - type: markdown
-    id: reference
-    attributes:
-      label: Reference 
-      value: [How to write good user stories](https://www.gov.uk/service-manual/agile-delivery/writing-user-stories)
-    validations:
-      required: false
