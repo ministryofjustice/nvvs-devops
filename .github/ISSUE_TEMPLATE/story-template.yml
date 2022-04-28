@@ -11,12 +11,8 @@ body:
     id: user-story
     attributes:
       label: User Story
-      placeholder: "As a… *[who is the user?]*  
-                    I need/want/expect to… *[what does the user want to do?]*  
-                    So that… *[why does the user want to do this?]*"
-      value:  "As a… 
-              I need/want/expect to… 
-              So that…"
+      placeholder: "test123"
+      value: test
     validations:
       required: true
   - type: textarea
