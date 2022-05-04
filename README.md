@@ -11,64 +11,67 @@ This is the Ministry of Justice [Cloud Operations teams](https://ministryofjusti
 ### Core repositories
 | Name | Description |
 |-|-|
-| [cloud-operations-team](https://github.com/ministryofjustice/cloud-operations) | Our repository for documentation, scripts and ways of working (this repository) |
+| [Cloud Operations team](https://github.com/ministryofjustice/cloud-operations) | Our repository for documentation, scripts and ways of working (this repository) |
 
 ### Shared Services
 | Name | Description |
 |-|-|
-| [shared-services-infrastructure](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure) | Creates infrastructure in the shared services account, including continuous integration and delivery pipelines |
-| [docker-base-images](https://github.com/ministryofjustice/staff-device-docker-base-images) | Repository for base container images used across multiple services. Created as the solution to DockerHub rate limits as suggested by AWS. |
+| [Docker images](https://github.com/ministryofjustice/staff-device-docker-base-images) | Repository for base container images used across multiple services. Created as the solution to DockerHub rate limits as suggested by AWS. |
+| [Shared services infrastructure](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure) | Creates infrastructure in the shared services account, including continuous integration and delivery pipelines |
+| [Tech docs monitor](https://github.com/ministryofjustice/tech-docs-monitor) | Technical Documentation expiry monitor and notifier |
+
+
 
 ### Certificate Services
 | Name | Description |
 |-|-|
-| [infra-certificate-services](https://github.com/ministryofjustice/staff-infrastructure-certificate-services) | Public Key Infrastructure for devices and users. This repository is used to redeploy the EC2 instances which Entrust build their managed service on. |
+| [Certificate Services](https://github.com/ministryofjustice/staff-infrastructure-certificate-services) | Public Key Infrastructure(PKI) for devices and users. This repository is used to redeploy the EC2 instances on which Entrust builds the managed service. |
 
 ### DHCP / DNS
 | Name | Description |
 |-|-|
-| [infra-dhcp-dns](https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure) | This repository contains the Terraform code to build the AWS infrastructure for the Ministry of Justice's DNS and DHCP platform. |
-| [dns-dhcp-admin](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin) | Portal for managing staff device site dhcp and dns. |
-| [dhcp-server](https://github.com/ministryofjustice/staff-device-dhcp-server) | This repository contains the Dockerfile to create the ISC Kea DHCP server docker image. The configuration for this server is managed in the Admin Portal. |
-| [dns-server](https://github.com/ministryofjustice/staff-device-dns-server) | This repository contains the Dockerfile to create the BIND DNS server Docker image. The configuration for this server is managed in the Admin Portal. |
-| [private-dns-zone](https://github.com/ministryofjustice/staff-device-private-dns-zone) | Add private DNS zones into Route53 |
-| [disaster-recovery](https://github.com/ministryofjustice/staff-device-dns-dhcp-disaster-recovery) | This repo contains an interactive script which can be used to roll back a corrupt config file for the DNS or DHCP services. |
-| [logging-integration-tests](https://github.com/ministryofjustice/staff-device-logging-dns-dhcp-integration-tests) | These scripts emulate UDP traffic for both DHCP and Syslog requests. They are run from the Corsham VM to test the services over the network. |
+| [DHCP DNS infrastructure](https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure) | This repository contains the Terraform code to build the AWS infrastructure for the Ministry of Justice's DNS and DHCP platform. |
+| [DHCP DNS admin portal](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin) | Portal for managing staff device site DHCP and DNS. |
+| [DHCP server](https://github.com/ministryofjustice/staff-device-dhcp-server) | This repository contains the Dockerfile to create the ISC Kea DHCP server docker image. The configuration for this server is managed in the Admin Portal. |
+| [DNS server](https://github.com/ministryofjustice/staff-device-dns-server) | This repository contains the Dockerfile to create the BIND DNS server Docker image. The configuration for this server is managed in the Admin Portal. |
+| [Private DNS zone](https://github.com/ministryofjustice/staff-device-private-dns-zone) | Add private DNS zones into Route53 |
+| [DHCP DNS disaster recovery](https://github.com/ministryofjustice/staff-device-dns-dhcp-disaster-recovery) | This repo contains an interactive script which can be used to roll back a corrupt config file for the DNS or DHCP services. |
+| [DHCP DNS integration tests](https://github.com/ministryofjustice/staff-device-logging-dns-dhcp-integration-tests) | These scripts emulate UDP traffic for both DHCP and Syslog requests. They are run from the Corsham VM to test the services over the network. |
 
 ### Infrastructure Monitoring and Alerting Platform
 | Name | Description |
 |-|-|
-| [infra-imap](https://github.com/ministryofjustice/staff-infrastructure-monitoring) | Terraform module that deploys the staff infrastructure monitoring solution. It has support for components like: Grafana, Prometheus, etc.
-| [app-reachability](https://github.com/ministryofjustice/staff-infrastructure-monitoring-app-reachability) | Container to remote write blackbox http application prometheus metrics |
-| [blackbox-exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter) | To probe endpoints over HTTP, HTTPS, DNS, TCP and ICMP |
-| [snmp-exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter) | To scrape data from physical devices (Docker image) |
-| [dns-reachability](https://github.com/ministryofjustice/staff-infrastructure-monitoring-dns-reachability) | Container to remote write blackbox DNS prometheus metrics
-| [imap-config](https://github.com/ministryofjustice/staff-infrastructure-monitoring-config) | To provision data sources for the IMA Platform
-| [deployments](https://github.com/ministryofjustice/staff-infrastructure-monitoring-deployments) | To deploy helm charts to EKS
-| [metric-aggregation-server](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) | Prometheus ECS
-| [metric-aggregator-cloud](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregator-cloud) | Prometheus EKS
+| [App reachability](https://github.com/ministryofjustice/staff-infrastructure-monitoring-app-reachability) | Container to remote write blackbox http application prometheus metrics |
+| [Blackbox exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter) | To probe endpoints over HTTP, HTTPS, DNS, TCP and ICMP |
+| [DNS reachability](https://github.com/ministryofjustice/staff-infrastructure-monitoring-dns-reachability) | Container to remote write blackbox DNS prometheus metrics
+| [Helm Deployment](https://github.com/ministryofjustice/staff-infrastructure-monitoring-deployments) | To deploy helm charts to EKS
+| [IMAP infrastructure](https://github.com/ministryofjustice/staff-infrastructure-monitoring) | Terraform module that deploys the staff infrastructure monitoring solution including Grafana and Prometheus.
+| [SNMP exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter) | To scrape data from physical devices (Docker image) |
+| [IMAP configuration](https://github.com/ministryofjustice/staff-infrastructure-monitoring-config) | To provision data sources dashboards and alerts 
+| [Prometheus ECS](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) | Prometheus ECS
+| [Prometheus EKS](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregator-cloud) | Prometheus EKS
 
 ### Security Log Aggregation and Shipping
 | Name | Description |
 |-|-|
-| [infra-log-shipping](https://github.com/ministryofjustice/staff-device-logging-infrastructure) | Log shipping to infrastructure > OST
-| [syslog-to-cloudwatch](https://github.com/ministryofjustice/staff-device-logging-syslog-to-cloudwatch) | Syslog to aws cloudwatch > OST
+| [Log shipping infrastructure](https://github.com/ministryofjustice/staff-device-logging-infrastructure) | Log shipping to infrastructure > OST
+| [Syslog to CloudWatch](https://github.com/ministryofjustice/staff-device-logging-syslog-to-cloudwatch) | Syslog to aws cloudwatch > OST
 
 ### SMTP Relay Service
 | Name | Description |
 |-|-|
-| [infra-smtp](https://github.com/ministryofjustice/staff-infrastructure-network-services) | Infrastructure deployment for networking services including SMTP |
-| [smtp-relay-server](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server) | Internal mail relay based on POSTFIX
+| [SMTP infrastructure](https://github.com/ministryofjustice/staff-infrastructure-network-services) | Infrastructure deployment for networking services including SMTP |
+| [SMTP relay server](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server) | Internal mail relay based on POSTFIX
 
 ### Network Access Control (NACS)
 
 | Name | Description |
 |-|-|
-| [network-access-control-admin](https://github.com/ministryofjustice/network-access-control-admin) | Web Frontend for managing Network Access Control |
-| [network-access-control-disaster-recovery](https://github.com/ministryofjustice/network-access-control-disaster-recovery) | Disaster Recovery |
-| [network-access-control-infrastructure](https://github.com/ministryofjustice/network-access-control-infrastructure) | NACS Infrastructure |
-| [network-access-control-integration-tests](https://github.com/ministryofjustice/network-access-control-integration-tests) | NACS Integrations Tests |
-| [network-access-control-server ](https://github.com/ministryofjustice/network-access-control-server ) | NACS Radius Server Configuration |
+| [Network access control admin](https://github.com/ministryofjustice/network-access-control-admin) | Web Frontend for managing Network Access Control |
+| [Network access control disaster recovery](https://github.com/ministryofjustice/network-access-control-disaster-recovery) | Disaster Recovery |
+| [Network access control infrastructure](https://github.com/ministryofjustice/network-access-control-infrastructure) | NACS Infrastructure |
+| [Network access control integration tests](https://github.com/ministryofjustice/network-access-control-integration-tests) | NACS Integrations Tests |
+| [Network access control server ](https://github.com/ministryofjustice/network-access-control-server ) | NACS Radius Server Configuration |
 
 ## About this Website
 
