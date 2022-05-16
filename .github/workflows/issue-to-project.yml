@@ -1,9 +1,7 @@
 name: Add issues to project
 
 on:
-  issues:
-    types:
-      - opened
+ workflow_call:
 
 jobs:
   add-to-project:
