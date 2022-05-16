@@ -14,4 +14,4 @@ jobs:
       - uses: actions/add-to-project@main
         with:
           project-url: https://github.com/orgs/ministryofjustice/projects/11
-          github-token: ${{ secrets.TECH_SERVICES_GITHUB_TOKEN }}
+          github-token: ${{ inputs.TECH_SERVICES_GITHUB_TOKEN }}
