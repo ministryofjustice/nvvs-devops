@@ -16,7 +16,6 @@ This is the Ministry of Justice [Cloud Operations teams](https://ministryofjusti
 ### Shared Services
 | Name | Description |
 |-|-|
-| [Docker images](https://github.com/ministryofjustice/staff-device-docker-base-images) | Repository for base container images used across multiple services. Created as the solution to DockerHub rate limits as suggested by AWS. |
 | [GitHub actions](https://github.com/ministryofjustice/cloud-operations-github-actions) | Central configuration repository for [GitHub Actions Workflows](https://docs.github.com/en/actions/using-workflows/about-workflows), which can be called from our other repositories. |
 | [Shared services infrastructure](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure) | Creates infrastructure in the shared services account, including continuous integration and delivery pipelines |
 | [Tech docs monitor](https://github.com/ministryofjustice/tech-docs-monitor) | Technical Documentation expiry monitor and notifier |
