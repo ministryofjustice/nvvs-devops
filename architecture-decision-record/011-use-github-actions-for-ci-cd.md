@@ -2,7 +2,7 @@
 Date: 2021-03-22
 
 ## Status
-🤔 Proposed
+✅ Accepted
 
 ## Context
 A generic library of GitHub actions which the team uses are stored in the [cloud-operations-github-actions](https://github.com/ministryofjustice/cloud-operations-github-actions) repository.
