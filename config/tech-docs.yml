@@ -7,7 +7,7 @@ show_govuk_logo: true
 service_name: MoJ Cloud Operations
 
 service_link: /cloud-operations
-phase: Alpha
+phase: Beta
 
 # Links to show on right-hand-side of header
 header_links:
