@@ -1,0 +1,27 @@
+---
+owner_slack: "#mojo-cloud-ops"
+title: Creating a GitHub PAT
+last_reviewed_on: 2022-08-08
+review_in: 6 months
+---
+# Generating a GitHub Personal Access Token
+
+We use a service GitHub account to create `personal access tokens`.
+
+## Prerequisties
+
+- [LastPass Enterprise](https://security-guidance.service.justice.gov.uk/using-lastpass/#using-lastpass-enterprise) access.
+- [oathtool](https://www.nongnu.org/oath-toolkit/oathtool.1.html) to generate a [one time password](https://en.wikipedia.org/wiki/One-time_password)
+
+## Accessing the service account details
+> **Note:**
+> Use an `incognito` browser session to generate token to be sure not to create in your own account.
+
+Open the lastpass vault and search for [staff-infrastructure-moj](https://github.com/staff-infrastructure-moj).
+Open a new incognito browser session and copy the user, password then create a one time password using the code in the secure notes on the GitHub challenge. 
+
+## Creating a PAT
+> **Warning:**
+> Treat your tokens like passwords and keep them secret. When working with the API, use tokens as environment variables instead of hardcoding them.
+
+Once logged into the `staff-infrastructure-moj` account. Follow GitHub's latest guidance on creating a PAT [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-token).
