@@ -1,0 +1,29 @@
+---
+owner_slack: "#mojo-cloud-ops"
+title: Monitoring and alerting guide
+last_reviewed_on: 2022-08-31
+review_in: 3 months
+---
+
+# <%= current_page.data.title %>
+
+The following lists the grafana dashboards and alerting channels to report on product health.
+
+## Prerequisites
+
+To view the grafana dashboards below, you will need the following. 
+- `@justice.gov.uk` account.
+- Your account is part of the  `MoJO-EntApp-Grafana_Viewer` AzureAD group.
+
+Slack access is available to any `@justice.gov.uk` or `@digital.justice.gov.uk` account and can be requested via [support portal](https://mojprod.service-now.com/)
+
+## Monitoring dashboards and alerting
+| Product | Grafana dashboards | Slack alerts channel |
+| --- | --- | --- |
+| [DNS](documentation/products/dns.html) | [BIND DNS folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/hBI4MBCnk/staff-device-dns-dhcp-infrastructure) | [#mojo-staff-device-dhcp-dns-alerts](https://mojdt.slack.com/archives/C01F6PNNHBJ)
+| [DHCP](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin#readme)| [KEA DHCP folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/hBI4MBCnk/staff-device-dns-dhcp-infrastructure) | [#mojo-staff-device-dhcp-dns-alerts](https://mojdt.slack.com/archives/C01F6PNNHBJ)
+| [IMAP](https://github.com/ministryofjustice/staff-infrastructure-monitoring#readme) | [Monitoring infrastructure and alerting folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/OU3wTDJGk/staff-infrastructure-monitoring) | [#mojo-ima-platform-alerts](https://mojdt.slack.com/archives/C01FTSYNMA4) |
+| [Log Shipping](https://github.com/ministryofjustice/staff-device-logging-infrastructure#readme) | [Log shipping folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/sgp9b4JMz/staff-device-logging-infrastructure) | [#mojo-staff-device-logging-infrastructure-alerts](https://mojdt.slack.com/archives/C01DLD7LK9R)
+| [NACS](https://github.com/ministryofjustice/network-access-control-admin#readme) | [Network Access Control Service folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/TJ_h-lx7z/network-access-control-infrastructure) | [#network-access-control-critical-alerts](https://mojdt.slack.com/archives/C03AACX65HV) |
+| [PKI](https://github.com/ministryofjustice/staff-infrastructure-certificate-services#readme) | [Public Key Infrastructure folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/-K2gf41Gk/staff-device-certificate-services) | [#mojo-staff-certificate-services-alerts](https://mojdt.slack.com/archives/C01FEFGC1GS) |
+| [SMTP Relay](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server#readme) |  [Simple Mail Transort Protocol Relay folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/6XC9F_I7z/staff-infrastructure-smtp-relay-server) | [#mojo-staff-infrastructure-smtp-alerts](https://mojdt.slack.com/archives/C02EN7GNDNF) |
