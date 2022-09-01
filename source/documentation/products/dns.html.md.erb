@@ -8,7 +8,7 @@ review_in: 3 months
 
 `Protected domain name resolution for staff devices`
 
-The MoJO-DNS service is a client device facing service which will be used to resolve [DNS](https://en.wikipedia.org/wiki/Domain_Name_System) queries within the MoJ local area network managed by Vodafone.
+The MoJO-DNS service is a client device facing service, used to resolve [DNS](https://en.wikipedia.org/wiki/Domain_Name_System) queries within the MoJ local area network.
 
 The service will provide DNS resolution requests for the following:
 
@@ -26,12 +26,12 @@ Prevent access to malware, ransomware, phishing attacks, viruses, malicious site
 
 [Use cloud first](https://www.gov.uk/guidance/use-cloud-first) To meet point 5 of the [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) (TCoP) and the government’s cloud first policy. 
 
-[Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) provides a complete audit of changes, versioning of cloud infrastructure and DNS server application, automated testing and redeployment of the service in the event of disaster. 
+[Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) provides full audit of changes, automated testing, redeployment of the service in the event of failure or disaster.
 
 ## Tools
 
 The DNS service uses [BIND ISC](https://www.isc.org/bind/) containers running on [AWS ECS Fargate](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html).
-We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to provide a complete audit of changes, versioning of components and the DNS server application, automated testing and redeployment of the service in the event of disaster. 
+We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code). This provides an audit of changes, versioning of components and automated testing and redeployment of the service in the event of disaster. 
 
 ## Diagram
 ![High level diagram](../../images/dns-hld-diagram.jpeg)
@@ -43,17 +43,15 @@ We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](
 | --- | --- |
 | [DNS admin portal](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin#readme) | Admin Portal for managing staff device DNS forwarders and zone configuration. |
 | [DNS server](https://github.com/ministryofjustice/staff-device-dns-server#readme) | This repository contains the Dockerfile to create the BIND DNS server Docker image. The configuration for this server is managed in the Admin Portal. |
-| [Shared Infrastructure CI/CD](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure#readme) | This creates the shared infrastructure for the main account, named Shared Services. This account is used to host CI/CD pipelines. |
 | [DNS disaster recovery](https://github.com/ministryofjustice/staff-device-dns-dhcp-disaster-recovery#readme) | This repo contains an interactive script which can be used to roll back a corrupt config file for the DNS or DHCP services. |
 | [DNS performance testing](https://github.com/ministryofjustice/staff-device-logging-dns-dhcp-integration-tests#readme) | These scripts emulate UDP traffic for both DHCP and Syslog requests, contains results of previous load testing. See also video of testing [here](https://justiceuk.sharepoint.com/sites/PTTP-WaysofWorking-Tooling-MadeTechChannel/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2FPTTP%2DWaysofWorking%2DTooling%2DMadeTechChannel%2FShared%20Documents%2FMade%20Tech%20Channel%2FTesting%2Fkea%2Dha%2Dprod%2Dtesting%2F2021%2D02%2D09%2Dkea%2Dha%2Dprod%2Dtesting%2Emp4&parent=%2Fsites%2FPTTP%2DWaysofWorking%2DTooling%2DMadeTechChannel%2FShared%20Documents%2FMade%20Tech%20Channel%2FTesting%2Fkea%2Dha%2Dprod%2Dtesting&p=true&ga=1)  |
+| [Shared Infrastructure CI/CD](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure#readme) | This creates the shared infrastructure for the main account, named Shared Services. This account is used to host CI/CD pipelines. |
 
 ## Useful links
 
 | Link | Description | 
 | --- | --- |
-| [DNS admin portal](https://dhcp-dns-admin.staff.service.justice.gov.uk/dns) | Admin Portal for managing staff device DNS forwarders and zone configuration. |
-| [Alerts slack channel](https://mojdt.slack.com/archives/C01F6PNNHBJ) | Alerts from monitoring and alerting |
-| [Monitoring dashboards](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/hBI4MBCnk/staff-device-dns-dhcp-infrastructure) | Grafana dashboards showing the health of the service. |
-| [Transit gateway ](https://github.com/ministryofjustice/deployment-tgw) | Connects the service to wider MoJ networks as a virtual WAN |
+| [DNS admin portal](https://dhcp-dns-admin.staff.service.justice.gov.uk/dns) | Admin Portal for managing staff device DNS forwarders and zone configuration. *Please not you need to be a member of the AzureAD group `MoJO-EntApp-DNSDHCP_Viewer` and `MoJO-EntApp-DNSDHCP_Editor` to edit.* |
+| [Monitoring and alerting guide](product-monitoring-alerting.html) | List Grafana dashboards for health of the products and slack channels in use for alerts. |
 | [NCSC Protective DNS Portal](https://www.protectivedns.service.ncsc.gov.uk/pdns) | Dashboard for Protective DNS |
-
+| [Transit gateway](https://github.com/ministryofjustice/deployment-tgw) | Connects the service to wider MoJ networks as a virtual WAN |
