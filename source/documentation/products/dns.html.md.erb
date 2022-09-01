@@ -26,7 +26,7 @@ Prevent access to malware, ransomware, phishing attacks, viruses, malicious site
 
 [Use cloud first](https://www.gov.uk/guidance/use-cloud-first) To meet point 5 of the [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) (TCoP) and the government’s cloud first policy. 
 
-[Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) provides a complete audit of changes, versioning of cloud infrastructure and DNS server application, automated testing and redeployment of the service in the event of disaster. 
+[Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) provides full audit of changes, automated testing, redeployment of the service in the event of failiure or disaster. 
 
 ## Tools
 
@@ -51,10 +51,7 @@ We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](
 
 | Link | Description | 
 | --- | --- |
-| [Alerts - slack channel](https://mojdt.slack.com/archives/C01F6PNNHBJ) | Alerts from monitoring and alerting |
-| [DNS admin portal](https://dhcp-dns-admin.staff.service.justice.gov.uk/dns) | Admin Portal for managing staff device DNS forwarders and zone configuration. |
-| [Monitoring and alerting](product-monitoring-alerting.html) | Grafana dashboards showing the health of the service and slack channels for alerts. |
+| [DNS admin portal](https://dhcp-dns-admin.staff.service.justice.gov.uk/dns) | Admin Portal for managing staff device DNS forwarders and zone configuration. *Please not you need to be a member of the AzureAD group `MoJO-EntApp-DNSDHCP_Viewer`*. |
+| [Monitoring and alerting guide](product-monitoring-alerting.html) | List Grafana dashboards for health of the products and slack channels in use for alerts. |
 | [NCSC Protective DNS Portal](https://www.protectivedns.service.ncsc.gov.uk/pdns) | Dashboard for Protective DNS |
 | [Transit gateway](https://github.com/ministryofjustice/deployment-tgw) | Connects the service to wider MoJ networks as a virtual WAN |
-
-
