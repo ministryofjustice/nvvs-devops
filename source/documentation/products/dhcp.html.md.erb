@@ -1,0 +1,52 @@
+---
+title: DHCP Overview
+last_reviewed_on: 2022-09-01
+review_in: 3 months
+---
+
+# <%= current_page.data.title %>
+
+`Helps devices when cabled, reach the internet by configuring IP settings`
+
+The MoJO-DHCP service is a client device facing service which automatically configures client device settings when cabled.
+
+## User needs
+
+Allows Public internet connectivity for prison staff and enables modern devices.
+
+## Principles
+
+Enable onsite support staff to manage local devices e.g. [DHCP reservation](https://kb.isc.org/docs/what-are-host-reservations-how-to-use-them) using GOV.UK Design System styles and patterns.
+
+[Use cloud first](https://www.gov.uk/guidance/use-cloud-first) To meet point 5 of the [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) (TCoP) and the government’s cloud first policy. 
+
+[Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) provides a complete audit of changes, versioning of cloud infrastructure and DNS server application, automated testing and redeployment of the service in the event of disaster. 
+
+## Tools
+
+The DHCP service uses [ISC KEA](https://www.isc.org/kea/) containers running on [AWS ECS Fargate](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html).
+We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to provide a complete audit of changes, versioning of components and the DNS server application, automated testing and redeployment of the service in the event of disaster. 
+
+## Diagram
+![High level diagram](../../images/dhcp-hld-diagram.jpeg)
+[diagram source](https://github.com/ministryofjustice/staff-device-dhcp-server#high-level-diagram)
+
+## Repositories
+
+| Repository | Description | 
+| --- | --- |
+| [DHCP admin portal](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin#readme) | Admin Portal for managing staff device DNS forwarders and zone configuration. |
+| [DHCP server](https://github.com/ministryofjustice/staff-device-dhcp-server#readme) | This repository contains the Dockerfile to create the ISC DHCP server Docker image. The configuration for this server is managed in the Admin Portal. |
+| [Shared Infrastructure CI/CD](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure#readme) | This creates the shared infrastructure for the main account, named Shared Services. This account is used to host CI/CD pipelines. |
+| [DHCP disaster recovery](https://github.com/ministryofjustice/staff-device-dns-dhcp-disaster-recovery#readme) | This repo contains an interactive script which can be used to roll back a corrupt config file for the DHCP service. |
+| [DHCP performance testing](https://github.com/ministryofjustice/staff-device-dhcp-server/blob/main/documentation/performance-metrics.md#readme) | Using perfdhcp to simulate leases  |
+
+## Useful links
+
+| Link | Description | 
+| --- | --- |
+| [DHCP admin portal](https://dhcp-dns-admin.staff.service.justice.gov.uk/dhcp) | Admin Portal for managing staff device DNS forwarders and zone configuration. *Please not you need to be a member of the AzureAD group `MoJO-EntApp-DNSDHCP_Viewer` to view and `MoJO-EntApp-DNSDHCP_Editor` to edit.*  |
+| [Monitoring and alerting guide](product-monitoring-alerting.html) | List Grafana dashboards for health of the products and slack channels in use for alerts. |
+| [Transit gateway ](https://github.com/ministryofjustice/deployment-tgw) | Connects the service to wider MoJ networks as a virtual WAN |
+
+
