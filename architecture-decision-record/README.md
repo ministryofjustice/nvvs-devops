@@ -1,23 +1,5 @@
-# Cloud Operations - Architecture Decisions
+# Cloud Operations - Architecture Decision Record
+> **Note:**  
+>
+> These have been moved to cloud-operations/source/documentation/adrs/adr-index.html and are now published [here](https://ministryofjustice.github.io/documentation/adrs/adr-index.html#architecture-decision-records) see [ADR-012](https://ministryofjustice.github.io/documentation/adrs/012-use-techdocs-for-adrs.html#012-use-tech-docs-for-adrs) for decision.
 
-This is our architecture decision log, made during the design and build of Cloud Operations products.
-
-## Table of contents
-0. ✅ [Record architecture decisions](000-record-architecture-decisions.md)
-1. ✅ [Use BIND for Domain Naming System](001-use-bind-for-device-domain-naming-system.md)
-2. ❌ [Use Cloud Platform to host DHCP DNS](002-use-cloud-platform-to-host-dhcp-dns.md)
-3. ✅  [Use AWS Elastic Container Service for DHCP DNS](003-use-aws-elastic-container-service-for-dhcp-dns.md)
-4. ⌛️ [Use AWS CodePipelines for CI/CD](004-use-aws-codepiplines-for-cicd.md)
-5.  ✅ [Use Log Aggregation Platform for logging](005-use-log-aggregration-platform-for-logging.md)
-6.  ✅ [Use AWS Parameter Store for secrets](006-use-aws-parameter-store-for-secrets.md)
-7.  ✅ [Use Prometheus and Grafana for monitoring and alerting](007-use-prometheus-and-grafana-for-metrics-alerting.md)
-8.  ✅ [Use AWS Elastic Container Registry](008-use-aws-elastic-container-registry.md)
-9.  ✅ [Use AWS SSO for AWS account access](009-use-aws-sso-for-aws-account-access.md)
-10. ✅ [Use AWS EKS for monitoring infrastructure](010-use-aws-eks-for-monitoring-infrastructure.md)
-11. ✅ [Use GitHub Actions for CI/CD](011-use-github-actions-for-ci-cd.md)
-
-## Statuses
-- ✅ Accepted
-- ❌ Rejected
-- 🤔 Proposed
-- ⌛️ Superseded
