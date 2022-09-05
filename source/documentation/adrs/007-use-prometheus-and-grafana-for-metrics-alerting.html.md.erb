@@ -1,10 +1,17 @@
-  # 6. Use Prometheus and Grafana for metrics and alerting
-  Date: 2020-07-07
+---
+owner_slack: "#mojo-cloud-ops"
+title: MoJ Cloud Operations
+last_reviewed_on: 2022-09-05
+review_in: 6 months
+---
 
-  ## Status
-  ✅ Accepted
+# 007 - Use Prometheus and Grafana for metrics and alerting
+Date: 2020-07-07
 
-  ## Context
+## Status
+✅ Accepted
+
+## Context
 
 There is a need to ensure [PTTP](https://ministry-of-justice-acronyms.service.justice.gov.uk/#:~:text=Prison%20Technology%20Transformation%20Programme) systems e.g. DHCP, DNS and the networking equipment carrying those services are functioning and healthy.
 
@@ -18,7 +25,7 @@ Amazon Managed Service for Promethues and Grafana are available. Ticket created 
 **Update 7th January 2022**
 The [IMA infrastructure](https://github.com/ministryofjustice/staff-infrastructure-monitoring) can be moved to Cloud Platform, but requires the following issue ([see issue here](https://github.com/ministryofjustice/cloud-platform/issues/3454)) resolved.
 
-  ## Decision
+## Decision
 
 Use [Prometheus](https://prometheus.io/) for metrics and [Grafana](https://grafana.com/) for visualisaton and alerting.
 - Aligned with wider [MoJ teams](https://github.com/ministryofjustice/operations-engineering/issues/147)
