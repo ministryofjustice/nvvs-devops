@@ -2,8 +2,7 @@
 host: https://ministryofjustice.github.io/cloud-operations
 
 # Header-related options
-
-show_govuk_logo: true
+show_govuk_logo: false
 service_name: MoJ Cloud Operations
 
 service_link: /cloud-operations
