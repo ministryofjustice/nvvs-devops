@@ -16,7 +16,7 @@ This is the Ministry of Justice [NVVS DevOps teams](https://ministryofjustice.gi
 ### Shared Services
 | Name | Description |
 |-|-|
-| [GitHub actions](https://github.com/ministryofjustice/cloud-operations-github-actions) | Central configuration repository for [GitHub Actions Workflows](https://docs.github.com/en/actions/using-workflows/about-workflows), which can be called from our other repositories. |
+| [GitHub actions](https://github.com/ministryofjustice/nvvs-devops-github-actions) | Central configuration repository for [GitHub Actions Workflows](https://docs.github.com/en/actions/using-workflows/about-workflows), which can be called from our other repositories. |
 | [Shared services infrastructure](https://github.com/ministryofjustice/staff-device-shared-services-infrastructure) | Creates infrastructure in the shared services account, including continuous integration and delivery pipelines |
 | [Technology Services GitHub Teams](https://github.com/ministryofjustice/staff-technology-services-github-teams) | Terraform repository to define and maintain GitHub Teams for Technology Services. |
 | [Tech docs monitor](https://github.com/ministryofjustice/tech-docs-monitor) | Technical Documentation expiry monitor and notifier |
