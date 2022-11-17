@@ -1,17 +1,17 @@
 # Host to use for canonical URL generation (without trailing slash)
-host: https://ministryofjustice.github.io/cloud-operations
+host: https://ministryofjustice.github.io/nvvs-devops
 
 # Header-related options
 show_govuk_logo: false
 service_name: NVVS DevOps
 
-service_link: /cloud-operations
+service_link: /nvvs-devops
 phase: Beta
 
 # Links to show on right-hand-side of header
 header_links:
-  Home: https://ministryofjustice.github.io/cloud-operations
-  GitHub: https://github.com/ministryofjustice/cloud-operations
+  Home: https://ministryofjustice.github.io/nvvs-devops
+  GitHub: https://github.com/ministryofjustice/nvvs-devops
   Slack: https://mojdt.slack.com/archives/C026AFE617T
 
 # Enables search functionality. This indexes pages only and is not recommended for single-page sites.
@@ -32,6 +32,6 @@ max_toc_heading_level: 3
 prevent_indexing: true
 
 show_contribution_banner: true
-github_repo: ministryofjustice/cloud-operations
+github_repo: ministryofjustice/nvvs-devops
 
 github_branch: main
