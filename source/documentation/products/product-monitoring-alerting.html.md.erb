@@ -1,7 +1,7 @@
 ---
 owner_slack: "#nvvs-devops"
 title: Monitoring and alerting guide
-last_reviewed_on: 2022-08-31
+last_reviewed_on: 2022-12-05
 review_in: 3 months
 ---
 
@@ -18,20 +18,20 @@ To view the grafana dashboards below, you will need the following.
 - Slack access which is available to any `@justice.gov.uk` or `@digital.justice.gov.uk` account. Request via [support portal](https://mojprod.service-now.com/)
 
 ## NVVS DevOps Monitoring Dashboards and Alerts
-| Product | Grafana dashboards | Slack alert channel |
+| Product | Grafana Dashboard | Slack Alert Channel |
 | --- | --- | --- |
-| [DNS](dns.html) | [BIND DNS folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/hBI4MBCnk/staff-device-dns-dhcp-infrastructure) | [#mojo-staff-device-dhcp-dns-alerts](https://mojdt.slack.com/archives/C01F6PNNHBJ)
-| [DHCP](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin#readme)| [KEA DHCP folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/hBI4MBCnk/staff-device-dns-dhcp-infrastructure) | [#mojo-staff-device-dhcp-dns-alerts](https://mojdt.slack.com/archives/C01F6PNNHBJ)
-| [IMAP](https://github.com/ministryofjustice/staff-infrastructure-monitoring#readme) | [Monitoring infrastructure and alerting folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/OU3wTDJGk/staff-infrastructure-monitoring) | [#mojo-ima-platform-alerts](https://mojdt.slack.com/archives/C01FTSYNMA4) |
-| [Log Shipping](https://github.com/ministryofjustice/staff-device-logging-infrastructure#readme) | [Log shipping folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/sgp9b4JMz/staff-device-logging-infrastructure) | [#mojo-staff-device-logging-infrastructure-alerts](https://mojdt.slack.com/archives/C01DLD7LK9R)
-| [NACS](https://github.com/ministryofjustice/network-access-control-admin#readme) | [Network Access Control Service folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/TJ_h-lx7z/network-access-control-infrastructure) | [#network-access-control-critical-alerts](https://mojdt.slack.com/archives/C03AACX65HV) |
-| [PKI](https://github.com/ministryofjustice/staff-infrastructure-certificate-services#readme) | [Public Key Infrastructure folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/-K2gf41Gk/staff-device-certificate-services) | [#mojo-staff-certificate-services-alerts](https://mojdt.slack.com/archives/C01FEFGC1GS) |
-| [SMTP Relay](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server#readme) |  [Simple Mail Transort Protocol Relay folder](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/6XC9F_I7z/staff-infrastructure-smtp-relay-server) | [#mojo-staff-infrastructure-smtp-alerts](https://mojdt.slack.com/archives/C02EN7GNDNF) |
+| DNS / DHCP | [DNS DHCP Status Overview](https://monitoring-alerting.staff.service.justice.gov.uk/d/E8-yWIqMk/)
+| [DNS](dns.html) | [DNS Server Health](https://monitoring-alerting.staff.service.justice.gov.uk/d/pS6ZuGV7z/) | [#mojo-staff-device-dhcp-dns-alerts](https://mojdt.slack.com/archives/C01F6PNNHBJ)
+| [DNS](dns.html) | [BIND DNS Metrics](https://monitoring-alerting.staff.service.justice.gov.uk/d/tm5gLH1Gz) | [#mojo-staff-device-dhcp-dns-alerts](https://mojdt.slack.com/archives/C01F6PNNHBJ)
+| [DHCP](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin#readme)| [KEA DHCP Metrics](https://monitoring-alerting.staff.service.justice.gov.uk/d/cEwjsH1Gk/) | [#mojo-staff-device-dhcp-dns-alerts](https://mojdt.slack.com/archives/C01F6PNNHBJ)
+| [NACS](https://github.com/ministryofjustice/network-access-control-admin#readme) | [Network Access Control](https://monitoring-alerting.staff.service.justice.gov.uk/d/CFhQiFxnk/) | [#network-access-control-critical-alerts](https://mojdt.slack.com/archives/C03AACX65HV) |
+| [PKI](https://github.com/ministryofjustice/staff-infrastructure-certificate-services#readme) | [Public Key Infrastructure](https://monitoring-alerting.staff.service.justice.gov.uk/d/r8eWoHpGz/) | [#mojo-staff-certificate-services-alerts](https://mojdt.slack.com/archives/C01FEFGC1GS) |
+| [SMTP Relay](https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server#readme) |  [Simple Mail Transort Protocol Relay](https://monitoring-alerting.staff.service.justice.gov.uk/d/h36Havfik/) | [#mojo-staff-infrastructure-smtp-alerts](https://mojdt.slack.com/archives/C02EN7GNDNF) |
 
 ## Other Monitoring Dashboards and Alerts
  Service | Grafana dashboards | Slack alert channel 
  --- | --- | --- 
- Certificate Expiry | [Certificate Expiry and HTTP Respone Dashboard](https://monitoring-alerting.staff.service.justice.gov.uk/d/xtkCtBkizsdsdf/certificates-expiry-http-and-public-dns-checks?orgId=1&from=now-2d&to=now&refresh=5s) | [#mojo-staff-certificate-services-alerts](https://mojdt.slack.com/archives/C01FEFGC1GS) 
+ Certificate Expiry | [Certificate Expiry and HTTP Respone Dashboard](https://monitoring-alerting.staff.service.justice.gov.uk/d/xtkCtBkizsdsdf/) | [#mojo-staff-certificate-services-alerts](https://mojdt.slack.com/archives/C01FEFGC1GS) 
  Internet Gateway Service | [SNMP Interface Detail](https://monitoring-alerting.staff.service.justice.gov.uk/d/Fi96pMWGk/snmp-interface-detail?orgId=1&refresh=30m) | [#mojo-network-alerts](https://mojdt.slack.com/archives/CP30T2WPJ)
- PSN Lumen | [PSN Lumen Alerting](https://monitoring-alerting.staff.service.justice.gov.uk/d/z-UwqJyMz/psn-lumen-alerting?orgId=1&refresh=30s) | [#mojo-network-alerts](https://mojdt.slack.com/archives/CP30T2WPJ)
- SOP | [SOP OCI Infrastructure](https://monitoring-alerting.staff.service.justice.gov.uk/dashboards/f/Ql1GAZ1Mk/application-sop-oci) | [#mojo-network-alerts](https://mojdt.slack.com/archives/CP30T2WPJ)
+ PSN Lumen | [PSN Lumen Alerting](https://monitoring-alerting.staff.service.justice.gov.uk/d/z-UwqJyMz/) | [#mojo-network-alerts](https://mojdt.slack.com/archives/CP30T2WPJ)
+ SOP | [SOP OCI Infrastructure](https://monitoring-alerting.staff.service.justice.gov.uk/d/PRbM0ZJGk/) | [#mojo-network-alerts](https://mojdt.slack.com/archives/CP30T2WPJ)
