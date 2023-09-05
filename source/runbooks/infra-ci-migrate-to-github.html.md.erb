@@ -1,0 +1,226 @@
+---
+owner_slack: "#nvvs-devops"
+title: Infrastructure CI Migration to GitHub Actions
+last_reviewed_on: 2023-09-01
+review_in: 6 months
+---
+# Infrastructure CI Migration to GitHub Actions
+This runbook outlines the steps to prepare a typical NVVS Terraform Infrastructure for migration to GitHUb Actions as per [ADR 011 - Use GitHub Actions for CI/CD](../documentation/adrs/011-use-github-actions-for-ci-cd.html).
+
+## Benefits
+
+The procedure for migrating to GitHub Actions for CI will require some housekeeping and minor refactoring is necessary to enable the GitHub Action CI deployments. It will provide the following benefits.
+
+- Quicker deployments.
+- Simple branch build and deploy.
+- Clearer sequence display and log viewing for engineers to understand the context of deployment processes in action.
+- Terraform version will be defined in one location(instead of Readme, buildspec or latest pulled in).
+- Retrieval of TF_VAR inputs will be scripted and consistent (no need to assemble values form various sources indicated in example files and Readme).
+- The above will enable quicker on-boarding of engineers.
+- Linting and Security tools will enable overview of as yet undefined issues.
+
+## Stages
+
+Initially the project repository will be prepared to run `terraform plan` on GitHub. When this is achieved the AWS CodeBuild pipeline can be disabled; prior to full migration to GitHub. The Terraform state and Dynamo DB state locking AWS resources would be managed via another Terraform Module or the current module would have option to remove the AWS Codepipeline resources.
+
+At the time of writing we can reference the branch of [network-access-control-infrastructure](https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1) for examples to reference.
+
+### Overview
+
+- Makefile update
+- README update
+- Terraform Version
+- Terraform Inputs (TF_VAR)
+- GitHub Permissions & GitHub Secrets
+- Test GitHub Action on branch
+- Test Static Code Analysis
+
+### Makefile update
+
+For consistency ensure the `Makefile` has all the commands here:
+
+```make
+#!make
+include .env
+export
+
+fmt:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform fmt --recursive
+
+init:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform init -reconfigure \
+	--backend-config="key=terraform.$$ENV.state"
+
+workspace-list:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform workspace list
+
+workspace-select:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform workspace select $$ENV || \
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform workspace new $$ENV
+
+validate:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform validate
+
+plan-out:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform plan -no-color > $$ENV.tfplan
+
+plan:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform plan
+
+refresh:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform refresh
+
+output:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform output -json
+
+apply:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform apply
+
+state-list:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform state list
+
+show:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform show -no-color
+
+destroy:
+	aws-vault exec $$AWS_VAULT_PROFILE -- terraform destroy
+
+clean:
+	rm -rf .terraform/ terraform.tfstate*
+```
+
+### README update
+
+Find the appropriate place to add the following snippet into the `README.md` or other documentation file.
+
+<pre>
+This file is no longer necessary. The necessary TF*VARS that are required from the SSM Parameter Store and used by Terraform are for local development and testing written to the `.env` file that the Makefile sources. The values are exported in the shell's environment as `TF_VAR*{variable_name}`.
+Provided the following have been set in your shell's environment
+```shell
+export AWS_PROFILE=mojo-shared-services-cli
+export AWS_VAULT_PROFILE=mojo-shared-services-cli
+```
+You can run from the root of this project the following script.
+```shell
+./scripts/generate-env-file.sh [environment_name: development|pre-production|production]
+```
+An `.env` file will be produced for the environment, if you need to test or check a plan against another environment rerun the script.
+```
+</pre>
+
+
+### Terraform Version
+
+Each Terraform project will have a `version.tf` file as per Hashcorp advised convention in the root of the project. It will have at a minimum a `terraform` block with the `required_version specified`. If the version has already been spefified in the `terraform` block in `main.tf` remove from there and add as illustrated.
+
+```terraform
+terraform {
+  required_version = "1.1.8"
+}
+```
+
+This convention enables easy retrieval of the Terraform version by automation scripts and for local use with the [`tfenv`](https://github.com/tfutils/tfenv) tool. The alias below will install the required Terraform version loaccly and pin it for the project.
+
+```shell
+alias tfenvuse='tfenv use $(cat versions.tf 2> /dev/null | grep required_version | cut -d "\"" -f 2 | cut -d " " -f 2) && tfenv pin'
+```
+
+
+
+### Terraform Inputs (TF_VAR)
+
+Getting the correct values for `.env` files and `terraform.tfvars` files from the various locations is time consuming and doesn't allow a new engineer to get familiar with the tooling or project with any confidence. A script will gather the required values and produce an `.env` for the specified environment which will be exported into the shell's environment when a command is run via the `make` target (init, plan, apply etc).
+The script will use the existing information to inform what is necessary, the `env` section of the `buildspec.yml` is the most reliable source of required variables.
+
+Copy the scripts from [network-access-control-infrastructure/scripts](https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts) to the current project's `scripts` directory (create if not already exists).
+
+```shell
+mkdir -p scripts && \
+cp ../network-access-control-infrastructure/scripts/aws_ssm_get_parameters.sh scripts/ && \
+cp ../network-access-control-infrastructure/scripts/generate-env-file.sh scripts/ && \
+cp ../network-access-control-infrastructure/scripts/generate-github-env.sh scripts/
+```
+
+The scripts `generate-env-file.sh` and `generate-github-env.sh` are similar.
+The first is used locally the second within the GitHub Action Workflow file to generate an `.env` file or inject into the special `GITHUB_ENV` variable.
+
+| Script                 	        | Use                        	| Change         	|
+|--------------------------------   |----------------------------	|----------------	|
+| [aws_ssm_get_parameters.sh][get]	| Retrieve SSM Params        	| most           	|
+| [generate-env-file.sh][env]   	| locally generate an `.env` 	| lines 72 -> 88 	|
+| [generate-github-env.sh][hub] 	| GitHub Action Workflow     	| lines 11 -> 23 	|
+
+With reference to the `buildspec.yml` up the lines as indicated in the table with the values from the `env:variables:` yaml block in the `generate-*` script files.
+
+The `aws_ssm_get_parameters.sh` needs updating with the values ffrom the `env:parameter-store:` yaml block. The SSM Parameters need to be retrieved in blocks of ten. Due to variable names sometimes changing from parameter store to their use in Terraform a line for each need to be written in which they're mapped into an array for use in the other two scripts.
+Note: start with one param, test then add and test.
+
+```shell
+./scripts/generate-env-file.sh [environment_name: development|pre-production|production]
+```
+
+Now to run the Terraform the Makefile will only require the `.env` to provide the variables. Test before proceding.
+
+### GitHub Permissions & GitHub Secrets
+
+The GitHub repository will likely need adding to the OIDC Provider and the AWS Role added as a GitHub secret.
+`role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}`
+Checkout the repo [mojo-aws-github-oidc-provider](https://github.com/ministryofjustice/mojo-aws-github-oidc-provider) and add the name of the GitHub repository to the
+[locals.tf](https://github.com/ministryofjustice/mojo-aws-github-oidc-provider/blob/main/locals.tf)
+
+The code needs to be run from your local machine (it can't apply the code to it's self (yet). See that project's README file for full details.
+
+### Test GitHub Action on branch
+
+Most project already have GitHub Actions Workflows although they don't require AWS credentials to run such as formatting and Dependabot actions; hence the `.github/workflows` directory will likely already exist. Add the workflow files from [network-access-control-infrastructure/.github/workflows](https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/.github/workflows) to the current project's `scripts` directory (create if not already exists).
+
+```shell
+mkdir -p .github/workflows && \
+cp ../network-access-control-infrastructure/.github/workflows/terraform-apply.yaml .github/workflows/ && \
+cp ../network-access-control-infrastructure/.github/workflows/terraform-static-analysis.yml .github/workflows/
+```
+
+Those file don't need any changes, commit and push them. Currently they will only run `terraform plan` when there is a PR for the `main` branch or a push to a branch ending with `-GHTEST`.
+To test you branch create a temporary branch from your current one and append `-GHTEST`
+
+```shell
+git checkout -b {your_branch_name}-GHTEST
+git push --set-upstream origin {your_branch_name}-GHTEST
+```
+
+Now you should see under the *Actions* tab thes two workflows `https://github.com/ministryofjustice/{project_name}/actions`.
+Check the results confirm they run.
+
+
+## Checklist
+
+<ol>
+    <li>
+        <label>Makefile update</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label>README update</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label>Terraform Version</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label>Terraform Inputs (TF_VAR)</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label>GitHub Permissions & GitHub Secrets</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label>Test GitHub Action on branch</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+</ol>
+
+[get]: https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts/aws_ssm_get_parameters.sh
+[env]: https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts/generate-env-file.sh
+[hub]: https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts/generate-github-env.sh
