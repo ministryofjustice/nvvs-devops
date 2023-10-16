@@ -44,13 +44,14 @@ This is the Ministry of Justice [NVVS DevOps teams](https://ministryofjustice.gi
 ### Infrastructure Monitoring and Alerting Platform
 | Name | Description |
 |-|-|
+| [DevOps Monitor](https://github.com/ministryofjustice/nvvs-devops-monitor) | Monitoring solution developed by the Lan & WIFI team to monitor the applications that this team currently manages. |
 | [App reachability](https://github.com/ministryofjustice/staff-infrastructure-monitoring-app-reachability) | Container to remote write blackbox http application prometheus metrics |
 | [Blackbox exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter) | To probe endpoints over HTTP, HTTPS, DNS, TCP and ICMP |
 | [DNS reachability](https://github.com/ministryofjustice/staff-infrastructure-monitoring-dns-reachability) | Container to remote write blackbox DNS prometheus metrics
 | [Helm Deployment](https://github.com/ministryofjustice/staff-infrastructure-monitoring-deployments) | To deploy helm charts to EKS
 | [IMAP infrastructure](https://github.com/ministryofjustice/staff-infrastructure-monitoring) | Terraform module that deploys the staff infrastructure monitoring solution including Grafana and Prometheus.
 | [SNMP exporter](https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter) | To scrape data from physical devices (Docker image) |
-| [IMAP configuration](https://github.com/ministryofjustice/staff-infrastructure-monitoring-config) | To provision data sources dashboards and alerts 
+| [IMAP configuration](https://github.com/ministryofjustice/staff-infrastructure-monitoring-config) | To provision data sources dashboards and alerts
 | [Prometheus ECS](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) | Prometheus ECS
 | [Prometheus EKS](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregator-cloud) | Prometheus EKS
 
