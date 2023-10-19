@@ -1,19 +1,26 @@
 ---
 owner_slack: "#nvvs-devops"
 title: Team Tools
-last_reviewed_on: 2023-06-20
+last_reviewed_on: 2023-10-19
 review_in: 3 months
 ---
 # Team Tools
 
 The intended readership of this page is new joiners to the team, the page illustrates tools which the team use frequently.
 
+### MacOS
+
+Engineers will be provided with MacBooks, this means Unix tools are native and ready to use (no need for things like WSL see bleow).
+Some additional software and commandline tools are subsequently required, they can be quickly installed following these instructions.
+
+Follow instructions on this repository linuxify(https://github.com/ministryofjustice/linuxify)
+
+
 ### Windows Subsystem for Linux (WSL) 🐧
 
-Download the WSL(https://www.microsoft.com/store/productId/9P9TQF7MRM4R) and Ubuntu subsytem from the windows app store 
+This is only relevent for laptops with Windows.
 
-To successfully start the Windows Subsystem for Linux (WSL) here and update the package (if you don't starting Ubuntu will fail)
-https://aka.ms/wsl2kernel as detailed [here](https://docs.microsoft.com/en-gb/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package)
+Follow the instructions on this repository provision-ubuntu2004-on-wsl2(https://github.com/ministryofjustice/provision-ubuntu2004-on-wsl2)
 
 #### Ubuntu
 - In Start search for 'Ubuntu' and start the Ubuntu system.
@@ -34,9 +41,9 @@ To access Settings open Windows Terminal and click the V arrow on the Taskbar:
 - (optional) Change your colour scheme. Save your eyes! 👀
 
 
-### VSCode 
+### VSCode
 
-The team uses [VSCode](https://code.visualstudio.com/) on a daily basis. 
+The team uses [VSCode](https://code.visualstudio.com/) on a daily basis.
 
 Some of our preferred extensions are listed below, to install these extensions on VSCode (_Ctrl + Shift + P; "Install Extensions"_):
 
@@ -54,9 +61,8 @@ Some of our preferred extensions are listed below, to install these extensions o
 
 - [Tabnine](https://marketplace.visualstudio.com/items?itemName=TabNine.tabnine-vscode) (👩‍💻🤖 JavaScript, Python, Java, Typescript & all other languages - AI Code completion plugin. Tabnine makes developers more productive by auto-completing their code.)
 
-- (optional) Change your colour scheme. Save your eyes! 👀 
-[Dracula](https://marketplace.visualstudio.com/items?itemName=dracula-theme.theme-dracula) 🧛 is a good one. 
+- (optional) Change your colour scheme. Save your eyes! 👀
+[Dracula](https://marketplace.visualstudio.com/items?itemName=dracula-theme.theme-dracula) 🧛 is a good one.
 
 If you've installed any Extensions prior to installing Remote WSL, re-install them on the WSL Ubuntu. To do this an 'Install' button should appear on these extensions when viewed on the Extensions (under WSL:
 Ubuntu) submenu on the left hand side of VS Code.
-
