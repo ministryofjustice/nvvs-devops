@@ -1,7 +1,7 @@
 ---
 owner_slack: "#nvvs-devops"
 title: Backups
-last_reviewed_on: 2023-04-11
+last_reviewed_on: 2023-10-20
 review_in: 6 months
 ---
 
@@ -15,10 +15,10 @@ Product | Type of backup | Retention
 ---|---|---|
 DHCP/DNS Admin Portal | RDS (MySQL) | 30 Days
 DHCP KEA | RDS (MySQL) | 30 Days |
-IMA | RDS (Postgres) | 7 Days | 
-NACS Admin | RDS (MySQL) | 30 Days | 
+IMA | RDS (Postgres) | 7 Days |
+NACS Admin | RDS (MySQL) | 30 Days |
 
-## Backup configuration 
+## Backup configuration
 
 The backup retention is defined as code in the following locations.
 
@@ -26,5 +26,4 @@ Product | variable | database setting
 ---|---|---|
 DHCP/DNS Admin Portal | https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure/blob/main/variables.tf#L52) | https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure/blob/main/modules/admin/db.tf#L18 |
 DHCP KEA | https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure/blob/main/variables.tf | https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure/blob/main/modules/dhcp/mysql.tf#L10 |
-NACS Admin |  https://github.com/ministryofjustice/network-access-control-infrastructure/blob/main/variables.tf#L48 | https://github.com/ministryofjustice/network-access-control-infrastructure/blob/main/modules/admin/db.tf#L15 | 
-
+NACS Admin |  https://github.com/ministryofjustice/network-access-control-infrastructure/blob/main/variables.tf#L48 | https://github.com/ministryofjustice/network-access-control-infrastructure/blob/main/modules/admin/db.tf#L15 |

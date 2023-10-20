@@ -1,163 +1,172 @@
 ---
 owner_slack: "#nvvs-devops"
 title: Re-configure AWS Vault
-last_reviewed_on: 2023-06-22
+last_reviewed_on: 2023-10-20
 review_in: 3 month
 ---
 
 # Configure AWS Vault
 
-Follow this guide to re-configure your [AWS Vault](https://github.com/99designs/aws-vault) to work with [AWS SSO](https://aws.amazon.com/single-sign-on/).  
+Follow this guide to re-configure your [AWS Vault](https://github.com/99designs/aws-vault) to work with [AWS SSO](https://aws.amazon.com/single-sign-on/).
 
-> **Note:**  
+> **Note:**
 >
-> This guide is for re-configuring AWS Vault running on **Ubuntu**.  
+> This guide is for re-configuring AWS Vault running on **Ubuntu**.
+> Some details are different on MacOS
 
 ## Prerequisites
 
-To be able to follow this guide to setup the AWS SSO, you need to have the following already:  
+To be able to follow this guide to setup the AWS SSO, you need to have the following already:
 
-- [GPG](https://gnupg.org/index.html) installed.  
-- [AWS Vault](https://github.com/99designs/aws-vault#installing) set up.  
-- Access to [Moj AWS SSO](https://moj.awsapps.com/start#/).  
+- [GPG](https://gnupg.org/index.html) installed.
+- [AWS Vault](https://github.com/99designs/aws-vault#installing) set up.
+- Access to [Moj AWS SSO](https://moj.awsapps.com/start#/).
 
-## Generate a GPG key  
 
-We will need a GPG key to encrypt credentials in a password store later. So, let's start by generating a GPG key. Run the following command:  
 
-`gpg --full-generate-key`  
+## Generate a GPG key
 
-Press `Enter` for `Please select what kind of key you want:`, to select the default value.  
+We will need a GPG key to encrypt credentials in a password store later. So, let's start by generating a GPG key. Run the following command:
 
-Press `Enter` again for `What keysize do you want? (3072)`, to select the given size.  
+`gpg --full-generate-key`
 
-Press `Enter` again for `Key is valid for? (0)`, to set the key to never expire.  
+Press `Enter` for `Please select what kind of key you want:`, to select the default value.
 
-Confirm this by typing `Y` for `Is this correct? (y/N)` in next step and then press `Enter`.  
+Press `Enter` again for `What keysize do you want? (3072)`, to select the given size.
 
-Provide a ID for the key in the next step as below:  
+Press `Enter` again for `Key is valid for? (0)`, to set the key to never expire.
 
-Type `<your username> Password Storage Key` for `Real name:`  
+Confirm this by typing `Y` for `Is this correct? (y/N)` in next step and then press `Enter`.
 
-You may leave `Email address:` and `Comment:` blank.  
+Provide a ID for the key in the next step as below:
 
-Finally, confirm all by typing `O` to accept Okay.  
+Type `<your username> Password Storage Key` for `Real name:`
 
-It will prompt for a `Passphrase`. Create a new passphrase to protect the GPG key.  
+You may leave `Email address:` and `Comment:` blank.
 
-A new GPG key is now created.  
+Finally, confirm all by typing `O` to accept Okay.
 
-## Export GPG_TTY variable  
+It will prompt for a `Passphrase`. Create a new passphrase to protect the GPG key.
 
-If you do not already have, add the below in your `.bashrc` or `.zshrc` file:  
+A new GPG key is now created.
 
-````  
-# gpg  
-export GPG_TTY=$(tty)  
-```` 
+## Export GPG_TTY variable
+
+If you do not already have, add the below in your `.bashrc` or `.zshrc` file:
+
+````
+# gpg
+export GPG_TTY=$(tty)
+````
 
 ## Install and initialise pass
 
-We will use [pass](https://www.passwordstore.org/) as the `backend` for `aws-vault` later. So, let's install it.  
+(Not required on MacOS as it uses the keychain to create a vault)
 
-### Install  
+We will use [pass](https://www.passwordstore.org/) as the `backend` for `aws-vault` later. So, let's install it.
 
-Run the below command:  
+### Install
 
-`sudo apt-get install pass` 
+Run the below command:
 
-### Setting it up  
+`sudo apt-get install pass`
 
-To begin, run the following command:  
+### Setting it up
 
-`pass init "<your username> Password Storage Key"`  
+To begin, run the following command:
 
-Here, `<your username> Password Storage Key` is the ID of the GPG key that you created in the previous step.  
+`pass init "<your username> Password Storage Key"`
 
-A new Password Store is now created in `~/.password-store`.  
+Here, `<your username> Password Storage Key` is the ID of the GPG key that you created in the previous step.
+
+A new Password Store is now created in `~/.password-store`.
 
 ## Finally, update the config file
 
-Add to / replace with the below, your `~/.aws/config` file and save.  
+On MacOs use the config file from [here](https://github.com/ministryofjustice/provision-ubuntu2004-on-wsl2/blob/master/templates/aws-cli-config.j2)
+It omits ` --backend=pass --prompt=pass` from the config.
+
+
+Add to / replace with the below, your `~/.aws/config` file and save.
 
 ````
-[default]  
-region=eu-west-2  
-output=json  
- 
-[profile mojo-shared-services]  
-sso_start_url = https://moj.awsapps.com/start  
-sso_region = eu-west-2  
-sso_account_id = <shared services AWS account ID>  
-sso_role_name = AdministratorAccess  
-region = eu-west-2  
-output = json  
+[default]
+region=eu-west-2
+output=json
 
-[profile mojo-development]  
-sso_start_url = https://moj.awsapps.com/start  
-sso_region = eu-west-2  
-sso_account_id = <development AWS account ID>   
-sso_role_name = AdministratorAccess  
-region = eu-west-2  
-output = json  
+[profile mojo-shared-services]
+sso_start_url = https://moj.awsapps.com/start
+sso_region = eu-west-2
+sso_account_id = <shared services AWS account ID>
+sso_role_name = AdministratorAccess
+region = eu-west-2
+output = json
 
-[profile mojo-pre-production]  
-sso_start_url = https://moj.awsapps.com/start  
-sso_region = eu-west-2  
-sso_account_id = <pre production AWS account ID>   
-sso_role_name = AdministratorAccess  
-region = eu-west-2  
-output = json  
+[profile mojo-development]
+sso_start_url = https://moj.awsapps.com/start
+sso_region = eu-west-2
+sso_account_id = <development AWS account ID>
+sso_role_name = AdministratorAccess
+region = eu-west-2
+output = json
 
-[profile mojo-production]  
-sso_start_url = https://moj.awsapps.com/start  
-sso_region = eu-west-2  
-sso_account_id = <production AWS account ID>   
-sso_role_name = AdministratorAccess  
-region = eu-west-2  
-output = json  
+[profile mojo-pre-production]
+sso_start_url = https://moj.awsapps.com/start
+sso_region = eu-west-2
+sso_account_id = <pre production AWS account ID>
+sso_role_name = AdministratorAccess
+region = eu-west-2
+output = json
 
-[profile mojo-shared-services-cli]  
-region = eu-west-2  
-credential_process = /usr/local/bin/aws-vault exec mojo-shared-services --json --backend=pass --prompt=pass  
+[profile mojo-production]
+sso_start_url = https://moj.awsapps.com/start
+sso_region = eu-west-2
+sso_account_id = <production AWS account ID>
+sso_role_name = AdministratorAccess
+region = eu-west-2
+output = json
 
-[profile mojo-development-cli]  
-credential_process = /usr/local/bin/aws-vault exec mojo-development --json --backend=pass --prompt=pass  
+[profile mojo-shared-services-cli]
+region = eu-west-2
+credential_process = /usr/local/bin/aws-vault exec mojo-shared-services --json --backend=pass --prompt=pass
 
-[profile mojo-pre-production-cli]  
-credential_process = /usr/local/bin/aws-vault exec mojo-pre-production --json --backend=pass --prompt=pass  
+[profile mojo-development-cli]
+credential_process = /usr/local/bin/aws-vault exec mojo-development --json --backend=pass --prompt=pass
 
-[profile mojo-production-cli]  
-credential_process = /usr/local/bin/aws-vault exec mojo-production --json --backend=pass --prompt=pass  
-````  
+[profile mojo-pre-production-cli]
+credential_process = /usr/local/bin/aws-vault exec mojo-pre-production --json --backend=pass --prompt=pass
 
-## Test your AWS Cli  
+[profile mojo-production-cli]
+credential_process = /usr/local/bin/aws-vault exec mojo-production --json --backend=pass --prompt=pass
+````
 
-Run the below, to set the `AWS_PROFILE` to use the shared services account:  
+## Test your AWS Cli
 
-`export AWS_PROFILE=mojo-shared-services-cli`  
+Run the below, to set the `AWS_PROFILE` to use the shared services account:
 
-Then, run the below aws command:  
+`export AWS_PROFILE=mojo-shared-services-cli`
 
-`aws sts get-caller-identity`  
+Then, run the below aws command:
 
-When prompted, provide the passphrase for GPG key you created earlier.  
+`aws sts get-caller-identity`
 
-You will then see web page on your browser to authorise a request:  
+When prompted, provide the passphrase for GPG key you created earlier.
 
-![AWS SSO authorisation prompt](images/aws_sso_auth_prompt.png)  
+You will then see web page on your browser to authorise a request:
 
-Click `Allow`.  
+![AWS SSO authorisation prompt](images/aws_sso_auth_prompt.png)
+
+Click `Allow`.
 
 You should see the below in the terminal:
 
 ````
-{  
-    "UserId": "<your username>@digital.justice.gov.uk",  
-    "Account": "<shared services AWS account id>",  
-    "Arn": "arn:aws:sts::<shared services AWS account id>:assumed-role/<your username>@digital.justice.gov.uk"  
-}  
-````  
+{
+    "UserId": "<your username>@digital.justice.gov.uk",
+    "Account": "<shared services AWS account id>",
+    "Arn": "arn:aws:sts::<shared services AWS account id>:assumed-role/<your username>@digital.justice.gov.uk"
+}
+````
 
 Congratulations, you have successfully configured your AWS Vault to work with AWS SSO.
 
@@ -165,7 +174,7 @@ In order for the SSO to work you wil need access to MOJ gihub org. Please contac
 
 ## Forgotten GPG Key Password
 
-In the event you forget the password of your GPG Key you will need to delete it and create another. 
+In the event you forget the password of your GPG Key you will need to delete it and create another.
 
 List the key. You will need the string under 'pub' later.
 
@@ -194,7 +203,7 @@ Delete this key from the keyring? (y/N) y
 This is a secret key! - really delete? (y/N) y
 ```
 
-Now delete the key itself: 
+Now delete the key itself:
 
 ```
 username@laptop:~$ gpg  --delete-keys DDE8C445795E88ABB4CBCE49C3F2562BD
@@ -218,6 +227,6 @@ gpg: checking the trustdb
 gpg: no ultimately trusted keys found
 ```
 
-Now you must generate a new GPG Key as per the documentation above. 
+Now you must generate a new GPG Key as per the documentation above.
 
-### 
+###

@@ -1,6 +1,6 @@
 ---
 title: DHCP Overview
-last_reviewed_on: 2023-04-11
+last_reviewed_on: 2023-10-20
 review_in: 3 months
 ---
 
@@ -18,14 +18,14 @@ Allows Public internet connectivity for prison staff and enables modern devices.
 
 Enable onsite support staff to manage local devices e.g. [DHCP reservation](https://kb.isc.org/docs/what-are-host-reservations-how-to-use-them) using GOV.UK Design System styles and patterns.
 
-[Use cloud first](https://www.gov.uk/guidance/use-cloud-first) To meet point 5 of the [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) (TCoP) and the government’s cloud first policy. 
+[Use cloud first](https://www.gov.uk/guidance/use-cloud-first) To meet point 5 of the [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) (TCoP) and the government’s cloud first policy.
 
-[Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) provides a complete audit of changes, versioning of cloud infrastructure and DNS server application, automated testing and redeployment of the service in the event of disaster. 
+[Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) provides a complete audit of changes, versioning of cloud infrastructure and DNS server application, automated testing and redeployment of the service in the event of disaster.
 
 ## Tools
 
 The DHCP service uses [ISC KEA](https://www.isc.org/kea/) containers running on [AWS ECS Fargate](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html).
-We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to provide a complete audit of changes, versioning of components and the DNS server application, automated testing and redeployment of the service in the event of disaster. 
+We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to provide a complete audit of changes, versioning of components and the DNS server application, automated testing and redeployment of the service in the event of disaster.
 
 ## Diagram
 ![High level diagram](../../images/dhcp-hld-diagram.jpeg)
@@ -33,7 +33,7 @@ We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](
 
 ## Repositories
 
-| Repository | Description | 
+| Repository | Description |
 | --- | --- |
 | [DHCP admin portal](https://github.com/ministryofjustice/staff-device-dns-dhcp-admin#readme) | Admin Portal for managing staff device DNS forwarders and zone configuration. |
 | [DHCP server](https://github.com/ministryofjustice/staff-device-dhcp-server#readme) | This repository contains the Dockerfile to create the ISC DHCP server Docker image. The configuration for this server is managed in the Admin Portal. |
@@ -43,10 +43,8 @@ We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](
 
 ## Useful links
 
-| Link | Description | 
+| Link | Description |
 | --- | --- |
 | [DHCP admin portal](https://dhcp-dns-admin.staff.service.justice.gov.uk/dhcp) | Admin Portal for managing staff device DNS forwarders and zone configuration. *Please not you need to be a member of the AzureAD group `MoJO-EntApp-DNSDHCP_Viewer` to view and `MoJO-EntApp-DNSDHCP_Editor` to edit.*  |
 | [Monitoring and alerting guide](product-monitoring-alerting.html) | List Grafana dashboards for health of the products and slack channels in use for alerts. |
 | [Transit gateway ](https://github.com/ministryofjustice/deployment-tgw) | Connects the service to wider MoJ networks as a virtual WAN |
-
-
