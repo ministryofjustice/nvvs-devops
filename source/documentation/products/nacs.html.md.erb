@@ -1,6 +1,6 @@
 ---
 title: NACS Overview
-last_reviewed_on: 2023-05-09
+last_reviewed_on: 2023-10-20
 review_in: 3 months
 ---
 
@@ -16,15 +16,15 @@ Provides access to MOJ networks from suitably configured devices.
 
 Enable onsite support staff to manage access of local devices such as printers e.g. [Printer Mac Address reservation](https://kb.isc.org/docs/what-are-host-reservations-how-to-use-them).
 
-[Use cloud first](https://www.gov.uk/guidance/use-cloud-first) To meet point 5 of the [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) (TCoP) and the government’s cloud first policy. 
+[Use cloud first](https://www.gov.uk/guidance/use-cloud-first) To meet point 5 of the [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) (TCoP) and the government’s cloud first policy.
 
-[Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) provides a complete audit of changes, versioning of cloud infrastructure and DNS server application, automated testing and redeployment of the service in the event of disaster. 
+[Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) provides a complete audit of changes, versioning of cloud infrastructure and DNS server application, automated testing and redeployment of the service in the event of disaster.
 
 ## Tools
 
 The NACS service uses [Freeradius](https://www.freeradius.org) containers running on [AWS ECS Fargate](https://docs.aws.amazon.com/AmazonECS/latest/userguide/what-is-fargate.html), as well as a seperate ruby on rails admin portal.
 
-We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to provide a complete audit of changes, versioning of components, automated testing and redeployment of the service in the event of disaster. 
+We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](https://en.wikipedia.org/wiki/Infrastructure_as_code) to provide a complete audit of changes, versioning of components, automated testing and redeployment of the service in the event of disaster.
 
 ## Diagram
 ![High level diagram](../../images/nacs-hld-diagram.png)
@@ -32,7 +32,7 @@ We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](
 
 ## Repositories
 
-| Repository | Description | 
+| Repository | Description |
 | --- | --- |
 | [NACS admin portal](https://github.com/ministryofjustice/network-access-control-admin#readme) | Admin Portal for configuring clients, sites, policies and rules. |
 | [NACS server](https://github.com/ministryofjustice/network-access-control-server#readme) | This repository contains the neccesary code to build the freeradius docker image. |
@@ -42,7 +42,7 @@ We use [Terraform](https://www.terraform.io/intro) and [Infrastructure as Code](
 
 ## Useful links
 
-| Link | Description | 
+| Link | Description |
 | --- | --- |
 | [NACS Admin Portal(Live)](https://admin.network-access-control.service.justice.gov.uk/sign_in) | Admin Portal for managing clients, sites, policies and rules. *Please note you need to be a member of the AzureAD group `moj-[ENVIRONMENT_NAME]-network-access-control-admin-azure-app`|
 | [NACS Radius Server Docs] (https://github.com/ministryofjustice/network-access-control-server/tree/main/docs) | NACS Radius Server documentation |
