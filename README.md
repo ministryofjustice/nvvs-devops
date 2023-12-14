@@ -77,6 +77,11 @@ This is the Ministry of Justice [NVVS DevOps teams](https://ministryofjustice.gi
 | [Network access control integration tests](https://github.com/ministryofjustice/network-access-control-integration-tests) | NACS Integrations Tests |
 | [Network access control server ](https://github.com/ministryofjustice/network-access-control-server ) | NACS Radius Server Configuration |
 
+### Tools & Automation
+| Name                                                                                      | Description                                     |
+|-------------------------------------------------------------------------------------------|-------------------------------------------------|
+| [Juniper Mist integration](https://github.com/ministryofjustice/juniper-mist-integration) | Automated tool, to manage sites on Juniper Mist |
+
 ## About this Website
 
 This repository is published via Github Pages [here](https://ministryofjustice.github.io/nvvs-devops/#network-voice-and-video-service-devops-nvvs-devops)
