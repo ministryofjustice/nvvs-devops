@@ -26,3 +26,11 @@ jobs:
           title: Link Checker Report
           content-filepath: ./lychee/out.md
           labels: documentation
+
+    container:
+      image: ministryofjustice/tech-docs-github-pages-publisher:v3.0.1
+    steps:
+    - uses: actions/checkout@v4
+    - name: htmlproofer
+      run: /scripts/deploy.sh no-repository-changes
+
