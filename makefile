@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-IMAGE := ministryofjustice/tech-docs-github-pages-publisher:1.4
+IMAGE := ministryofjustice/tech-docs-github-pages-publisher:v3.0.1
 
 .PHONY: preview report
 
@@ -8,8 +8,7 @@ preview: ## Run a local instance of the documentation site, while editing
 		-v $$(pwd)/config:/app/config \
 		-v $$(pwd)/source:/app/source \
 		-p 4567:4567 \
-		-it $(IMAGE) /publishing-scripts/preview.sh
-
+		-it $(IMAGE) /scripts/preview.sh
 
 report: ## Review which pages have expired
 	 ./report-for-daniel-the-manual-spaniel.sh
