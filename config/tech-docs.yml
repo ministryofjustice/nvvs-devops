@@ -4,8 +4,7 @@ host: https://ministryofjustice.github.io/nvvs-devops
 # Header-related options
 show_govuk_logo: false
 service_name: NVVS DevOps
-
-service_link: /nvvs-devops
+service_link: /
 phase: Beta
 
 # Links to show on right-hand-side of header
