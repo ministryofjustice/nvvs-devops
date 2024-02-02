@@ -1,7 +1,6 @@
-
 documentation:
-  - "architecture-decision-record/**"
-  - "diagrams/**"
-  - "documentation/**"
-  - "README.md"
-  - "source/**"
+  - - "architecture-decision-record/**"
+  - - "diagrams/**"
+  - - "documentation/**"
+  - - "README.md"
+  - - "source/**"
