@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en" class="govuk-template no-js">
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>Team Tools - NVVS DevOps</title>
+
+    <link href="../../stylesheets/manifest.css" rel="stylesheet" />
+
+    <link rel="canonical" href="https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/team-tools.html">
+
+      <meta name="robots" content="noindex" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:domain" content="ministryofjustice.github.io" />
+      <meta name="twitter:image" content="https://ministryofjustice.github.io/nvvs-devops/images/govuk-large.png" />
+      <meta name="twitter:title" content="Team Tools - NVVS DevOps" />
+      <meta name="twitter:url" content="https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/team-tools.html" />
+
+      <meta property="og:image" content="https://ministryofjustice.github.io/nvvs-devops/images/govuk-large.png" />
+      <meta property="og:site_name" content="NVVS DevOps" />
+      <meta property="og:title" content="Team Tools" />
+      <meta property="og:type" content="object" />
+      <meta property="og:url" content="https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/team-tools.html" />
+
+    
+  </head>
+
+  <body class="govuk-template__body">
+    <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+
+    <div class="app-pane">
+      <div class="app-pane__header toc-open-disabled">
+        <a href="#content" class="govuk-skip-link">Skip to main content</a>
+
+        <header class="govuk-header app-header" role="banner" data-module="govuk-header">
+  <div class="govuk-header__container govuk-header__container--full-width">
+    <div class="govuk-header__logo">
+      <a href="/" class="govuk-header__link govuk-header__link--homepage">
+        <span class="govuk-header__product-name">
+          NVVS DevOps
+        </span>
+      </a>
+        <strong class="govuk-tag">Beta</strong>
+    </div>
+    <div class="govuk-header__content">
+      <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
+      <nav>
+        <ul id="navigation" class="govuk-header__navigation govuk-header__navigation--end" aria-label="Top Level Navigation">
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://ministryofjustice.github.io/nvvs-devops">Home</a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://github.com/ministryofjustice/nvvs-devops">GitHub</a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://mojdt.slack.com/archives/C026AFE617T">Slack</a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+      </div>
+
+        <div id="toc-heading" class="toc-show fixedsticky">
+          <a href="#toc" class="toc-show__label js-toc-show" aria-controls="toc">
+            Table of contents <span class="toc-show__icon"></span>
+          </a>
+        </div>
+
+      <div class="app-pane__body" data-module="in-page-navigation">
+          <div class="app-pane__toc">
+            <div class="toc" data-module="table-of-contents">
+              <div class="search" data-module="search">
+  <form action="https://www.google.co.uk/search" method="get" role="search">
+    <input type="hidden" name="as_sitesearch" value="https://ministryofjustice.github.io/nvvs-devops"/>
+    <label class="govuk-label search__label" for="search">
+      Search (via Google)
+    </label>
+    <input class="govuk-input govuk-!-margin-bottom-4" id="search" name="q" type="text" aria-controls="search-results" placeholder="Search">
+  </form>
+  <div id="search-results" class="search-results" aria-hidden="true" role="dialog" aria-labelledby="search-results-title">
+    <div class="search-results__inner">
+      <button class="search-results__close">Close<span class="search-results__close-label"> search results</span></button>
+      <h2 id="search-results-title" class="search-results__title" aria-live="polite">Results</h2>
+      <div class="search-results__content"></div>
+    </div>
+  </div>
+</div>
+
+              <a href="#" class="toc__close js-toc-close" aria-controls="toc" aria-label="Hide table of contents"></a>
+              <nav id="toc" class="js-toc-list toc__list" aria-labelledby="toc-heading">
+                      <ul>
+  <li>
+    <a href="#team-tools"><span>Team Tools</span></a>
+    <ul>
+      <li>
+        <ul>
+          <li>
+            <a href="#macos"><span>MacOS</span></a>
+          </li>
+          <li>
+            <a href="#windows-subsystem-for-linux-wsl"><span>Windows Subsystem for Linux (WSL) 🐧</span></a>
+          </li>
+          <li>
+            <a href="#vscode"><span>VSCode</span></a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+              </nav>
+            </div>
+          </div>
+
+        <div class="app-pane__content toc-open-disabled">
+          <main id="content" class="technical-documentation" data-module="anchored-headings">
+            <h1 id="team-tools">Team Tools</h1><p>The intended readership of this page is new joiners to the team, the page illustrates tools which the team use frequently.</p>
+<h3 id="macos">MacOS</h3><p>Engineers will be provided with MacBooks, this means Unix tools are native and ready to use (no need for things like WSL see bleow).
+Some additional software and commandline tools are subsequently required, they can be quickly installed following these instructions.</p>
+<p>Follow instructions on this repository <a href="https://github.com/ministryofjustice/linuxify">linuxify</a></p>
+<h3 id="windows-subsystem-for-linux-wsl">Windows Subsystem for Linux (WSL) 🐧</h3><p>This is only relevent for laptops with Windows.</p>
+<p>Follow the instructions on this <a href="https://github.com/ministryofjustice/provision-ubuntu2004-on-wsl2">repository provision-ubuntu2004-on-wsl2</a></p>
+<h4 id="ubuntu">Ubuntu</h4>
+<ul>
+<li><p>In Start search for &lsquo;Ubuntu&rsquo; and start the Ubuntu system.</p></li>
+<li><p>This will prompt you to create a User, do so. You will use this username later.</p></li>
+</ul>
+<h4 id="windows-terminal">Windows Terminal</h4><p>To access Settings open Windows Terminal and click the V arrow on the Taskbar:</p>
+
+<ul>
+<li><p>Change Default Profile to Ubuntu</p></li>
+<li><p>In the Ubuntu Profile, edit the Startup Directory to \wsl$\Ubuntu\home\<strong>your-ubuntu-username</strong>/</p></li>
+<li><p>Save your settings</p></li>
+<li><p>Restart the app and confirm you can access your Ubuntu subsystem</p></li>
+<li><p>(optional) Change your colour scheme. Save your eyes! 👀</p></li>
+</ul>
+<h3 id="vscode">VSCode</h3><p>The team uses <a href="https://code.visualstudio.com/">VSCode</a> on a daily basis.</p>
+<p>Some of our preferred extensions are listed below, to install these extensions on VSCode (<em>Ctrl + Shift + P; &ldquo;Install Extensions&rdquo;</em>):</p>
+
+<ul>
+<li><p><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl">Remote WSL</a> (Open any folder in the Windows Subsystem for Linux (WSL) and take advantage of Visual Studio Code&rsquo;s full feature set, install the requested updates for Ubuntu when prompted)</p></li>
+<li><p><a href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens">GitLens</a> (Visualize code authorship at a glance via Git blame annotations and code lens, seamlessly navigate and explore Git repositories, gain valuable insights via powerful comparison commands, and so much more)</p></li>
+<li><p><a href="https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare">Live Share</a> (Real-time collaborative development from the comfort of your favorite tools.)</p></li>
+<li><p><a href="https://marketplace.visualstudio.com/items?itemName=HashiCorp.terraform">HashiCorp Terraform</a> (Syntax highlighting and autocompletion for Terraform)</p></li>
+<li><p><a href="https://marketplace.visualstudio.com/items?itemName=seatonjiang.gitmoji-vscode">Gitmoji</a> 😎 (An emoji tool for your git commit messages)</p></li>
+<li><p><a href="https://marketplace.visualstudio.com/items?itemName=bung87.rails">Ruby</a> (Ruby on Rails support for Visual Studio Code)</p></li>
+<li><p><a href="https://marketplace.visualstudio.com/items?itemName=TabNine.tabnine-vscode">Tabnine</a> (👩‍💻🤖 JavaScript, Python, Java, Typescript &amp; all other languages - AI Code completion plugin. Tabnine makes developers more productive by auto-completing their code.)</p></li>
+<li><p>(optional) Change your colour scheme. Save your eyes! 👀
+<a href="https://marketplace.visualstudio.com/items?itemName=dracula-theme.theme-dracula">Dracula</a> 🧛 is a good one.</p></li>
+</ul>
+<p>If you&rsquo;ve installed any Extensions prior to installing Remote WSL, re-install them on the WSL Ubuntu. To do this an &lsquo;Install&rsquo; button should appear on these extensions when viewed on the Extensions (under WSL:
+Ubuntu) submenu on the left hand side of VS Code.</p>
+
+              <div data-module='page-expiry' data-last-reviewed-on="2024-01-19">
+    <div class='page-expiry--not-expired'>
+      This page was last reviewed on 19 October 2023.
+
+        It needs to be reviewed again on 19 January 2024
+        by the page owner <a href="">#nvvs-devops</a>
+        .
+    </div>
+
+    <div class='page-expiry--expired'>
+      This page was set to be reviewed before 19 January 2024
+       by the page owner <a href="">#nvvs-devops</a>.
+      This might mean the content is out of date.
+    </div>
+  </div>
+
+          </main>
+
+          <aside>
+              <ul class="contribution-banner">
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops/blob/main/source/documentation/team-guide/team-tools.html.md.erb">View source</a></li>
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops/issues/new?labels=bug&amp;title=Re:%20'Team%20Tools'&amp;body=Problem%20with%20'Team%20Tools'%20(https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/team-tools.html)">Report problem</a></li>
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops">GitHub Repo</a></li>
+              </ul>
+          </aside>
+
+          <footer class="govuk-footer app-footer" role="contentinfo">
+  <div class="govuk-footer__meta">
+    <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+
+
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        class="govuk-footer__licence-logo"
+        xmlns="http://www.w3.org/2000/svg"
+        viewbox="0 0 483.2 195.7"
+        height="17"
+        width="41"
+      >
+        <path
+          fill="currentColor"
+          d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145"
+        />
+      </svg>
+      <span class="govuk-footer__licence-description">
+        All content is available under the
+        <a
+          class="govuk-footer__link"
+          href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+          rel="license"
+        >Open Government Licence v3.0</a>, except where otherwise stated
+      </span>
+    </div>
+    <div class="govuk-footer__meta-item">
+      <a
+        class="govuk-footer__link govuk-footer__copyright-logo"
+        href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
+      >© Crown copyright</a>
+    </div>
+  </div>
+</footer>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <script src="../../javascripts/application.js"></script>
+  </body>
+</html>

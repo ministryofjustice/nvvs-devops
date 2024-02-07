@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en" class="govuk-template no-js">
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>Re-configure AWS Vault - NVVS DevOps</title>
+
+    <link href="../../../stylesheets/manifest.css" rel="stylesheet" />
+
+    <link rel="canonical" href="https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/best-practices/use-aws-sso.html">
+
+      <meta name="robots" content="noindex" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:domain" content="ministryofjustice.github.io" />
+      <meta name="twitter:image" content="https://ministryofjustice.github.io/nvvs-devops/images/govuk-large.png" />
+      <meta name="twitter:title" content="Re-configure AWS Vault - NVVS DevOps" />
+      <meta name="twitter:url" content="https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/best-practices/use-aws-sso.html" />
+
+      <meta property="og:image" content="https://ministryofjustice.github.io/nvvs-devops/images/govuk-large.png" />
+      <meta property="og:site_name" content="NVVS DevOps" />
+      <meta property="og:title" content="Re-configure AWS Vault" />
+      <meta property="og:type" content="object" />
+      <meta property="og:url" content="https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/best-practices/use-aws-sso.html" />
+
+    
+  </head>
+
+  <body class="govuk-template__body">
+    <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+
+    <div class="app-pane">
+      <div class="app-pane__header toc-open-disabled">
+        <a href="#content" class="govuk-skip-link">Skip to main content</a>
+
+        <header class="govuk-header app-header" role="banner" data-module="govuk-header">
+  <div class="govuk-header__container govuk-header__container--full-width">
+    <div class="govuk-header__logo">
+      <a href="/" class="govuk-header__link govuk-header__link--homepage">
+        <span class="govuk-header__product-name">
+          NVVS DevOps
+        </span>
+      </a>
+        <strong class="govuk-tag">Beta</strong>
+    </div>
+    <div class="govuk-header__content">
+      <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
+      <nav>
+        <ul id="navigation" class="govuk-header__navigation govuk-header__navigation--end" aria-label="Top Level Navigation">
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://ministryofjustice.github.io/nvvs-devops">Home</a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://github.com/ministryofjustice/nvvs-devops">GitHub</a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://mojdt.slack.com/archives/C026AFE617T">Slack</a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+      </div>
+
+        <div id="toc-heading" class="toc-show fixedsticky">
+          <a href="#toc" class="toc-show__label js-toc-show" aria-controls="toc">
+            Table of contents <span class="toc-show__icon"></span>
+          </a>
+        </div>
+
+      <div class="app-pane__body" data-module="in-page-navigation">
+          <div class="app-pane__toc">
+            <div class="toc" data-module="table-of-contents">
+              <div class="search" data-module="search">
+  <form action="https://www.google.co.uk/search" method="get" role="search">
+    <input type="hidden" name="as_sitesearch" value="https://ministryofjustice.github.io/nvvs-devops"/>
+    <label class="govuk-label search__label" for="search">
+      Search (via Google)
+    </label>
+    <input class="govuk-input govuk-!-margin-bottom-4" id="search" name="q" type="text" aria-controls="search-results" placeholder="Search">
+  </form>
+  <div id="search-results" class="search-results" aria-hidden="true" role="dialog" aria-labelledby="search-results-title">
+    <div class="search-results__inner">
+      <button class="search-results__close">Close<span class="search-results__close-label"> search results</span></button>
+      <h2 id="search-results-title" class="search-results__title" aria-live="polite">Results</h2>
+      <div class="search-results__content"></div>
+    </div>
+  </div>
+</div>
+
+              <a href="#" class="toc__close js-toc-close" aria-controls="toc" aria-label="Hide table of contents"></a>
+              <nav id="toc" class="js-toc-list toc__list" aria-labelledby="toc-heading">
+                      <ul>
+  <li>
+    <a href="#configure-aws-vault"><span>Configure AWS Vault</span></a>
+    <ul>
+      <li>
+        <a href="#prerequisites"><span>Prerequisites</span></a>
+      </li>
+      <li>
+        <a href="#generate-a-gpg-key"><span>Generate a GPG key</span></a>
+      </li>
+      <li>
+        <a href="#export-gpg-tty-variable"><span>Export GPG_TTY variable</span></a>
+      </li>
+      <li>
+        <a href="#install-and-initialise-pass"><span>Install and initialise pass</span></a>
+        <ul>
+          <li>
+            <a href="#install"><span>Install</span></a>
+          </li>
+          <li>
+            <a href="#setting-it-up"><span>Setting it up</span></a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#finally-update-the-config-file"><span>Finally, update the config file</span></a>
+      </li>
+      <li>
+        <a href="#test-your-aws-cli"><span>Test your AWS Cli</span></a>
+      </li>
+      <li>
+        <a href="#forgotten-gpg-key-password"><span>Forgotten GPG Key Password</span></a>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+              </nav>
+            </div>
+          </div>
+
+        <div class="app-pane__content toc-open-disabled">
+          <main id="content" class="technical-documentation" data-module="anchored-headings">
+            <h1 id="configure-aws-vault">Configure AWS Vault</h1><p>Follow this guide to re-configure your <a href="https://github.com/99designs/aws-vault">AWS Vault</a> to work with <a href="https://aws.amazon.com/single-sign-on/">AWS SSO</a>.</p>
+
+<blockquote>
+<p><strong>Note:</strong></p>
+<p>This guide is for re-configuring AWS Vault running on <strong>Ubuntu</strong>.
+Some details are different on MacOS</p>
+</blockquote>
+<h2 id="prerequisites">Prerequisites</h2><p>To be able to follow this guide to setup the AWS SSO, you need to have the following already:</p>
+
+<ul>
+<li><a href="https://gnupg.org/index.html">GPG</a> installed.</li>
+<li><a href="https://github.com/99designs/aws-vault#installing">AWS Vault</a> set up.</li>
+<li>Access to <a href="https://moj.awsapps.com/start#/">Moj AWS SSO</a>.</li>
+</ul>
+<h2 id="generate-a-gpg-key">Generate a GPG key</h2><p>We will need a GPG key to encrypt credentials in a password store later. So, let&rsquo;s start by generating a GPG key. Run the following command:</p>
+<p><code>gpg --full-generate-key</code></p>
+<p>Press <code>Enter</code> for <code>Please select what kind of key you want:</code>, to select the default value.</p>
+<p>Press <code>Enter</code> again for <code>What keysize do you want? (3072)</code>, to select the given size.</p>
+<p>Press <code>Enter</code> again for <code>Key is valid for? (0)</code>, to set the key to never expire.</p>
+<p>Confirm this by typing <code>Y</code> for <code>Is this correct? (y/N)</code> in next step and then press <code>Enter</code>.</p>
+<p>Provide a ID for the key in the next step as below:</p>
+<p>Type <code>&lt;your username&gt; Password Storage Key</code> for <code>Real name:</code></p>
+<p>You may leave <code>Email address:</code> and <code>Comment:</code> blank.</p>
+<p>Finally, confirm all by typing <code>O</code> to accept Okay.</p>
+<p>It will prompt for a <code>Passphrase</code>. Create a new passphrase to protect the GPG key.</p>
+<p>A new GPG key is now created.</p>
+<h2 id="export-gpg-tty-variable">Export GPG_TTY variable</h2><p>If you do not already have, add the below in your <code>.bashrc</code> or <code>.zshrc</code> file:</p>
+<div class="highlight"><pre class="highlight plaintext"><code># gpg
+export GPG_TTY=$(tty)
+</code></pre></div><h2 id="install-and-initialise-pass">Install and initialise pass</h2><p>(Not required on MacOS as it uses the keychain to create a vault)</p>
+<p>We will use <a href="https://www.passwordstore.org/">pass</a> as the <code>backend</code> for <code>aws-vault</code> later. So, let&rsquo;s install it.</p>
+<h3 id="install">Install</h3><p>Run the below command:</p>
+<p><code>sudo apt-get install pass</code></p>
+<h3 id="setting-it-up">Setting it up</h3><p>To begin, run the following command:</p>
+<p><code>pass init &quot;&lt;your username&gt; Password Storage Key&quot;</code></p>
+<p>Here, <code>&lt;your username&gt; Password Storage Key</code> is the ID of the GPG key that you created in the previous step.</p>
+<p>A new Password Store is now created in <code>~/.password-store</code>.</p>
+<h2 id="finally-update-the-config-file">Finally, update the config file</h2><p>On MacOs use the config file from <a href="https://github.com/ministryofjustice/provision-ubuntu2004-on-wsl2/blob/master/templates/aws-cli-config.j2">here</a>
+It omits <code>--backend=pass --prompt=pass</code> from the config.</p>
+<p>Add to / replace with the below, your <code>~/.aws/config</code> file and save.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>[default]
+region=eu-west-2
+output=json
+
+[profile mojo-shared-services]
+sso_start_url = https://moj.awsapps.com/start
+sso_region = eu-west-2
+sso_account_id = &lt;shared services AWS account ID&gt;
+sso_role_name = AdministratorAccess
+region = eu-west-2
+output = json
+
+[profile mojo-development]
+sso_start_url = https://moj.awsapps.com/start
+sso_region = eu-west-2
+sso_account_id = &lt;development AWS account ID&gt;
+sso_role_name = AdministratorAccess
+region = eu-west-2
+output = json
+
+[profile mojo-pre-production]
+sso_start_url = https://moj.awsapps.com/start
+sso_region = eu-west-2
+sso_account_id = &lt;pre production AWS account ID&gt;
+sso_role_name = AdministratorAccess
+region = eu-west-2
+output = json
+
+[profile mojo-production]
+sso_start_url = https://moj.awsapps.com/start
+sso_region = eu-west-2
+sso_account_id = &lt;production AWS account ID&gt;
+sso_role_name = AdministratorAccess
+region = eu-west-2
+output = json
+
+[profile mojo-shared-services-cli]
+region = eu-west-2
+credential_process = /usr/local/bin/aws-vault exec mojo-shared-services --json --backend=pass --prompt=pass
+
+[profile mojo-development-cli]
+credential_process = /usr/local/bin/aws-vault exec mojo-development --json --backend=pass --prompt=pass
+
+[profile mojo-pre-production-cli]
+credential_process = /usr/local/bin/aws-vault exec mojo-pre-production --json --backend=pass --prompt=pass
+
+[profile mojo-production-cli]
+credential_process = /usr/local/bin/aws-vault exec mojo-production --json --backend=pass --prompt=pass
+</code></pre></div><h2 id="test-your-aws-cli">Test your AWS Cli</h2><p>Run the below, to set the <code>AWS_PROFILE</code> to use the shared services account:</p>
+<p><code>export AWS_PROFILE=mojo-shared-services-cli</code></p>
+<p>Then, run the below aws command:</p>
+<p><code>aws sts get-caller-identity</code></p>
+<p>When prompted, provide the passphrase for GPG key you created earlier.</p>
+<p>You will then see web page on your browser to authorise a request:</p>
+<p><a href="images/aws_sso_auth_prompt.png" target="_blank" rel="noopener noreferrer"><img src="images/aws_sso_auth_prompt.png" alt="AWS SSO authorisation prompt" /></a></p>
+<p>Click <code>Allow</code>.</p>
+<p>You should see the below in the terminal:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>{
+    "UserId": "&lt;your username&gt;@digital.justice.gov.uk",
+    "Account": "&lt;shared services AWS account id&gt;",
+    "Arn": "arn:aws:sts::&lt;shared services AWS account id&gt;:assumed-role/&lt;your username&gt;@digital.justice.gov.uk"
+}
+</code></pre></div><p>Congratulations, you have successfully configured your AWS Vault to work with AWS SSO.</p>
+<p>In order for the SSO to work you wil need access to MOJ gihub org. Please contact Ops-Engineering team slack channel <a href="https://join.slack.com/share/enQtNTMyODc1MDM1MTc4My1kMGI3YjRhMjZhZmJjOGZjZmY2ZGNmMWY0MWEzOGJiMGJkOTdlODBkOTQzNTVlYzZiNWI1M2MyYzI4NjA4ZTU1">here</a> with your github handle once that is completed, also request member of the team to add you to github teams in this <a href="https://github.com/ministryofjustice/staff-technology-services-github-teams">repo</a></p>
+<h2 id="forgotten-gpg-key-password">Forgotten GPG Key Password</h2><p>In the event you forget the password of your GPG Key you will need to delete it and create another.</p>
+<p>List the key. You will need the string under &lsquo;pub&rsquo; later.</p>
+<div class="highlight"><pre class="highlight plaintext"><code>username@laptop:~$ gpg -k
+/home/username/.gnupg/pubring.kbx
+-----------------------------------
+pub   rsa3072 2021-11-19 [SC]
+      DDE8C445795E88ABB4CBCE49C3F2562BD
+uid           [ultimate] Gyour username&gt; Password Storage Key
+sub   rsa3072 2021-11-19 [E]
+</code></pre></div><p>Now delete the secret key:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>username@laptop:~$ gpg  --delete-secret-keys DDE8C445795E88ABB4CBCE49C3F2562BD
+gpg (GnuPG) 2.2.19; Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+
+sec  rsa3072/C3F2562BD768D6DC 2021-11-19 &lt;your username&gt; Password Storage Key
+
+Delete this key from the keyring? (y/N) y
+This is a secret key! - really delete? (y/N) y
+</code></pre></div><p>Now delete the key itself:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>username@laptop:~$ gpg  --delete-keys DDE8C445795E88ABB4CBCE49C3F2562BD
+gpg (GnuPG) 2.2.19; Copyright (C) 2019 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+
+pub  rsa3072/C3F2562BD768D6DC 2021-11-19 &lt;your username&gt; Password Storage Key
+
+Delete this key from the keyring? (y/N) y
+
+### You can now check the key has been deleted with the following command
+</code></pre></div><p>Confirm the key has been deleted with the following command:</p>
+<div class="highlight"><pre class="highlight plaintext"><code>username@laptop:~$ gpg -k
+gpg: checking the trustdb
+gpg: no ultimately trusted keys found
+</code></pre></div><p>Now you must generate a new GPG Key as per the documentation above.</p>
+
+              <div data-module='page-expiry' data-last-reviewed-on="2024-01-20">
+    <div class='page-expiry--not-expired'>
+      This page was last reviewed on 20 October 2023.
+
+        It needs to be reviewed again on 20 January 2024
+        by the page owner <a href="">#nvvs-devops</a>
+        .
+    </div>
+
+    <div class='page-expiry--expired'>
+      This page was set to be reviewed before 20 January 2024
+       by the page owner <a href="">#nvvs-devops</a>.
+      This might mean the content is out of date.
+    </div>
+  </div>
+
+          </main>
+
+          <aside>
+              <ul class="contribution-banner">
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops/blob/main/source/documentation/team-guide/best-practices/use-aws-sso.html.md.erb">View source</a></li>
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops/issues/new?labels=bug&amp;title=Re:%20'Re-configure%20AWS%20Vault'&amp;body=Problem%20with%20'Re-configure%20AWS%20Vault'%20(https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/best-practices/use-aws-sso.html)">Report problem</a></li>
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops">GitHub Repo</a></li>
+              </ul>
+          </aside>
+
+          <footer class="govuk-footer app-footer" role="contentinfo">
+  <div class="govuk-footer__meta">
+    <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+
+
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        class="govuk-footer__licence-logo"
+        xmlns="http://www.w3.org/2000/svg"
+        viewbox="0 0 483.2 195.7"
+        height="17"
+        width="41"
+      >
+        <path
+          fill="currentColor"
+          d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145"
+        />
+      </svg>
+      <span class="govuk-footer__licence-description">
+        All content is available under the
+        <a
+          class="govuk-footer__link"
+          href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+          rel="license"
+        >Open Government Licence v3.0</a>, except where otherwise stated
+      </span>
+    </div>
+    <div class="govuk-footer__meta-item">
+      <a
+        class="govuk-footer__link govuk-footer__copyright-logo"
+        href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
+      >© Crown copyright</a>
+    </div>
+  </div>
+</footer>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <script src="../../../javascripts/application.js"></script>
+  </body>
+</html>

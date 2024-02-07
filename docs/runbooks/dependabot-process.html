@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en" class="govuk-template no-js">
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>NVVS DevOps</title>
+
+    <link href="../stylesheets/manifest.css" rel="stylesheet" />
+
+    <link rel="canonical" href="https://ministryofjustice.github.io/nvvs-devops/runbooks/dependabot-process.html">
+
+      <meta name="robots" content="noindex" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:domain" content="ministryofjustice.github.io" />
+      <meta name="twitter:image" content="https://ministryofjustice.github.io/nvvs-devops/images/govuk-large.png" />
+      <meta name="twitter:title" content="NVVS DevOps" />
+      <meta name="twitter:url" content="https://ministryofjustice.github.io/nvvs-devops/runbooks/dependabot-process.html" />
+
+      <meta property="og:image" content="https://ministryofjustice.github.io/nvvs-devops/images/govuk-large.png" />
+      <meta property="og:site_name" content="NVVS DevOps" />
+      <meta property="og:type" content="object" />
+      <meta property="og:url" content="https://ministryofjustice.github.io/nvvs-devops/runbooks/dependabot-process.html" />
+
+    
+  </head>
+
+  <body class="govuk-template__body">
+    <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+
+    <div class="app-pane">
+      <div class="app-pane__header toc-open-disabled">
+        <a href="#content" class="govuk-skip-link">Skip to main content</a>
+
+        <header class="govuk-header app-header" role="banner" data-module="govuk-header">
+  <div class="govuk-header__container govuk-header__container--full-width">
+    <div class="govuk-header__logo">
+      <a href="/" class="govuk-header__link govuk-header__link--homepage">
+        <span class="govuk-header__product-name">
+          NVVS DevOps
+        </span>
+      </a>
+        <strong class="govuk-tag">Beta</strong>
+    </div>
+    <div class="govuk-header__content">
+      <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
+      <nav>
+        <ul id="navigation" class="govuk-header__navigation govuk-header__navigation--end" aria-label="Top Level Navigation">
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://ministryofjustice.github.io/nvvs-devops">Home</a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://github.com/ministryofjustice/nvvs-devops">GitHub</a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://mojdt.slack.com/archives/C026AFE617T">Slack</a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+      </div>
+
+        <div id="toc-heading" class="toc-show fixedsticky">
+          <a href="#toc" class="toc-show__label js-toc-show" aria-controls="toc">
+            Table of contents <span class="toc-show__icon"></span>
+          </a>
+        </div>
+
+      <div class="app-pane__body" data-module="in-page-navigation">
+          <div class="app-pane__toc">
+            <div class="toc" data-module="table-of-contents">
+              <div class="search" data-module="search">
+  <form action="https://www.google.co.uk/search" method="get" role="search">
+    <input type="hidden" name="as_sitesearch" value="https://ministryofjustice.github.io/nvvs-devops"/>
+    <label class="govuk-label search__label" for="search">
+      Search (via Google)
+    </label>
+    <input class="govuk-input govuk-!-margin-bottom-4" id="search" name="q" type="text" aria-controls="search-results" placeholder="Search">
+  </form>
+  <div id="search-results" class="search-results" aria-hidden="true" role="dialog" aria-labelledby="search-results-title">
+    <div class="search-results__inner">
+      <button class="search-results__close">Close<span class="search-results__close-label"> search results</span></button>
+      <h2 id="search-results-title" class="search-results__title" aria-live="polite">Results</h2>
+      <div class="search-results__content"></div>
+    </div>
+  </div>
+</div>
+
+              <a href="#" class="toc__close js-toc-close" aria-controls="toc" aria-label="Hide table of contents"></a>
+              <nav id="toc" class="js-toc-list toc__list" aria-labelledby="toc-heading">
+                      <ul>
+  <li>
+    <a href="#dns-dhcp-admin-portal-dependabot"><span>DNS/DHCP Admin Portal - Dependabot</span></a>
+    <ul>
+      <li>
+        <a href="#dependabot-example"><span>Dependabot Example</span></a>
+        <ul>
+          <li>
+            <a href="#omniauth-rails-csrf-protection"><span>omniauth-rails_csrf_protection</span></a>
+          </li>
+          <li>
+            <a href="#dns-dhcp-admin-repository"><span>DNS DHCP Admin Repository</span></a>
+          </li>
+          <li>
+            <a href="#dhcp-server-repository"><span>DHCP Server Repository</span></a>
+          </li>
+          <li>
+            <a href="#errors"><span>Errors</span></a>
+          </li>
+          <li>
+            <a href="#conflicts"><span>Conflicts</span></a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+              </nav>
+            </div>
+          </div>
+
+        <div class="app-pane__content toc-open-disabled">
+          <main id="content" class="technical-documentation" data-module="anchored-headings">
+            <h1 id="dns-dhcp-admin-portal-dependabot">DNS/DHCP Admin Portal - Dependabot</h1><p>Repositories required: 
+- <a href="https://github.com/ministryofjustice/staff-device-dns-dhcp-admin">DNS DHCP Admin Repository</a>
+- <a href="https://github.com/ministryofjustice/staff-device-dhcp-server">DHCP Server Repository</a></p>
+<div class="highlight"><pre class="highlight plaintext"><code>git clone https://github.com/ministryofjustice/staff-device-dns-dhcp-admin
+git clone https://github.com/ministryofjustice/staff-device-dhcp-server
+</code></pre></div><h2 id="dependabot-example">Dependabot Example</h2><p>We will use the <a href="https://github.com/cookpad/omniauth-rails_csrf_protection"><code>omniauth-rails_csrf_protection</code></a> dependabot PR listed <a href="https://github.com/ministryofjustice/staff-device-dns-dhcp-admin/pull/461">here</a> to describe the steps taken when working on a dependabot PR. This will include <em>local</em> setup of both the portal and DHCP server, the latter however is not required in this specific example, given the nature of the upgrade.</p>
+<h3 id="omniauth-rails-csrf-protection">omniauth-rails_csrf_protection</h3><p>Dependabot monitors repository gem files and creates pull requests on respective repositories with out-of-date gems.</p>
+<p>If you do not have the repository in question: <code>git clone https://github.com/ministryofjustice/staff-device-dhcp-server</code></p>
+<p>Presuming you already have the repository, start on the <code>main branch</code>.</p>
+
+<ol>
+<li><p><code>git pull</code> - to pull the latest updates to main.</p></li>
+<li><p><code>git switch dependabot/bundler/omniauth-rails_csrf_protection-1.0.1</code> - to switch to the dependant branch.</p></li>
+<li><p><code>make authenticate-docker</code> to authenticate to our AWS ECR.</p></li>
+<li><p><code>make build-dev</code> to locally build the containers.</p></li>
+<li><p><code>make test</code> to run rspec tests.</p></li>
+<li><p><code>make serve</code> to locally serve the front-end for any additional testing requirements.</p></li>
+<li><p>Merge dependabot PR and monitor pipeline for errors.</p></li>
+</ol>
+<h3 id="dns-dhcp-admin-repository">DNS DHCP Admin Repository</h3>
+<ol>
+<li><code>export SHARED_SERVICES_ACCOUNT_ID=&lt;shared services account ID&gt;</code><br>
+This step is required so the following step knows which AWS account to query.</li>
+<li><code>make authenticate-docker</code> to authenticate to our AWS ECR.<br>
+<code>
+./scripts/check_container_registry_account_id.sh
+./scripts/authenticate_docker.sh
+Login Succeeded
+</code></li>
+<li><code>make build-dev</code> to locally build the containers.<br>
+<code>
+env ENV=development UID=1000 docker-compose -f docker-compose.yml build
+admin-db uses an image, skipping
+Building app
+[+] Building 172.9s (19/19) FINISHED                                    &lt;----- NOTE THE TIME THIS CAN TAKE
+=&gt; [internal] load build definition from Dockerfile  0.1s
+=&gt; =&gt; transferring dockerfile: 38B  0.0s
+=&gt; [internal] load .dockerignore 0.0s
+=&gt; =&gt; transferring context: 35B  0.0s
+=&gt; [internal] load metadata for ############.dkr.ecr.eu-west-2.amazonaws.com/admin:ruby-2-7-1-alpine3-12 22.4s
+=&gt; [auth] sharing credentials for ############.dkr.ecr.eu-west-2.amazonaws.com  0.0s
+=&gt; [ 1/12] FROM ############.dkr.ecr.eu-west-2.amazonaws.com/admin:ruby-2-7-1-alpine3-12@sha256:############################# 0.0s
+...
+...
+...
+=&gt; [12/12] RUN if [ true = &#39;true&#39; ]; then   ASSET_PRECOMPILATION_ONLY=true RAILS_ENV=production bundle exec rails assets:precompile;   fi 10.3s
+...
+Use &#39;docker scan&#39; to run Snyk tests against images to find vulnerabilities and learn how to fix them
+</code></li>
+<li><code>make serve</code> to locally serve the front-end.<br>
+<code>
+env ENV=development UID=1000 docker-compose -f docker-compose.yml down
+Removing staff-device-dns-dhcp-admin_app_1      ... done
+Removing staff-device-dns-dhcp-admin_admin-db_1 ... done
+...
+...
+...
+app_1       | *  Max threads: 5
+app_1       | *  Environment: development
+app_1       | *          PID: 1
+app_1       | * Listening on http://0.0.0.0:3000     &lt;----- Ctrl/Cmd + Left Click here to open the page in a browser
+</code></li>
+</ol>
+<h3 id="dhcp-server-repository">DHCP Server Repository</h3><p>It is not required to run the DHCP server as part of the <code>omniauth-rails_csrf_protection</code> upgrade example. The process is listed below however for completeness.</p>
+<p>(Output from the below commands is omitted as it is largely the same as above )</p>
+
+<ol>
+<li><code>export SHARED_SERVICES_ACCOUNT_ID=&lt;shared services account ID&gt;</code></li>
+<li><code>make authenticate-docker</code> to authenticate to our AWS ECR.</li>
+<li><code>make build-dev</code> to locally build the containers.</li>
+<li><code>make run</code> </li>
+<li><code>make test</code></li>
+</ol>
+<h3 id="errors">Errors</h3><p>If you are in doubt as to the state of your container images <code>make implode</code>.</p>
+<h3 id="conflicts">Conflicts</h3><p>If Dependabot creates PR for <code>omniauth-rails_csrf_protection</code> gem - for <a href="https://github.com/ministryofjustice/staff-device-dns-dhcp-admin/pull/461">example</a>.<br>
+The PR is not merged by the team for a period of time, this can result in numerous PRs that are merged into the <code>main</code> branch <em>before</em> the PR is merged.</p>
+<p>As a result the PR has diverged from the main branch, that is to say, the newly merged changes in <code>main</code> are <em>not</em> included in the dependabot PR.
+To combine the changes previously made to <code>main</code> into the <code>omniauth-rails_csrf_protection</code> PR complete the <code>git</code> steps below.</p>
+
+<ol>
+<li><p><code>git pull</code> - to pull the latest updates to main.</p></li>
+<li><p><code>git switch dependabot/bundler/omniauth-rails_csrf_protection-1.0.1</code> - to switch to the dependant branch.</p></li>
+<li><p><code>git status</code> - to confirm which branch you are currently on.</p></li>
+<li><p><code>git rebase main</code> - this command combines the current dependabot PR branch with the  up-to-date main branch. More information <a href="https://git-scm.com/book/en/v2/Git-Branching-Rebasing">here</a>.</p></li>
+</ol>
+
+            
+          </main>
+
+          <aside>
+              <ul class="contribution-banner">
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops/blob/main/source/runbooks/dependabot-process.html.md.erb">View source</a></li>
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops/issues/new?labels=bug&amp;title=Re:%20''&amp;body=Problem%20with%20''%20(https://ministryofjustice.github.io/nvvs-devops/runbooks/dependabot-process.html)">Report problem</a></li>
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops">GitHub Repo</a></li>
+              </ul>
+          </aside>
+
+          <footer class="govuk-footer app-footer" role="contentinfo">
+  <div class="govuk-footer__meta">
+    <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+
+
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        class="govuk-footer__licence-logo"
+        xmlns="http://www.w3.org/2000/svg"
+        viewbox="0 0 483.2 195.7"
+        height="17"
+        width="41"
+      >
+        <path
+          fill="currentColor"
+          d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145"
+        />
+      </svg>
+      <span class="govuk-footer__licence-description">
+        All content is available under the
+        <a
+          class="govuk-footer__link"
+          href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+          rel="license"
+        >Open Government Licence v3.0</a>, except where otherwise stated
+      </span>
+    </div>
+    <div class="govuk-footer__meta-item">
+      <a
+        class="govuk-footer__link govuk-footer__copyright-logo"
+        href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
+      >© Crown copyright</a>
+    </div>
+  </div>
+</footer>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <script src="../javascripts/application.js"></script>
+  </body>
+</html>

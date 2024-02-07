@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en" class="govuk-template no-js">
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>Signing GitHub Commits - NVVS DevOps</title>
+
+    <link href="../../../stylesheets/manifest.css" rel="stylesheet" />
+
+    <link rel="canonical" href="https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/best-practices/signing-github-commits.html">
+
+      <meta name="robots" content="noindex" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:domain" content="ministryofjustice.github.io" />
+      <meta name="twitter:image" content="https://ministryofjustice.github.io/nvvs-devops/images/govuk-large.png" />
+      <meta name="twitter:title" content="Signing GitHub Commits - NVVS DevOps" />
+      <meta name="twitter:url" content="https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/best-practices/signing-github-commits.html" />
+
+      <meta property="og:image" content="https://ministryofjustice.github.io/nvvs-devops/images/govuk-large.png" />
+      <meta property="og:site_name" content="NVVS DevOps" />
+      <meta property="og:title" content="Signing GitHub Commits" />
+      <meta property="og:type" content="object" />
+      <meta property="og:url" content="https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/best-practices/signing-github-commits.html" />
+
+    
+  </head>
+
+  <body class="govuk-template__body">
+    <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+
+    <div class="app-pane">
+      <div class="app-pane__header toc-open-disabled">
+        <a href="#content" class="govuk-skip-link">Skip to main content</a>
+
+        <header class="govuk-header app-header" role="banner" data-module="govuk-header">
+  <div class="govuk-header__container govuk-header__container--full-width">
+    <div class="govuk-header__logo">
+      <a href="/" class="govuk-header__link govuk-header__link--homepage">
+        <span class="govuk-header__product-name">
+          NVVS DevOps
+        </span>
+      </a>
+        <strong class="govuk-tag">Beta</strong>
+    </div>
+    <div class="govuk-header__content">
+      <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
+      <nav>
+        <ul id="navigation" class="govuk-header__navigation govuk-header__navigation--end" aria-label="Top Level Navigation">
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://ministryofjustice.github.io/nvvs-devops">Home</a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://github.com/ministryofjustice/nvvs-devops">GitHub</a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://mojdt.slack.com/archives/C026AFE617T">Slack</a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+      </div>
+
+        <div id="toc-heading" class="toc-show fixedsticky">
+          <a href="#toc" class="toc-show__label js-toc-show" aria-controls="toc">
+            Table of contents <span class="toc-show__icon"></span>
+          </a>
+        </div>
+
+      <div class="app-pane__body" data-module="in-page-navigation">
+          <div class="app-pane__toc">
+            <div class="toc" data-module="table-of-contents">
+              <div class="search" data-module="search">
+  <form action="https://www.google.co.uk/search" method="get" role="search">
+    <input type="hidden" name="as_sitesearch" value="https://ministryofjustice.github.io/nvvs-devops"/>
+    <label class="govuk-label search__label" for="search">
+      Search (via Google)
+    </label>
+    <input class="govuk-input govuk-!-margin-bottom-4" id="search" name="q" type="text" aria-controls="search-results" placeholder="Search">
+  </form>
+  <div id="search-results" class="search-results" aria-hidden="true" role="dialog" aria-labelledby="search-results-title">
+    <div class="search-results__inner">
+      <button class="search-results__close">Close<span class="search-results__close-label"> search results</span></button>
+      <h2 id="search-results-title" class="search-results__title" aria-live="polite">Results</h2>
+      <div class="search-results__content"></div>
+    </div>
+  </div>
+</div>
+
+              <a href="#" class="toc__close js-toc-close" aria-controls="toc" aria-label="Hide table of contents"></a>
+              <nav id="toc" class="js-toc-list toc__list" aria-labelledby="toc-heading">
+                      <ul>
+  <li>
+    <a href="#signing-github-commits"><span>Signing GitHub Commits</span></a>
+    <ul>
+      <li>
+        <a href="#generate-a-new-gpg-key"><span>Generate a new GPG key</span></a>
+      </li>
+      <li>
+        <a href="#add-the-gpg-key-to-github"><span>Add the GPG key to GitHub</span></a>
+      </li>
+      <li>
+        <a href="#configure-git-with-the-gpg-key"><span>Configure Git with the GPG key</span></a>
+      </li>
+      <li>
+        <a href="#export-gpg-tty-variable"><span>Export GPG_TTY variable</span></a>
+      </li>
+      <li>
+        <a href="#sign-your-commits"><span>Sign your commits</span></a>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+              </nav>
+            </div>
+          </div>
+
+        <div class="app-pane__content toc-open-disabled">
+          <main id="content" class="technical-documentation" data-module="anchored-headings">
+            <h1 id="signing-github-commits">Signing GitHub Commits</h1><h2 id="generate-a-new-gpg-key">Generate a new GPG key</h2>
+<ol>
+<li><p>Download and install the GPG command line tools for your operating system.
+<code>sudo apt-get install gnupg</code></p></li>
+<li><p>Generate a GPG key pair.
+<code>gpg --full-generate-key</code></p></li>
+<li><p>At the prompt, specify the kind of key you want, or press <code>Enter</code> to accept the default.</p></li>
+<li><p>At the prompt, specify the key size you want, or press <code>Enter</code> to accept the default. Your key must be at least <code>4096</code> bits.</p></li>
+<li><p>Enter the length of time the key should be valid. Press <code>Enter</code> to specify the default selection, indicating that the key doesn&rsquo;t expire.</p></li>
+<li><p>Verify that your selections are correct.</p></li>
+<li><p>Enter your user ID information.</p></li>
+<li><p>List the long form of the GPG keys for which you have both a public and private key.
+<code>gpg --list-secret-keys --keyid-format=long</code></p></li>
+<li><p>From the list of GPG keys, copy the long form of the GPG key ID you&rsquo;d like to use.<br />In this example, the GPG key ID is <code>3AA5C34371567BD2</code>:
+<code>sec   rsa4096/3AA5C34371567BD2 2021-11-08 [SC]</code></p></li>
+<li><p>Paste the text below, substituting in the GPG key ID you&rsquo;d like to use. In this example, the GPG key ID is <code>3AA5C34371567BD2</code>:
+<code>gpg --armor --export 3AA5C34371567BD2</code></p></li>
+<li><p>Copy your GPG key, beginning with <code>-----BEGIN PGP PUBLIC KEY BLOCK-----</code> and ending with <code>-----END PGP PUBLIC KEY BLOCK-----</code>.</p></li>
+</ol>
+<h2 id="add-the-gpg-key-to-github">Add the GPG key to GitHub</h2>
+<ol>
+<li><p>In the upper-right corner of any page, click your profile photo, then click <strong>Settings</strong>.</p></li>
+<li><p>In the user settings sidebar, click <strong>SSH and GPG keys</strong>.</p></li>
+<li><p>Click <strong>New GPG key</strong>.</p></li>
+<li><p>In the &ldquo;Key&rdquo; field, paste the GPG key you copied earlier</p></li>
+<li><p>Click <strong>Add GPG key</strong>.</p></li>
+</ol>
+<h2 id="configure-git-with-the-gpg-key">Configure Git with the GPG key</h2>
+<ol>
+<li><p>List the long form of the GPG keys for which you have both a public and private key.
+<code>gpg --list-secret-keys --keyid-format=long</code></p></li>
+<li><p>From the list of GPG keys, copy the long form of the GPG key ID you&rsquo;d like to use.<br />In this example, the GPG key ID is <code>3AA5C34371567BD2</code>:
+<code>sec   rsa4096/3AA5C34371567BD2 2021-11-08 [SC]</code></p></li>
+<li><p>To set your GPG signing key in Git, paste the text below, substituting in the GPG key ID you&rsquo;d like to use. In this example, the GPG key ID is <code>3AA5C34371567BD2</code>:
+<code>git config --global user.signingkey 3AA5C34371567BD2</code></p></li>
+</ol>
+<h2 id="export-gpg-tty-variable">Export GPG_TTY variable</h2><p>If you do not already have, add the below in your <code>.bashrc</code> or <code>.zshrc</code> file:</p>
+<div class="highlight"><pre class="highlight plaintext"><code># gpg
+export GPG_TTY=$(tty)
+</code></pre></div><h2 id="sign-your-commits">Sign your commits</h2>
+<blockquote>
+<p><strong>Tips</strong>:</p>
+<p>To configure your Git client to sign commits by default for a local repository,
+run <code>git config commit.gpgsign true</code>.</p>
+<p>To sign all commits by default in any local repository on your computer,
+run <code>git config --global commit.gpgsign true</code>.</p>
+</blockquote>
+
+<ol>
+<li><p>When committing changes in your local branch, add the -S flag to the git commit command:
+<code>git commit -S -m &quot;your commit message&quot;</code></p></li>
+<li><p>When you&rsquo;ve finished creating commits locally, push them to your remote repository on GitHub:
+<code>git push</code></p></li>
+</ol>
+
+              <div data-module='page-expiry' data-last-reviewed-on="2024-01-16">
+    <div class='page-expiry--not-expired'>
+      This page was last reviewed on 16 October 2023.
+
+        It needs to be reviewed again on 16 January 2024
+        by the page owner <a href="">#nvvs-devops</a>
+        .
+    </div>
+
+    <div class='page-expiry--expired'>
+      This page was set to be reviewed before 16 January 2024
+       by the page owner <a href="">#nvvs-devops</a>.
+      This might mean the content is out of date.
+    </div>
+  </div>
+
+          </main>
+
+          <aside>
+              <ul class="contribution-banner">
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops/blob/main/source/documentation/team-guide/best-practices/signing-github-commits.html.md.erb">View source</a></li>
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops/issues/new?labels=bug&amp;title=Re:%20'Signing%20GitHub%20Commits'&amp;body=Problem%20with%20'Signing%20GitHub%20Commits'%20(https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/best-practices/signing-github-commits.html)">Report problem</a></li>
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops">GitHub Repo</a></li>
+              </ul>
+          </aside>
+
+          <footer class="govuk-footer app-footer" role="contentinfo">
+  <div class="govuk-footer__meta">
+    <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+
+
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        class="govuk-footer__licence-logo"
+        xmlns="http://www.w3.org/2000/svg"
+        viewbox="0 0 483.2 195.7"
+        height="17"
+        width="41"
+      >
+        <path
+          fill="currentColor"
+          d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145"
+        />
+      </svg>
+      <span class="govuk-footer__licence-description">
+        All content is available under the
+        <a
+          class="govuk-footer__link"
+          href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+          rel="license"
+        >Open Government Licence v3.0</a>, except where otherwise stated
+      </span>
+    </div>
+    <div class="govuk-footer__meta-item">
+      <a
+        class="govuk-footer__link govuk-footer__copyright-logo"
+        href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
+      >© Crown copyright</a>
+    </div>
+  </div>
+</footer>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <script src="../../../javascripts/application.js"></script>
+  </body>
+</html>

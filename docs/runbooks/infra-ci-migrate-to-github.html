@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en" class="govuk-template no-js">
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+    <title>Infrastructure CI Migration to GitHub Actions - NVVS DevOps</title>
+
+    <link href="../stylesheets/manifest.css" rel="stylesheet" />
+
+    <link rel="canonical" href="https://ministryofjustice.github.io/nvvs-devops/runbooks/infra-ci-migrate-to-github.html">
+
+      <meta name="robots" content="noindex" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:domain" content="ministryofjustice.github.io" />
+      <meta name="twitter:image" content="https://ministryofjustice.github.io/nvvs-devops/images/govuk-large.png" />
+      <meta name="twitter:title" content="Infrastructure CI Migration to GitHub Actions - NVVS DevOps" />
+      <meta name="twitter:url" content="https://ministryofjustice.github.io/nvvs-devops/runbooks/infra-ci-migrate-to-github.html" />
+
+      <meta property="og:image" content="https://ministryofjustice.github.io/nvvs-devops/images/govuk-large.png" />
+      <meta property="og:site_name" content="NVVS DevOps" />
+      <meta property="og:title" content="Infrastructure CI Migration to GitHub Actions" />
+      <meta property="og:type" content="object" />
+      <meta property="og:url" content="https://ministryofjustice.github.io/nvvs-devops/runbooks/infra-ci-migrate-to-github.html" />
+
+    
+  </head>
+
+  <body class="govuk-template__body">
+    <script>document.body.className = ((document.body.className) ? document.body.className + ' js-enabled' : 'js-enabled');</script>
+
+    <div class="app-pane">
+      <div class="app-pane__header toc-open-disabled">
+        <a href="#content" class="govuk-skip-link">Skip to main content</a>
+
+        <header class="govuk-header app-header" role="banner" data-module="govuk-header">
+  <div class="govuk-header__container govuk-header__container--full-width">
+    <div class="govuk-header__logo">
+      <a href="/" class="govuk-header__link govuk-header__link--homepage">
+        <span class="govuk-header__product-name">
+          NVVS DevOps
+        </span>
+      </a>
+        <strong class="govuk-tag">Beta</strong>
+    </div>
+    <div class="govuk-header__content">
+      <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
+      <nav>
+        <ul id="navigation" class="govuk-header__navigation govuk-header__navigation--end" aria-label="Top Level Navigation">
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://ministryofjustice.github.io/nvvs-devops">Home</a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://github.com/ministryofjustice/nvvs-devops">GitHub</a>
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a class="govuk-header__link" href="https://mojdt.slack.com/archives/C026AFE617T">Slack</a>
+            </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+
+      </div>
+
+        <div id="toc-heading" class="toc-show fixedsticky">
+          <a href="#toc" class="toc-show__label js-toc-show" aria-controls="toc">
+            Table of contents <span class="toc-show__icon"></span>
+          </a>
+        </div>
+
+      <div class="app-pane__body" data-module="in-page-navigation">
+          <div class="app-pane__toc">
+            <div class="toc" data-module="table-of-contents">
+              <div class="search" data-module="search">
+  <form action="https://www.google.co.uk/search" method="get" role="search">
+    <input type="hidden" name="as_sitesearch" value="https://ministryofjustice.github.io/nvvs-devops"/>
+    <label class="govuk-label search__label" for="search">
+      Search (via Google)
+    </label>
+    <input class="govuk-input govuk-!-margin-bottom-4" id="search" name="q" type="text" aria-controls="search-results" placeholder="Search">
+  </form>
+  <div id="search-results" class="search-results" aria-hidden="true" role="dialog" aria-labelledby="search-results-title">
+    <div class="search-results__inner">
+      <button class="search-results__close">Close<span class="search-results__close-label"> search results</span></button>
+      <h2 id="search-results-title" class="search-results__title" aria-live="polite">Results</h2>
+      <div class="search-results__content"></div>
+    </div>
+  </div>
+</div>
+
+              <a href="#" class="toc__close js-toc-close" aria-controls="toc" aria-label="Hide table of contents"></a>
+              <nav id="toc" class="js-toc-list toc__list" aria-labelledby="toc-heading">
+                      <ul>
+  <li>
+    <a href="#infrastructure-ci-migration-to-github-actions"><span>Infrastructure CI Migration to GitHub Actions</span></a>
+    <ul>
+      <li>
+        <a href="#benefits"><span>Benefits</span></a>
+      </li>
+      <li>
+        <a href="#stages"><span>Stages</span></a>
+        <ul>
+          <li>
+            <a href="#overview"><span>Overview</span></a>
+          </li>
+          <li>
+            <a href="#makefile-update"><span>Makefile update</span></a>
+          </li>
+          <li>
+            <a href="#readme-update"><span>README update</span></a>
+          </li>
+          <li>
+            <a href="#terraform-version"><span>Terraform Version</span></a>
+          </li>
+          <li>
+            <a href="#terraform-inputs-tf-var"><span>Terraform Inputs (TF_VAR)</span></a>
+          </li>
+          <li>
+            <a href="#github-permissions-amp-github-secrets"><span>GitHub Permissions & GitHub Secrets</span></a>
+          </li>
+          <li>
+            <a href="#test-github-action-on-branch"><span>Test GitHub Action on branch</span></a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#checklist"><span>Checklist</span></a>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+              </nav>
+            </div>
+          </div>
+
+        <div class="app-pane__content toc-open-disabled">
+          <main id="content" class="technical-documentation" data-module="anchored-headings">
+            <h1 id="infrastructure-ci-migration-to-github-actions">Infrastructure CI Migration to GitHub Actions</h1><p>This runbook outlines the steps to prepare a typical NVVS Terraform Infrastructure for migration to GitHUb Actions as per <a href="../documentation/adrs/011-use-github-actions-for-ci-cd.html">ADR 011 - Use GitHub Actions for CI/CD</a>.</p>
+<h2 id="benefits">Benefits</h2><p>The procedure for migrating to GitHub Actions for CI will require some housekeeping and minor refactoring is necessary to enable the GitHub Action CI deployments. It will provide the following benefits.</p>
+
+<ul>
+<li>Quicker deployments.</li>
+<li>Simple branch build and deploy.</li>
+<li>Clearer sequence display and log viewing for engineers to understand the context of deployment processes in action.</li>
+<li>Terraform version will be defined in one location(instead of Readme, buildspec or latest pulled in).</li>
+<li>Retrieval of TF_VAR inputs will be scripted and consistent (no need to assemble values form various sources indicated in example files and Readme).</li>
+<li>The above will enable quicker on-boarding of engineers.</li>
+<li>Linting and Security tools will enable overview of as yet undefined issues.</li>
+</ul>
+<h2 id="stages">Stages</h2><p>Initially the project repository will be prepared to run <code>terraform plan</code> on GitHub. When this is achieved the AWS CodeBuild pipeline can be disabled; prior to full migration to GitHub. The Terraform state and Dynamo DB state locking AWS resources would be managed via another Terraform Module or the current module would have option to remove the AWS Codepipeline resources.</p>
+<p>At the time of writing we can reference the branch of <a href="https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1">network-access-control-infrastructure</a> for examples to reference.</p>
+<h3 id="overview">Overview</h3>
+<ul>
+<li>Makefile update</li>
+<li>README update</li>
+<li>Terraform Version</li>
+<li>Terraform Inputs (TF_VAR)</li>
+<li>GitHub Permissions &amp; GitHub Secrets</li>
+<li>Test GitHub Action on branch</li>
+<li>Test Static Code Analysis</li>
+</ul>
+<h3 id="makefile-update">Makefile update</h3><p>For consistency ensure the <code>Makefile</code> has all the commands here:</p>
+<div class="highlight"><pre class="highlight make"><code><span class="c">#!make
+</span><span class="k">include</span><span class="sx"> .env</span>
+<span class="err">export</span>
+
+<span class="nl">fmt</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">fmt</span> <span class="err">--recursive</span>
+
+<span class="nl">init</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">init</span> <span class="err">-reconfigure</span> <span class="err">\</span>
+    <span class="nv">--backend-config</span><span class="o">=</span><span class="s2">"key=terraform.</span><span class="nv">$$</span><span class="s2">ENV.state"</span>
+
+<span class="nl">workspace-list</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">workspace</span> <span class="err">list</span>
+
+<span class="nl">workspace-select</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">workspace</span> <span class="err">select</span> <span class="err">$$ENV</span> <span class="err">||</span> <span class="err">\</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">workspace</span> <span class="err">new</span> <span class="err">$$ENV</span>
+
+<span class="nl">validate</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">validate</span>
+
+<span class="nl">plan-out</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">plan</span> <span class="err">-no-color</span> <span class="err">&gt;</span> <span class="err">$$ENV.tfplan</span>
+
+<span class="nl">plan</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">plan</span>
+
+<span class="nl">refresh</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">refresh</span>
+
+<span class="nl">output</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">output</span> <span class="err">-json</span>
+
+<span class="nl">apply</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">apply</span>
+
+<span class="nl">state-list</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">state</span> <span class="err">list</span>
+
+<span class="nl">show</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">show</span> <span class="err">-no-color</span>
+
+<span class="nl">destroy</span><span class="o">:</span>
+    <span class="err">aws-vault</span> <span class="err">exec</span> <span class="err">$$AWS_VAULT_PROFILE</span> <span class="err">--</span> <span class="err">terraform</span> <span class="err">destroy</span>
+
+<span class="nl">clean</span><span class="o">:</span>
+    <span class="err">rm</span> <span class="err">-rf</span> <span class="err">.terraform/</span> <span class="err">terraform.tfstate*</span>
+</code></pre></div><h3 id="readme-update">README update</h3><p>Find the appropriate place to add the following snippet into the <code>README.md</code> or other documentation file.</p>
+
+<pre>
+This file is no longer necessary. The necessary TF*VARS that are required from the SSM Parameter Store and used by Terraform are for local development and testing written to the `.env` file that the Makefile sources. The values are exported in the shell's environment as `TF_VAR*{variable_name}`.
+Provided the following have been set in your shell's environment
+```shell
+export AWS_PROFILE=mojo-shared-services-cli
+export AWS_VAULT_PROFILE=mojo-shared-services-cli
+```
+You can run from the root of this project the following script.
+```shell
+./scripts/generate-env-file.sh [environment_name: development|pre-production|production]
+```
+An `.env` file will be produced for the environment, if you need to test or check a plan against another environment rerun the script.
+```
+</pre>
+<h3 id="terraform-version">Terraform Version</h3><p>Each Terraform project will have a <code>version.tf</code> file as per Hashcorp advised convention in the root of the project. It will have at a minimum a <code>terraform</code> block with the <code>required_version specified</code>. If the version has already been spefified in the <code>terraform</code> block in <code>main.tf</code> remove from there and add as illustrated.</p>
+<div class="highlight"><pre class="highlight terraform"><code><span class="k">terraform</span> <span class="p">{</span>
+  <span class="nx">required_version</span> <span class="p">=</span> <span class="s2">"1.1.8"</span>
+<span class="p">}</span>
+</code></pre></div><p>This convention enables easy retrieval of the Terraform version by automation scripts and for local use with the <a href="https://github.com/tfutils/tfenv"><code>tfenv</code></a> tool. The alias below will install the required Terraform version loaccly and pin it for the project.</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">alias </span><span class="nv">tfenvuse</span><span class="o">=</span><span class="s1">'tfenv use $(cat versions.tf 2&gt; /dev/null | grep required_version | cut -d "\"" -f 2 | cut -d " " -f 2) &amp;&amp; tfenv pin'</span>
+</code></pre></div><h3 id="terraform-inputs-tf-var">Terraform Inputs (TF_VAR)</h3><p>Getting the correct values for <code>.env</code> files and <code>terraform.tfvars</code> files from the various locations is time consuming and doesn&rsquo;t allow a new engineer to get familiar with the tooling or project with any confidence. A script will gather the required values and produce an <code>.env</code> for the specified environment which will be exported into the shell&rsquo;s environment when a command is run via the <code>make</code> target (init, plan, apply etc).
+The script will use the existing information to inform what is necessary, the <code>env</code> section of the <code>buildspec.yml</code> is the most reliable source of required variables.</p>
+<p>Copy the scripts from <a href="https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts">network-access-control-infrastructure/scripts</a> to the current project&rsquo;s <code>scripts</code> directory (create if not already exists).</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">mkdir</span> <span class="nt">-p</span> scripts <span class="o">&amp;&amp;</span> <span class="se">\</span>
+<span class="nb">cp</span> ../network-access-control-infrastructure/scripts/aws_ssm_get_parameters.sh scripts/ <span class="o">&amp;&amp;</span> <span class="se">\</span>
+<span class="nb">cp</span> ../network-access-control-infrastructure/scripts/generate-env-file.sh scripts/ <span class="o">&amp;&amp;</span> <span class="se">\</span>
+<span class="nb">cp</span> ../network-access-control-infrastructure/scripts/generate-github-env.sh scripts/
+</code></pre></div><p>The scripts <code>generate-env-file.sh</code> and <code>generate-github-env.sh</code> are similar.
+The first is used locally the second within the GitHub Action Workflow file to generate an <code>.env</code> file or inject into the special <code>GITHUB_ENV</code> variable.</p>
+<div class="table-container">
+        <table>
+          <tr>
+<th>Script</th>
+<th>Use</th>
+<th>Change</th>
+</tr>
+<tr>
+<td>[aws_ssm_get_parameters.sh][get]</td>
+<td>Retrieve SSM Params</td>
+<td>most</td>
+</tr>
+<tr>
+<td>[generate-env-file.sh][env]</td>
+<td>locally generate an <code>.env</code></td>
+<td>lines 72 -&gt; 88</td>
+</tr>
+<tr>
+<td>[generate-github-env.sh][hub]</td>
+<td>GitHub Action Workflow</td>
+<td>lines 11 -&gt; 23</td>
+</tr>
+
+        </table>
+      </div><p>With reference to the <code>buildspec.yml</code> up the lines as indicated in the table with the values from the <code>env:variables:</code> yaml block in the <code>generate-*</code> script files.</p>
+<p>The <code>aws_ssm_get_parameters.sh</code> needs updating with the values ffrom the <code>env:parameter-store:</code> yaml block. The SSM Parameters need to be retrieved in blocks of ten. Due to variable names sometimes changing from parameter store to their use in Terraform a line for each need to be written in which they&rsquo;re mapped into an array for use in the other two scripts.
+Note: start with one param, test then add and test.</p>
+<div class="highlight"><pre class="highlight shell"><code>./scripts/generate-env-file.sh <span class="o">[</span>environment_name: development|pre-production|production]
+</code></pre></div><p>Now to run the Terraform the Makefile will only require the <code>.env</code> to provide the variables. Test before proceding.</p>
+<h3 id="github-permissions-amp-github-secrets">GitHub Permissions &amp; GitHub Secrets</h3><p>The GitHub repository will likely need adding to the OIDC Provider and the AWS Role added as a GitHub secret.
+<code>role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}</code>
+Checkout the repo <a href="https://github.com/ministryofjustice/mojo-aws-github-oidc-provider">mojo-aws-github-oidc-provider</a> and add the name of the GitHub repository to the
+<a href="https://github.com/ministryofjustice/mojo-aws-github-oidc-provider/blob/main/locals.tf">locals.tf</a></p>
+<p>The code needs to be run from your local machine (it can&rsquo;t apply the code to it&rsquo;s self (yet). See that project&rsquo;s README file for full details.</p>
+<h3 id="test-github-action-on-branch">Test GitHub Action on branch</h3><p>Most project already have GitHub Actions Workflows although they don&rsquo;t require AWS credentials to run such as formatting and Dependabot actions; hence the <code>.github/workflows</code> directory will likely already exist. Add the workflow files from <a href="https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/.github/workflows">network-access-control-infrastructure/.github/workflows</a> to the current project&rsquo;s <code>scripts</code> directory (create if not already exists).</p>
+<div class="highlight"><pre class="highlight shell"><code><span class="nb">mkdir</span> <span class="nt">-p</span> .github/workflows <span class="o">&amp;&amp;</span> <span class="se">\</span>
+<span class="nb">cp</span> ../network-access-control-infrastructure/.github/workflows/terraform-apply.yaml .github/workflows/ <span class="o">&amp;&amp;</span> <span class="se">\</span>
+<span class="nb">cp</span> ../network-access-control-infrastructure/.github/workflows/terraform-static-analysis.yml .github/workflows/
+</code></pre></div><p>Those file don&rsquo;t need any changes, commit and push them. Currently they will only run <code>terraform plan</code> when there is a PR for the <code>main</code> branch or a push to a branch ending with <code>-GHTEST</code>.
+To test you branch create a temporary branch from your current one and append <code>-GHTEST</code></p>
+<div class="highlight"><pre class="highlight shell"><code>git checkout <span class="nt">-b</span> <span class="o">{</span>your_branch_name<span class="o">}</span><span class="nt">-GHTEST</span>
+git push <span class="nt">--set-upstream</span> origin <span class="o">{</span>your_branch_name<span class="o">}</span><span class="nt">-GHTEST</span>
+</code></pre></div><p>Now you should see under the <em>Actions</em> tab thes two workflows <code>https://github.com/ministryofjustice/{project_name}/actions</code>.
+Check the results confirm they run.</p>
+<h2 id="checklist">Checklist</h2>
+<ol>
+    <li>
+        <label>Makefile update</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label>README update</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label>Terraform Version</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label>Terraform Inputs (TF_VAR)</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label>GitHub Permissions & GitHub Secrets</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label>Test GitHub Action on branch</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+</ol>
+<p>[get]: https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts/aws_ssm_get_parameters.sh
+[env]: https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts/generate-env-file.sh
+[hub]: https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts/generate-github-env.sh</p>
+
+              <div data-module='page-expiry' data-last-reviewed-on="2024-03-01">
+    <div class='page-expiry--not-expired'>
+      This page was last reviewed on 1 September 2023.
+
+        It needs to be reviewed again on 1 March 2024
+        by the page owner <a href="">#nvvs-devops</a>
+        .
+    </div>
+
+    <div class='page-expiry--expired'>
+      This page was set to be reviewed before 1 March 2024
+       by the page owner <a href="">#nvvs-devops</a>.
+      This might mean the content is out of date.
+    </div>
+  </div>
+
+          </main>
+
+          <aside>
+              <ul class="contribution-banner">
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops/blob/main/source/runbooks/infra-ci-migrate-to-github.html.md.erb">View source</a></li>
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops/issues/new?labels=bug&amp;title=Re:%20'Infrastructure%20CI%20Migration%20to%20GitHub%20Actions'&amp;body=Problem%20with%20'Infrastructure%20CI%20Migration%20to%20GitHub%20Actions'%20(https://ministryofjustice.github.io/nvvs-devops/runbooks/infra-ci-migrate-to-github.html)">Report problem</a></li>
+                <li><a href="https://github.com/ministryofjustice/nvvs-devops">GitHub Repo</a></li>
+              </ul>
+          </aside>
+
+          <footer class="govuk-footer app-footer" role="contentinfo">
+  <div class="govuk-footer__meta">
+    <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+
+
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        class="govuk-footer__licence-logo"
+        xmlns="http://www.w3.org/2000/svg"
+        viewbox="0 0 483.2 195.7"
+        height="17"
+        width="41"
+      >
+        <path
+          fill="currentColor"
+          d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145"
+        />
+      </svg>
+      <span class="govuk-footer__licence-description">
+        All content is available under the
+        <a
+          class="govuk-footer__link"
+          href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+          rel="license"
+        >Open Government Licence v3.0</a>, except where otherwise stated
+      </span>
+    </div>
+    <div class="govuk-footer__meta-item">
+      <a
+        class="govuk-footer__link govuk-footer__copyright-logo"
+        href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
+      >© Crown copyright</a>
+    </div>
+  </div>
+</footer>
+
+        </div>
+      </div>
+    </div>
+
+    
+    <script src="../javascripts/application.js"></script>
+  </body>
+</html>
