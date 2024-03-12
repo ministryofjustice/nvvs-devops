@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-IMAGE := ministryofjustice/tech-docs-github-pages-publisher:v3.0.1
+IMAGE := ministryofjustice/tech-docs-github-pages-publisher:v4.0.0
 
 .PHONY: preview report
 
@@ -7,6 +7,7 @@ preview: ## Run a local instance of the documentation site, while editing
 	docker run --rm \
 		-v $$(pwd)/config:/app/config \
 		-v $$(pwd)/source:/app/source \
+		-v $$(pwd)/scripts:/scripts \
 		-p 4567:4567 \
 		-it $(IMAGE) /scripts/preview.sh
 
