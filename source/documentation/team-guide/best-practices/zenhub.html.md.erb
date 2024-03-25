@@ -1,26 +1,26 @@
 ---
 owner_slack: "#nvvs-devops"
-title: ZenHub
-last_reviewed_on: 2023-10-19
+title: Jira
+last_reviewed_on: 2024-03-25
 review_in: 3 months
 ---
 
-# ZenHub 🧘‍♀️
+# Jira 
 
-We use [ZenHub](https://www.zenhub.com/boards) which is integrates natively to GitHub to manage our workload. ZenHub adds additional features like epics, sprints, roadmaps and more.
+We use [Jira](https://dsdmoj.atlassian.net/jira/software/c/projects/ND/boards/1430) which is integrates natively to GitHub to manage our workload. Jira adds additional features like epics, sprints, roadmaps and more.
 
 The lifecycle of a issue is as follows. A user realises a need in the system. This can be a Story, Bug or Task. Issues in progress should be updated at the end of each day.
 
-Once a issue is in our backlog it will first go to [Backlog Refinement](../../../documentation/general-information/our-ceremonies.html#backlog-refinement), where it will become 'Ready for Development' then prioritised in [Backlog Grooming](../../../documentation/general-information/our-ceremonies.html#backlog-grooming).
+Once an issue is in our backlog it will first go to [Backlog Refinement](../../../documentation/general-information/our-ceremonies.html#backlog-refinement), where it will become 'Ready for Development' then prioritised in [Backlog Grooming](../../../documentation/general-information/our-ceremonies.html#backlog-grooming).
 
 The issue will then either be pulled into a Sprint during a [Sprint Planning](../../../documentation/general-information/our-ceremonies.html#sprint-planning) session or it can remain indefinitely in 'Ready for Development' until the backlog is cleared out.
+If an issue is Ready For Development, this does not necessarily mean the issue will be ever be done. Issues are pulled into Sprint based on their value and alignment to the current Roadmap.
 
-If a issue is Ready For Development, this does not necessarily mean the issue will be ever be done. Issues are pulled into Sprint based on their value and alignment to the current Roadmap.
-
+Within a sprint, the tickets can be further prioritised using the priority feature - this enables the whole team to work on the tickets in the order of highest to lowest impact. 
 
 ## Story 📚
 
-A requirement or request which is written from the perspective of a end user. Most of our work can be added as a story. We use a [Story Template](https://github.com/ministryofjustice/nvvs-devops/issues/new/choose) which is applied to [our repositories](https://github.com/ministryofjustice/nvvs-devops#core-repositories)
+A requirement or request which is written from the perspective of an end user. Most of our work can be added as a story. We use a [Story Template](https://github.com/ministryofjustice/nvvs-devops/issues/new/choose) which is applied to [our repositories](https://github.com/ministryofjustice/nvvs-devops#core-repositories)
 
 > **User Story:**
 >
@@ -44,7 +44,7 @@ A requirement or request which is written from the perspective of a end user. Mo
 >
 > *[Please clearly and concisely detail the DoD]*
 >
-> Checklist for definition of done and acceptance criteria, example below (optional).
+> Checklist for definition of done and acceptance criteria, example below.
 >
 > **Example**
 >
@@ -62,6 +62,6 @@ Anything detrimental to the system. Bugs affecting service are pulled into sprin
 
 Something that can be completed by one person and is of limited complexity.  A task doesn't have to hold clear value for an end-user.
 
-## Spike 📌
+## Spike 🧪
 
 A spike is a user story for which the team cannot estimate. We timebox this effort in [Sprint Planning](../../../documentation/general-information/our-ceremonies.html#sprint-planning) to learn and provide answers which the team can create stories and estimate.
