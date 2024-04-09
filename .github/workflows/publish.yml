@@ -17,6 +17,10 @@ on:
 #     - uses: actions/checkout@v4
 #     - name: Publish
 #       run: /usr/local/bin/package
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -24,8 +28,6 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ministryofjustice/tech-docs-github-pages-publisher:v4.0.0
-    permissions:
-      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
