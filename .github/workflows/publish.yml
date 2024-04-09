@@ -16,4 +16,4 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Publish
-      run: /scripts/deploy.sh
+      run: /usr/local/bin/package
