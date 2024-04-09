@@ -1,3 +1,5 @@
+- name: Publish GitHub Pages
+
 
 on:
   workflow_dispatch:
