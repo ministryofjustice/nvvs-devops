@@ -27,7 +27,7 @@ jobs:
       - name: Build
         id: build
         run: |
-          /usr/local/bin/package
+          /scripts/deploy.sh
 
       - name: Upload Artifact
         id: upload_artifact
