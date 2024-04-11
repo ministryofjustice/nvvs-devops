@@ -1,20 +1,20 @@
 ---
 owner_slack: "#nvvs-devops"
 title: Our Ceremonies
-last_reviewed_on: 2023-11-29
-review_in: 3 months
+last_reviewed_on: 2024-04-11
+review_in: 4 months
 ---
 # Our Ceremonies
 
-The NVVS DevOps team has the following regular ceremonies. The faciltator of the ceremionies is rotated within the team, to offer everyone a chance to speak, offer a fresh perspective and develop professionally.
+The NVVS DevOps team has the following regular ceremonies. The faciltator of the ceremonies is rotated within the team, to offer everyone a chance to speak, offer a fresh perspective and develop professionally.
 
 | Ceremony                                      | Occurence | Day             | Time          | Calendar Link                        |  
 | --------------------------------------------- | --------- | --------------- | ------------- | ------------------------------------ |
 | [Stand Up](#stand-up)                         | Daily     | Monday - Friday | 09:30 - 09:45 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
 | [Sprint Planning](#sprint-planning)           | Bi-Weekly | Wednesday       | 10:00 - 11:00 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
+| [Dev Refinement](#dev-refinement)             | Weekly    | Tuesday         | 10:00 - 12:00 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
 | [Backlog Refinement](#backlog-refinement)     | Weekly    | Thursday        | 14:00 - 15:00 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
 | [Backlog Grooming](#backlog-grooming)         | Weekly    | Monday          | 10:30 - 11:00 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
-| [Show & Tell](#show-amp-tell)                 | Monthly   | Thursday        | 13:00 - 13:45 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
 | [Sprint Retrospective](#sprint-retrospective) | Bi-Weekly | Tuesday         | 13:00 - 14:00 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
 | [Learn Tech](#learn-tech)                     | Weekly    | Friday          | 13:30 - 16:30 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
 
@@ -24,7 +24,7 @@ Our stand-ups run daily at 09:30 and last for fifteen minutes.  We will follow o
 
 - **Walk The Board**
 
-    Starting with the "Done" column we discuss any active issues in GitHub via [ZenHub](https://app.zenhub.com/workspaces/nvvs-devops-622a0b371800e400133bb924/board)
+    Starting with the "Done" column we discuss any active issues in GitHub via [Jira](https://dsdmoj.atlassian.net/jira/software/c/projects/ND/boards/1430)
 
 - **Yesterday, Today, Blockers**
 
@@ -33,7 +33,7 @@ Our stand-ups run daily at 09:30 and last for fifteen minutes.  We will follow o
 ## Sprint Planning 
 
 Each Sprint is two weeks long and starts on a Wednesday. 
-We use [ZenHub](https://app.zenhub.com/workspaces/nvvs-devops-622a0b371800e400133bb924/board) to run a one-hour session. Template agenda below:
+We use [Jira](https://dsdmoj.atlassian.net/jira/software/c/projects/ND/boards/1430) to run a one-hour session. Template agenda below:
 
 1. Discuss the previous sprint and if we met our goal, did we achieve anything outside of our goal? (10m).
 1. Discuss issues at the top of the backlog and add sticky notes for a potential sprint goal and any risks concerns (10m).
@@ -44,19 +44,19 @@ We use [ZenHub](https://app.zenhub.com/workspaces/nvvs-devops-622a0b371800e40013
 1. Any other business.
 1. Head to [our-sprints](our-sprints.html), update the outcome of the previous sprint and add the goal for the next sprint. Ensure the `last-reviewed-date` is also updated.
 
+## Dev Refinement
+
+On Tuesday mornings, the DevOps engineers get together to discuss tickets which need further technical refinement. This is done without the product team, to allow the conversation to go in depth technically and facilitate healthy challenge between the engineers, so that best solution to an issue can be found.
+
+Every other week, we also discuss [dependabots](https://ministryofjustice.github.io/nvvs-devops/runbooks/dependabot-process.html#dependabot-example), identifying a repository to focus on for the next sprint.
+
 ## Backlog Refinement
 
-On Thursday afternoons we have a forty-five minute session on backlog refinement. The purpose of this ceremony is for the team to agree that any issues created have enough information for any other team member to pick up.  Once a issue is refined we estimate it using the [Fibonacci scale](https://en.wikipedia.org/wiki/Fibonacci_scale_(agile)).
+On Thursday afternoons we have a session on backlog refinement. The purpose of this ceremony is for the team to agree that any issues created have enough information for any other team member to pick up.  Once a issue is refined we estimate it using the [Fibonacci scale](https://en.wikipedia.org/wiki/Fibonacci_scale_(agile)).
 
 ## Backlog Grooming
 
 On Monday mornings we have a thirty-minute ceremony for ensuring the top of the 'Ready for Development' queue is prioritised.  It also stimulates discussion about potenital new issues that should be created before refinement the following week.
-
-## Show & Tell
-
-At the end of each sprint we have a thirty-minute show and tell showcase to share with our colleagues and the wider organisation our achievements during the sprint. At the end of each sprint we have a thirty-minute show and tell showcase to share with our colleagues and the wider organisation our achievements during the sprint. The showcase normally consists of an introduction summing up the sprint and if we met our sprint goal followed by demonstration and then what’s next in the road map.
-
-Example slide deck: [Sprint 40](https://docs.google.com/presentation/d/1QU68AOz0xpf-Z9hqGHEWBJXF75leE0rtKHithdKDSq4/edit?usp=sharing)
 
 ## Sprint Retrospective
 
@@ -65,4 +65,9 @@ At the end of each sprint we have a one-hour retrospective.  This is for the tea
 ## Learn Tech
 
 We allocate Friday afternoons to learning. This time could be spent using one of the companies resources such as Pluralsight, myLearning or any 3rd party course. Alternatively you may wish to spend the time looking into new technically or features that could benefit the team and our users. Lightning Talks and Demonstrations of any outcomes are greatly encouraged and welcomed.
- 
+
+## Show & Tell
+
+From time to time, we have a thirty-minute show and tell showcase to share with our colleagues and the wider organisation our achievements during the sprint. This is particularly pertinent following a technical [spike](https://ministryofjustice.github.io/nvvs-devops/documentation/team-guide/best-practices/jira.html#spike), so that the new expertise can be shared with the team.
+
+Example slide deck: [Sprint 40](https://docs.google.com/presentation/d/1QU68AOz0xpf-Z9hqGHEWBJXF75leE0rtKHithdKDSq4/edit?usp=sharing)
