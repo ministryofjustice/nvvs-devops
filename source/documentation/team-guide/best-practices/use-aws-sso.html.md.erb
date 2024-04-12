@@ -1,7 +1,7 @@
 ---
 owner_slack: "#nvvs-devops"
 title: Re-configure AWS Vault
-last_reviewed_on: 2023-10-20
+last_reviewed_on: 2024-04-12
 review_in: 3 month
 ---
 
@@ -139,8 +139,10 @@ credential_process = /usr/local/bin/aws-vault exec mojo-pre-production --json --
 [profile mojo-production-cli]
 credential_process = /usr/local/bin/aws-vault exec mojo-production --json --backend=pass --prompt=pass
 ````
+Note - depending on the type of machine you have, the credential_process path may be different than the one above. For example MacBooks with M1/M2 chips will have the following path /opt/homebrew/opt/aws-vault/bin/aws-vault.
 
 ## Test your AWS Cli
+Note - it may take a few hours until you can run the below successfully, if you have very recently been to the MoJ GiHub account.
 
 Run the below, to set the `AWS_PROFILE` to use the shared services account:
 
