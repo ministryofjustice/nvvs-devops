@@ -48,6 +48,8 @@ run_report () {
   local today
   local expiring_pages
   local expired_pages
+  local expiring_pages_count
+  local expired_pages_count
 
   local last_reviewed_on
   local review_in
@@ -56,8 +58,10 @@ run_report () {
 
   report=$(ag last_reviewed_on -A 1 --ignore "*.txt" --ignore "*.sh" --group)
   today=$(date '+%Y-%m-%d')
-  expiring_pages="Following pages expiring in next 3 weeks:\n"
-  expired_pages="Following pages have expired:\n"
+  expiring_pages=""
+  expired_pages=""
+  expiring_pages_count=0
+  expired_pages_count=0
 
   while chunk=$(readlines 4)
   do
@@ -81,17 +85,21 @@ run_report () {
       echo "expiry_diff: ${expiry_diff}"
 
       page="$(echo "$chunk" | grep "source" | cut -d "/" -f1-)"
+      path="$(echo "$page" | cut -d "/" -f 2- | cut -d "." -f 1)"
+      url="https://ministryofjustice.github.io/nvvs-devops/${path}.html"
 
       if [[ ${expiry_diff} -gt 0 ]];then
         echo "****** fine ${page}  *****"
 
         if [[ ${expiry_diff} -lt 21 ]];then
+          let "expiring_pages_count=expiring_pages_count+1"
           echo "****** due ${page}  *****"
-          expiring_pages+="$(echo -e "\nExpiring in ${expiry_diff} days: ${page}")"
+          expiring_pages+="$(echo -e "\nExpiring in ${expiry_diff} days ago:\n\t file:\t ${page}\n\t  url:\t ${url}")"
         fi
       else
+        let "expired_pages_count=expired_pages_count+1"
         echo "****** review ${page}  *****"
-        expired_pages+="$(echo -e "\nExpired ${expiry_diff} days ago: ${page}")"
+        expired_pages+="$(echo -e "\nExpired ${expiry_diff} days ago:\n\t file:\t ${page}\n\t  url:\t ${url}")"
       fi
 
       echo "******************************************************************************************"
@@ -101,10 +109,12 @@ run_report () {
 
   echo ""
   echo ""
+  echo -e "Following ${expiring_pages_count} pages expiring in next 3 weeks:"
   echo -e "${expiring_pages}"
 
   echo ""
   echo ""
+  echo -e "Following ${expired_pages_count} pages have expired:"
   echo -e "${expired_pages}"
   echo ""
   echo ""
