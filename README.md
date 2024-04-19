@@ -55,12 +55,6 @@ This is the Ministry of Justice [NVVS DevOps teams](https://ministryofjustice.gi
 | [Prometheus ECS](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregation-server) | Prometheus ECS
 | [Prometheus EKS](https://github.com/ministryofjustice/staff-infrastructure-metric-aggregator-cloud) | Prometheus EKS
 
-### Security Log Aggregation and Shipping
-| Name | Description |
-|-|-|
-| [Log shipping infrastructure](https://github.com/ministryofjustice/staff-device-logging-infrastructure) | Log shipping to infrastructure > OST
-| [Syslog to CloudWatch](https://github.com/ministryofjustice/staff-device-logging-syslog-to-cloudwatch) | Syslog to aws cloudwatch > OST
-
 ### SMTP Relay Service
 | Name | Description |
 |-|-|
