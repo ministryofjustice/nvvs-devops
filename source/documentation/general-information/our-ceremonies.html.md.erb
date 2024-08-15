@@ -1,7 +1,7 @@
 ---
 owner_slack: "#nvvs-devops"
 title: Our Ceremonies
-last_reviewed_on: 2024-04-11
+last_reviewed_on: 2024-08-15
 review_in: 4 months
 ---
 # Our Ceremonies
@@ -11,7 +11,7 @@ The NVVS DevOps team has the following regular ceremonies. The faciltator of the
 | Ceremony                                      | Occurence | Day             | Time          | Calendar Link                        |  
 | --------------------------------------------- | --------- | --------------- | ------------- | ------------------------------------ |
 | [Stand Up](#stand-up)                         | Daily     | Monday - Friday | 09:30 - 09:45 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
-| [Sprint Planning](#sprint-planning)           | Bi-Weekly | Wednesday       | 10:00 - 11:00 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
+| [Sprint Planning](#sprint-planning)           | Bi-Weekly | Wednesday       | 09:30 - 10:30 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
 | [Dev Refinement](#dev-refinement)             | Weekly    | Tuesday         | 10:00 - 12:00 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
 | [Backlog Refinement](#backlog-refinement)     | Weekly    | Thursday        | 14:00 - 15:00 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
 | [Backlog Grooming](#backlog-grooming)         | Weekly    | Monday          | 10:30 - 11:00 | [Click for Team Calendar](https://calendar.google.com/calendar/embed?src=c_r0r67ur9efggi670vef00f7ae0%40group.calendar.google.com&ctz=Europe%2FLondon) |  
@@ -46,17 +46,17 @@ We use [Jira](https://dsdmoj.atlassian.net/jira/software/c/projects/ND/boards/14
 
 ## Dev Refinement
 
-On Tuesday mornings, the DevOps engineers get together to discuss tickets which need further technical refinement. This is done without the product team, to allow the conversation to go in depth technically and facilitate healthy challenge between the engineers, so that best solution to an issue can be found.
+On Tuesday mornings, the DevOps engineers get together to discuss tickets which need further technical refinement. This is done without the product team, to allow the conversation to go in depth technically and facilitate healthy challenge between the engineers, so that best solution to an issue can be found. We review tickets marked "DevRefinement" and change to "DevRefinementDone" when a conclusion has been met and the ticket is updated to reflect the outcome.
 
-Every other week, we also discuss [dependabots](https://ministryofjustice.github.io/nvvs-devops/runbooks/dependabot-process.html#dependabot-example), identifying a repository to focus on for the next sprint.
+Every other week, we also discuss [dependabots](https://ministryofjustice.github.io/nvvs-devops/runbooks/dependabot-process.html#dependabot-example), identifying a repository to focus on for the next sprint and creating tickets to clearly differentiate what is in and out of scope. A dependabot request may be deemed out of scope if the work required is complex, therefore it will be done as an independent ticket.
 
 ## Backlog Refinement
 
-On Thursday afternoons we have a session on backlog refinement. The purpose of this ceremony is for the team to agree that any issues created have enough information for any other team member to pick up.  Once a issue is refined we estimate it using the [Fibonacci scale](https://en.wikipedia.org/wiki/Fibonacci_scale_(agile)).
+On Thursday afternoons we have a session on backlog refinement. The purpose of this ceremony is for the team to agree that any issues created have enough information for any other team member to pick up.  Once a issue is refined we estimate it using the [Fibonacci scale](https://en.wikipedia.org/wiki/Fibonacci_scale_(agile)) and vote using [Agile Planning Poker](https://kollabe.com/).
 
 ## Backlog Grooming
 
-On Monday mornings we have a thirty-minute ceremony for ensuring the top of the 'Ready for Development' queue is prioritised.  It also stimulates discussion about potenital new issues that should be created before refinement the following week.
+On Monday mornings we have a thirty-minute ceremony for ensuring the top of the 'Ready for Development' queue is prioritised. This ceremony is owned by the Product Managers and developers are welcome to attend to bring important issues to the discussion. The Product managers will often assign the label "DevRefinement" to a ticket if technical decisions are needed before backlog refinement later in the week.
 
 ## Sprint Retrospective
 
