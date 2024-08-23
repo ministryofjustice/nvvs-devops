@@ -1,8 +1,8 @@
 ---
 owner_slack: "#nvvs-devops"
 title: Useful Scripts
-last_reviewed_on: 2024-04-12
-review_in: 3 months
+last_reviewed_on: 2024-08-23
+review_in: 6 months
 ---
 
 # Useful Scripts
@@ -15,9 +15,4 @@ Here is a list of some useful scripts to help with some day-to-day tasks:
 | [rds_delete.sh](https://github.com/ministryofjustice/nvvs-devops/blob/main/source/documentation/team-guide/scripts/rds_delete.sh) | Use this script to delete rds instances. <br />__Use AWS vault to run this script.__ <br />Example: `aws-vault exec <profile> -- rds_delete.sh rds-instance-name` |
 | [AddSecret.sh](https://github.com/ministryofjustice/nvvs-devops/blob/main/source/documentation/team-guide/scripts/AddSecret.sh) | Use this script to add secrets in AWS parameter store. <br />__Use AWS vault to run this script.__ <br />Example:<br />`aws-vault exec <profile> -- AddSecret.sh <environment> <name> <value>` |
 | [AddSecureSecret.sh](https://github.com/ministryofjustice/nvvs-devops/blob/main/source/documentation/team-guide/scripts/AddSecret.sh) | Use this script to add secure secrets in AWS parameter store. <br />__Use AWS vault to run this script.__ <br />Example:<br />`aws-vault exec <profile> -- AddSecureSecret.sh <environment> <name> <value>` |
-| [query_cloudwatch_log.py](https://github.com/ministryofjustice/nvvs-devops/blob/main/source/documentation/team-guide/scripts/query_cloudwatch_log.py) | Use this script to query VPC Flow Logs in Cloudwatch. <br />This is a quick script written in python that can query various fields in AWS VPC flow logs extracted from Cloudwatch. Cloudwatch doesnt support advanced querying where you will have to check src_ip against a known IP list. This scripts will allow you to load existing list of IPs from a CSV and match that against the src_ip in VPC Flow logs.' Steps:          1. Create a log export request to S3 using CloudWatch console.
-2. Download the logs from S3 using AWS CLI.
-3. Run the script on the log dir.
-4. Provide path for log dir.
-5. Provide allowed IP list path using file (CSV) path. |
-
+| [query_cloudwatch_log.py](https://github.com/ministryofjustice/nvvs-devops/blob/main/source/documentation/team-guide/scripts/query_cloudwatch_log.py) | Use this script to query VPC Flow Logs in Cloudwatch. <br />This is a quick script written in python that can query various fields in AWS VPC flow logs extracted from Cloudwatch. Cloudwatch doesnt support advanced querying where you will have to check src_ip against a known IP list. This scripts will allow you to load existing list of IPs from a CSV and match that against the src_ip in VPC Flow logs.<br>Steps to carry out:<br>1. Create a log export request to S3 using CloudWatch console.<br>2. Download the logs from S3 using AWS CLI.<br>3. Run the script on the log dir.<br>4. Provide path for log dir.<br>5. Provide allowed IP list path using file (CSV) path.
