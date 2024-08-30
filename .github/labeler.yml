@@ -1,6 +1,8 @@
 documentation:
-  - "architecture-decision-record/**"
-  - "diagrams/**"
-  - "documentation/**"
-  - "README.md"
-  - "source/**"
+- changed-files:
+  - any-glob-to-any-file:
+    - "architecture-decision-record/**"
+    - "diagrams/**"
+    - "documentation/**"
+    - "README.md"
+    - "source/**"
