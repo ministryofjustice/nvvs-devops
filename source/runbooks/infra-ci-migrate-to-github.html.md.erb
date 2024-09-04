@@ -1,7 +1,7 @@
 ---
 owner_slack: "#nvvs-devops"
 title: Infrastructure CI Migration to GitHub Actions
-last_reviewed_on: 2024-04-12
+last_reviewed_on: 2024-09-04
 review_in: 6 months
 ---
 # Infrastructure CI Migration to GitHub Actions
@@ -23,8 +23,6 @@ The procedure for migrating to GitHub Actions for CI will require some housekeep
 
 Initially the project repository will be prepared to run `terraform plan` on GitHub. When this is achieved the AWS CodeBuild pipeline can be disabled; prior to full migration to GitHub. The Terraform state and Dynamo DB state locking AWS resources would be managed via another Terraform Module or the current module would have option to remove the AWS Codepipeline resources.
 
-At the time of writing we can reference the branch of [network-access-control-infrastructure](https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1) for examples to reference.
-
 ### Overview
 
 - Makefile update
@@ -41,52 +39,174 @@ For consistency ensure the `Makefile` has all the commands here:
 
 ```make
 #!make
+.DEFAULT_GOAL := help
+SHELL := '/bin/bash'
+
+CURRENT_TIME := `date "+%Y.%m.%d-%H.%M.%S"`
+TERRAFORM_VERSION := `cat versions.tf 2> /dev/null | grep required_version | cut -d "\\"" -f 2 | cut -d " " -f 2`
+
+LOCAL_IMAGE := ministryofjustice/nvvs/terraforms:latest
+DOCKER_IMAGE := ghcr.io/ministryofjustice/nvvs/terraforms:latest
+
+DOCKER_RUN := @docker run --rm \
+				--env-file <(aws-vault exec $$AWS_PROFILE -- env | grep ^AWS_) \
+				--env-file <(env | grep ^TF_VAR_) \
+				--env-file <(env | grep ^ENV) \
+				-e TFENV_TERRAFORM_VERSION=$(TERRAFORM_VERSION) \
+				-v `pwd`:/data \
+				--workdir /data \
+				--platform linux/amd64 \
+				$(DOCKER_IMAGE)
+
+DOCKER_RUN_IT := @docker run --rm -it \
+				--env-file <(aws-vault exec $$AWS_PROFILE -- env | grep ^AWS_) \
+				--env-file <(env | grep ^TF_VAR_) \
+				--env-file <(env | grep ^ENV) \
+				-e TFENV_TERRAFORM_VERSION=$(TERRAFORM_VERSION) \
+				-v `pwd`:/data \
+				--workdir /data \
+				--platform linux/amd64 \
+				$(DOCKER_IMAGE)
+
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+
+.PHONY: debug
+debug:  ## debug
+	@echo "debug"
+	$(info target is $@)
+
+.PHONY: aws
+aws:  ## provide aws cli command as an arg e.g. (make aws AWSCLI_ARGUMENT="s3 ls")
+	$(DOCKER_RUN) /bin/bash -c "aws $$AWSCLI_ARGUMENT"
+
+.PHONY: shell
+shell: ## Run Docker container with interactive terminal
+	$(DOCKER_RUN_IT) /bin/bash
+
+.PHONY: fmt
+fmt: ## terraform fmt
+	$(DOCKER_RUN) terraform fmt --recursive
+
+.PHONY: init
+init: ## terraform init (make init ENV_ARGUMENT=pre-production) NOTE: Will also select the env's workspace.
+
+## INFO: Do not indent the conditional below, make stops with an error.
+ifneq ("$(wildcard .env)","")
+$(info Using config file ".env")
 include .env
-export
+init: -init
+else
+$(info Config file ".env" does not exist.)
+init: -init-gen-env
+endif
 
-fmt:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform fmt --recursive
+.PHONY: -init-gen-env
+-init-gen-env:
+	$(MAKE) gen-env
+	$(MAKE) -init
 
-init:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform init -reconfigure \
-	--backend-config="key=terraform.$$ENV.state"
+.PHONY: -init
+-init:
+	$(DOCKER_RUN) terraform init --backend-config="key=terraform.$$ENV.state"
+	$(MAKE) workspace-select
 
-workspace-list:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform workspace list
+.PHONY: init-upgrade
+init-upgrade: ## terraform init -upgrade
+	$(DOCKER_RUN) terraform init -upgrade --backend-config="key=terraform.$$ENV.state"
 
-workspace-select:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform workspace select $$ENV || \
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform workspace new $$ENV
+.PHONY: import
+import: ## terraform import e.g. (make import IMPORT_ARGUMENT="module.foo.bar some_resource")
+	$(DOCKER_RUN) terraform import $$IMPORT_ARGUMENT
 
-validate:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform validate
+.PHONY: rm
+rm: ## terraform import e.g. (make rm RM_ARGUMENT="module.foo.bar")
+	$(DOCKER_RUN) terraform state rm $$RM_ARGUMENT
 
-plan-out:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform plan -no-color > $$ENV.tfplan
+.PHONY: workspace-list
+workspace-list: ## terraform workspace list
+	$(DOCKER_RUN) terraform workspace list
 
-plan:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform plan
+.PHONY: workspace-select
+workspace-select: ## terraform workspace select
+	$(DOCKER_RUN) terraform workspace select $$ENV || \
+	$(DOCKER_RUN) terraform workspace new $$ENV
 
-refresh:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform refresh
+.PHONY: validate
+validate: ## terraform validate
+	$(DOCKER_RUN) terraform validate
 
-output:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform output -json
+.PHONY: plan-out
+plan-out: ## terraform plan - output to timestamped file
+	$(DOCKER_RUN) terraform plan -no-color > $$ENV.$(CURRENT_TIME).tfplan
 
-apply:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform apply
+.PHONY: plan
+plan: ## terraform plan
+	$(DOCKER_RUN) terraform plan
 
-state-list:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform state list
+.PHONY: refresh
+refresh: ## terraform refresh
+	$(DOCKER_RUN) terraform refresh
 
-show:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform show -no-color
+.PHONY: output
+output: ## terraform output (make output OUTPUT_ARGUMENT='--raw dns_dhcp_vpc_id')
+	$(DOCKER_RUN) terraform output -no-color $$OUTPUT_ARGUMENT
 
-destroy:
-	aws-vault exec $$AWS_VAULT_PROFILE -- terraform destroy
+.PHONY: output-bastion-rds-admin
+output-bastion-rds-admin: ## terraform output (make output-bastion-rds-admin)
+	$(DOCKER_RUN) /bin/bash -c "terraform output -no-color -json rds_bastion | jq -r .admin[][]"
 
-clean:
-	rm -rf .terraform/ terraform.tfstate*
+.PHONY: output-bastion-rds-server
+output-bastion-rds-server: ## terraform output (make output-bastion-rds-server)
+	$(DOCKER_RUN) /bin/bash -c "terraform output -no-color -json rds_bastion | jq -r .server[][]"
+
+.PHONY: output-bastion-rds-load_testing
+output-bastion-rds-load_testing: ## terraform output (make output-bastion-rds-load_testing)
+	$(DOCKER_RUN) /bin/bash -c "terraform output -no-color -json rds_bastion | jq -r .load_testing[][]"
+
+.PHONY: apply
+apply: ## terraform apply
+	$(DOCKER_RUN_IT) terraform apply
+	$(DOCKER_RUN) /bin/bash -c "./scripts/publish_terraform_outputs.sh"
+
+.PHONY: state-list
+state-list: ## terraform state list
+	$(DOCKER_RUN) terraform state list
+
+.PHONY: show
+show: ## terraform show
+	$(DOCKER_RUN) terraform show -no-color
+
+.PHONY: destroy
+destroy: ## terraform destroy
+	$(DOCKER_RUN) terraform destroy
+
+.PHONY: lock
+lock: ## terraform providers lock (reset hashes after upgrades prior to commit)
+	rm .terraform.lock.hcl
+	$(DOCKER_RUN) terraform providers lock -platform=windows_amd64 -platform=darwin_amd64 -platform=linux_amd64
+
+.PHONY: clean
+clean: ## clean terraform cached providers etc
+	rm -rf .terraform/ terraform.tfstate* .env
+
+.PHONY: gen-env
+gen-env: ## generate a ".env" file with the correct TF_VARS for the environment e.g. (make gen-env ENV_ARGUMENT=pre-production)
+	$(DOCKER_RUN) /bin/bash -c "./scripts/generate-env-file.sh $$ENV_ARGUMENT"
+
+.PHONY: aws_describe_instances
+aws_describe_instances: ## Use AWS CLI to describe EC2 instances - outputs a table with instance id, type, IP and name for current environment
+	$(DOCKER_RUN) /bin/bash -c "./scripts/aws_describe_instances.sh"
+
+.PHONY: aws_ssm_start_session
+aws_ssm_start_session: ## Use AWS CLI to start SSM session on an EC2 instance (make aws_ssm_start_session INSTANCE_ID=i-01d4de517c7336ff3)
+	$(DOCKER_RUN_IT) /bin/bash -c "./scripts/aws_ssm_start_session.sh $$INSTANCE_ID"
+
+.PHONY: tfenv
+tfenv: ## tfenv pin - terraform version from versions.tf
+	tfenv use $(cat versions.tf 2> /dev/null | grep required_version | cut -d "\"" -f 2 | cut -d " " -f 2) && tfenv pin
+
+help:
+	@grep -h -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 ```
 
 ### README update
@@ -98,7 +218,6 @@ This file is no longer necessary. The necessary TF*VARS that are required from t
 Provided the following have been set in your shell's environment
 ```shell
 export AWS_PROFILE=mojo-shared-services-cli
-export AWS_VAULT_PROFILE=mojo-shared-services-cli
 ```
 You can run from the root of this project the following script.
 ```shell
@@ -132,7 +251,7 @@ alias tfenvuse='tfenv use $(cat versions.tf 2> /dev/null | grep required_version
 Getting the correct values for `.env` files and `terraform.tfvars` files from the various locations is time consuming and doesn't allow a new engineer to get familiar with the tooling or project with any confidence. A script will gather the required values and produce an `.env` for the specified environment which will be exported into the shell's environment when a command is run via the `make` target (init, plan, apply etc).
 The script will use the existing information to inform what is necessary, the `env` section of the `buildspec.yml` is the most reliable source of required variables.
 
-Copy the scripts from [network-access-control-infrastructure/scripts](https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts) to the current project's `scripts` directory (create if not already exists).
+Copy the scripts from [network-access-control-infrastructure/scripts](https://github.com/ministryofjustice/network-access-control-infrastructure/tree/main/scripts) to the current project's `scripts` directory (create if not already exists).
 
 ```shell
 mkdir -p scripts && \
@@ -152,14 +271,14 @@ The first is used locally the second within the GitHub Action Workflow file to g
 
 With reference to the `buildspec.yml` up the lines as indicated in the table with the values from the `env:variables:` yaml block in the `generate-*` script files.
 
-The `aws_ssm_get_parameters.sh` needs updating with the values ffrom the `env:parameter-store:` yaml block. The SSM Parameters need to be retrieved in blocks of ten. Due to variable names sometimes changing from parameter store to their use in Terraform a line for each need to be written in which they're mapped into an array for use in the other two scripts.
+The `aws_ssm_get_parameters.sh` needs updating with the values from the `env:parameter-store:` yaml block. The SSM Parameters need to be retrieved in blocks of ten. Due to variable names sometimes changing from parameter store to their use in Terraform a line for each need to be written in which they're mapped into an array for use in the other two scripts.
 Note: start with one param, test then add and test.
 
 ```shell
 ./scripts/generate-env-file.sh [environment_name: development|pre-production|production]
 ```
 
-Now to run the Terraform the Makefile will only require the `.env` to provide the variables. Test before proceding.
+Now to run the Terraform the Makefile will only require the `.env` to provide the variables. Test before proceeding.
 
 ### GitHub Permissions & GitHub Secrets
 
@@ -188,7 +307,7 @@ git checkout -b {your_branch_name}-GHTEST
 git push --set-upstream origin {your_branch_name}-GHTEST
 ```
 
-Now you should see under the *Actions* tab thes two workflows `https://github.com/ministryofjustice/{project_name}/actions`.
+Now you should see under the *Actions* tab these two workflows `https://github.com/ministryofjustice/{project_name}/actions`.
 Check the results confirm they run.
 
 
@@ -221,6 +340,10 @@ Check the results confirm they run.
     </li>
 </ol>
 
-[get]: https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts/aws_ssm_get_parameters.sh
-[env]: https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts/generate-env-file.sh
-[hub]: https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/scripts/generate-github-env.sh
+[get]: https://github.com/ministryofjustice/network-access-control-infrastructure/blob/main/scripts/aws_ssm_get_parameters.sh
+[env]: https://github.com/ministryofjustice/network-access-control-infrastructure/blob/main/scripts/generate-env-file.sh
+<<<<<<< HEAD
+[hub]: https://github.com/ministryofjustice/network-access-control-infrastructure/blob/main/scripts/generate-github-env.sh
+=======
+[hub]: https://github.com/ministryofjustice/network-access-control-infrastructure/blob/main/scripts/generate-github-env.sh
+>>>>>>> 477d495a7653111f229e7bb45bcfc46945efe408
