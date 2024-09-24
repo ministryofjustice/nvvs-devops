@@ -1,0 +1,186 @@
+---
+owner_slack: "#nvvs-devops"
+title: Add New GitHub Repository Checklist
+last_reviewed_on: 2024-09-23
+review_in: 6 months
+---
+# Add New GitHub Repository Checklist
+This runbook contains the details and checklist for ensuring a new GitHub repository is fully adopted and integrqated with the team's workflow, tools and the team are admins.
+
+Follow the checklists (onboarding & configure), below those linked are detailed explanations of each item.
+These checklist conform to the <a href="https://user-guide.operations-engineering.service.justice.gov.uk/documentation/information/mojrepostandards.html#github-repository-standards-in-the-ministry-of-justice">GitHub Repository Standards in the Ministry of Justice</a> as referenced in the repository's templated README.
+
+## Checklist Configure Repo
+
+<ol>
+    <li>
+        <label><a href="#create-a-new-repository">Create a new repository</a> from MOJ "template-repository"</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label><a href="#add-the-team">Add the team</a> as admins.</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label><a href="#remove-your-account">Remove your account</a> as an admin (you will have access as a member of the team).</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label><a href="#branch-protection-rules">Branch protection rules</a></label>
+        <input type="checkbox" value="completed" name="status">
+        <ol>
+            <li>
+                <label>Require a pull request before merging</label>
+                <input type="checkbox" value="completed" name="status">
+            </li>
+            <li>
+                <label>Require review from Code Owners</label>
+                <input type="checkbox" value="completed" name="status">
+            </li>
+            <li>
+                <label>Do not allow bypassing the above settings</label>
+                <input type="checkbox" value="completed" name="status">
+            </li>
+            <li>
+                <label>Restrict who can push to matching branches</label>
+                <input type="checkbox" value="completed" name="status">
+            </li>
+        </ol>
+    </li>
+    <li>
+        <label><a href="#update-readme">Update README</a></label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+</ol>
+
+
+## Checklist Onboard Repo
+
+<ol>
+    <li>
+        <label><a href="#add-repository">Add repository</a> to "staff-technology-services-github-teams"</label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label><a href="#update-onboarding">Update onboarding</a></label>
+        <input type="checkbox" value="completed" name="status">
+        <ol>
+            <li>
+                <label>Github Repos Bookmarks</label>
+                <input type="checkbox" value="completed" name="status">
+            </li>
+            <li>
+                <label>Clone repos script</label>
+                <input type="checkbox" value="completed" name="status">
+            </li>
+        </ol>
+    </li>
+    <li>
+        <label><a href="#subscribe-to-slack-notifications">Subscribe to Slack notifications.</a></label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+</ol>
+
+
+
+## Configure Repo:
+
+### <span id="create-a-new-repository">Create a new repository from MOJ "template-repository"</span>
+
+Go to the MOJ GitHub home
+https://github.com/ministryofjustice/
+
+Select "template-repository" from the pinned
+
+Then click on the green button on the right, labeled "Use this template"
+
+Select "Create a new repository" from the drop down.
+
+In the "Create a new repository" page under "Owner / Choose an Owner" select "ministryofjustice".
+
+Enter a description, while that's optional it really should be filled out.
+
+Select whether it should public, internal or private (chooses accordingly, default has been public.
+
+Click the "Create repository" button.
+
+
+
+### <span id="add-the-team">Add the team as admins.</span>
+
+Add the team (current name nvvs-devops-admins) as admins.
+
+- Click on "Settings" in the menu above the repository name (far right).
+- Under "Access", click on "Collaborators and teams".
+- Then click green button "Add teams".
+- Paste `nvvs-devops-admins` into the search box.
+- Select the team (similar named teams may show in the results).
+- Select "Admin" for the role and click the green "Add ministryofjustice/nvvs-devops-admins".
+
+
+### <span id="remove-your-account">Remove your account as an admin (you will have access as a member of the team).</span>
+
+You should still be on same page/section from previous step.
+Remove your account as an admin, because you will have access as a member of the team.
+By leaving your account listed it creates confusion when you leave the team (leave MOJ or move to another team).
+
+### <span id="branch-protection-rules">Branch protection rules</span>
+
+- Click on "Settings" in the menu above the repository name (far right).
+- Under "Code and automation", click on "Branches".
+- Click on "Add classic branch protection rule".
+- In the "Branch name pattern" box enter `main`.
+- Under "Protect matching branches":
+  - Check "Require a pull request before merging".
+  - Check "Require review from Code Owners".
+  - Check "Do not allow bypassing the above settings".
+  - Check "Restrict who can push to matching branches", accept defaults offered.
+  - Click green "Create" button (or "Save changes if updating).
+
+
+### <span id="update-readme">Update README</span>
+
+The README.md will need updating to reflect the purpose of the new repository and provide information useful to users.
+This could be done after all the other configuration and on-boarding steps have been completed.
+
+## Onboard Repo:
+
+### <span id="add-repository">Add repository to "staff-technology-services-github-teams"</span>
+
+We  need to add this to this Terraform code which manages the team
+<a href="https://github.com/ministryofjustice/staff-technology-services-github-teams">staff-technology-services-github-teams</a>
+
+In the file linked below:
+https://github.com/ministryofjustice/staff-technology-services-github-teams/blob/main/teams.tf
+
+### <span id="update-onboarding">Update onboarding</span>
+
+The <a href="https://github.com/ministryofjustice/linuxify">linuxify</a> project used to quickly onboard a new engineer's laptop (Mac) will require updating in two files
+
+- Github Repos Bookmarks : https://github.com/ministryofjustice/linuxify/blob/main/github_bookmarks2.html
+- Clone repos script: https://github.com/ministryofjustice/linuxify/blob/main/scripts/getrepos.sh
+  adding the new repo to the list
+
+
+### <span id="subscribe-to-slack-notifications">Subscribe to Slack notifications.</span>
+
+We have a Slack channel <a href="https://moj.enterprise.slack.com/archives/C023F6BDH2S">"nvvs-devops-notifications"</a> in which GitHub `pull requests`, `deployments` and `releases` are posted automatically.
+
+To add enter the following into that Slack channel:
+
+```shell
+/github subscribe ministryofjustice/replace-this-with-new-repo-name
+```
+
+And then follow the instructions to approve this in GitHub (have your 2FA ready).
+
+Here you can also check existing subscriptions or unsubscribe
+
+```shell
+/github subscribe list
+
+/github unsubscribe owner/repo
+```
+
+See following URL for more options and details:
+https://github.com/integrations/slack#subscribe-to-an-organization-or-a-repository
