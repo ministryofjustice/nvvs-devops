@@ -8,7 +8,11 @@ review_in: 6 months
 This runbook contains the details and checklist for ensuring a new GitHub repository is fully adopted and integrqated with the team's workflow, tools and the team are admins.
 
 Follow the checklists (onboarding & configure), below those linked are detailed explanations of each item.
-These checklist conform to the <a href="https://user-guide.operations-engineering.service.justice.gov.uk/documentation/information/mojrepostandards.html#github-repository-standards-in-the-ministry-of-justice">GitHub Repository Standards in the Ministry of Justice</a> as referenced in the repository's templated README.
+These checklists conform to the <a href="https://user-guide.operations-engineering.service.justice.gov.uk/documentation/information/mojrepostandards.html#github-repository-standards-in-the-ministry-of-justice">GitHub Repository Standards in the Ministry of Justice</a> as referenced in the repository's templated README.
+
+After 24 hours you can check the repository for compliance at the Ministry of Justice GitHub Standards Report service:
+https://operations-engineering-reports-prod.cloud-platform.service.justice.gov.uk/home
+
 
 ## Checklist Configure Repo
 
@@ -46,6 +50,18 @@ These checklist conform to the <a href="https://user-guide.operations-engineerin
                 <input type="checkbox" value="completed" name="status">
             </li>
         </ol>
+    </li>
+    <li>
+        <label><a href="#issues-enabled">Issues enabled</a></label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label><a href="#delete-head-branches">Automatically delete head branches</a></label>
+        <input type="checkbox" value="completed" name="status">
+    </li>
+    <li>
+        <label><a href="#update-codeowners-file">Update CODEOWNERS file</a></label>
+        <input type="checkbox" value="completed" name="status">
     </li>
     <li>
         <label><a href="#update-readme">Update README</a></label>
@@ -137,6 +153,28 @@ By leaving your account listed it creates confusion when you leave the team (lea
   - Check "Restrict who can push to matching branches", accept defaults offered.
   - Click green "Create" button (or "Save changes if updating).
 
+### <span id="issues-enabled">Issues enabled</span>
+
+- Click on "Settings" in the menu above the repository name (far right).
+- This is the "General" section, scroll down to "Features".
+- Check the "Automatically delete head branches" box.
+
+### <span id="delete-head-branches">Automatically delete head branches</span>
+
+- Click on "Settings" in the menu above the repository name (far right).
+- This is the "General" section, scroll down to "Pull Requests".
+- Check the "Issues" box.
+
+> [!NOTE]
+> The following two configuration items need to be done on a branch then PR raised to merge.
+
+### <span id="update-codeowners-file">Update CODEOWNERS file</span>
+
+- On a new branch edit the `.github/CODEOWNERS` file.
+- Delete the templated example.
+- Paste `* @ministryofjustice/nvvs-devops-admins`
+- Save, Commit, Push branch.
+- Raise PR and merge to `main` branch.
 
 ### <span id="update-readme">Update README</span>
 
