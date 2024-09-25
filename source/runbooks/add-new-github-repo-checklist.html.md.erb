@@ -185,11 +185,14 @@ This could be done after all the other configuration and on-boarding steps have 
 
 ### <span id="add-repository">Add repository to "staff-technology-services-github-teams"</span>
 
-We  need to add this to this Terraform code which manages the team
+We need to add the repository to a list `common_team_repositories_for_all_groups` in this Terraform code which manages the team's access and ownership.
 <a href="https://github.com/ministryofjustice/staff-technology-services-github-teams">staff-technology-services-github-teams</a>
 
 In the file linked below:
 https://github.com/ministryofjustice/staff-technology-services-github-teams/blob/main/teams.tf
+
+(This step solidifies the step that had been done by click ops in the second step of Configure Repo).
+
 
 ### <span id="update-onboarding">Update onboarding</span>
 
