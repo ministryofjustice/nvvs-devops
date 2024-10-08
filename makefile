@@ -13,7 +13,7 @@ preview: ## Run a local instance of the documentation site, while editing
 
 .PHONY: report
 report: ## Review which pages have expired
-	 ./report-for-daniel-the-manual-spaniel.sh
+	 ./report-for-daniel-the-manual-spaniel.sh | tee expired_report_$$(date +"%F").txt
 
 help:
 	@grep -h -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
