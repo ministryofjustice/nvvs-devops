@@ -94,7 +94,7 @@ run_report () {
         if [[ ${expiry_diff} -lt 21 ]];then
           let "expiring_pages_count=expiring_pages_count+1"
           echo "****** due ${page}  *****"
-          expiring_pages+="$(echo -e "\nExpiring in ${expiry_diff} days ago:\n\t file:\t ${page}\n\t  url:\t ${url}")"
+          expiring_pages+="$(echo -e "\nExpiring in ${expiry_diff} days:\n\t file:\t ${page}\n\t  url:\t ${url}")"
         fi
       else
         let "expired_pages_count=expired_pages_count+1"

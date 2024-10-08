@@ -1,2 +1,5 @@
 .env
-.vscode 
+.vscode
+.idea
+
+expired_report_*
