@@ -1,345 +1,140 @@
 ---
 owner_slack: "#nvvs-devops"
-title: Infrastructure CI Migration to GitHub Actions
-last_reviewed_on: 2024-09-04
+title: Creating Github PAT Token
+last_reviewed_on: 2025-05-07
 review_in: 6 months
 ---
-# Infrastructure CI Migration to GitHub Actions
-This runbook outlines the steps to prepare a typical NVVS Terraform Infrastructure for migration to GitHUb Actions as per [ADR 011 - Use GitHub Actions for CI/CD](../documentation/adrs/011-use-github-actions-for-ci-cd.html).
+# Creating a GitHub Personal Access Token (PAT)
+
+This runbook outlines the steps required to generate and securely use a GitHub Personal Access Token (PAT) for use with CI/CD systems or local development as per [ADR 011 - Use GitHub Actions for CI/CD](../documentation/adrs/011-use-github-actions-for-ci-cd.html).
+
+## Purpose
+
+GitHub PATs are used for authenticating against GitHub APIs or repositories in contexts where SSH keys are not applicable, such as:
+
+* Authenticating with GitHub Actions for private repository access
+* Using CLI tools (e.g., `gh`, `git`, or `curl`) that require GitHub API access
+* Interacting with GitHub via scripts or Terraform providers
 
 ## Benefits
 
-The procedure for migrating to GitHub Actions for CI will require some housekeeping and minor refactoring is necessary to enable the GitHub Action CI deployments. It will provide the following benefits.
+* Granular access control via fine-grained scopes
+* Easier than setting up SSH keys in CI/CD pipelines
+* Supports GitHub CLI (`gh auth login`)
+* Required for workflows needing GitHub API authentication (e.g., Terraform providers, GitHub CLI)
 
-- Quicker deployments.
-- Simple branch build and deploy.
-- Clearer sequence display and log viewing for engineers to understand the context of deployment processes in action.
-- Terraform version will be defined in one location(instead of Readme, buildspec or latest pulled in).
-- Retrieval of TF_VAR inputs will be scripted and consistent (no need to assemble values form various sources indicated in example files and Readme).
-- The above will enable quicker on-boarding of engineers.
-- Linting and Security tools will enable overview of as yet undefined issues.
+## Prerequisites
 
-## Stages
+* GitHub account with access to the required repositories or org
+* 2FA enabled (required for token generation)
 
-Initially the project repository will be prepared to run `terraform plan` on GitHub. When this is achieved the AWS CodeBuild pipeline can be disabled; prior to full migration to GitHub. The Terraform state and Dynamo DB state locking AWS resources would be managed via another Terraform Module or the current module would have option to remove the AWS Codepipeline resources.
+## Steps
 
-### Overview
+### 1. Generate a PAT
 
-- Makefile update
-- README update
-- Terraform Version
-- Terraform Inputs (TF_VAR)
-- GitHub Permissions & GitHub Secrets
-- Test GitHub Action on branch
-- Test Static Code Analysis
+1. Navigate to [https://github.com/settings/tokens](https://github.com/settings/tokens)
+2. Click **"Fine-grained tokens"** (recommended)
+3. Click **"Generate new token"**
+4. Provide a **name** for the token (e.g., `ci-pat-nvvs`)
+5. Set an **expiration** (default: 30 days, recommended: 90 days or less for CI)
+6. Select **Repositories**:
 
-### Makefile update
+  * Choose "Only select repositories"
+  * Pick the repo(s) you will access with the token
+7. Select the **Permissions**:
 
-For consistency ensure the `Makefile` has all the commands here:
+  * For CI/CD pipelines: `contents: read`, `metadata: read`, `actions: read/write`
+  * For Terraform GitHub provider: `repo`, `admin:org`, `read:org` (depending on usage)
+8. Click **Generate token**
+9. **Copy the token** and store it securely (you won't be able to see it again)
 
-```make
-#!make
-.DEFAULT_GOAL := help
-SHELL := '/bin/bash'
+### 2. Store Token Securely
 
-CURRENT_TIME := `date "+%Y.%m.%d-%H.%M.%S"`
-TERRAFORM_VERSION := `cat versions.tf 2> /dev/null | grep required_version | cut -d "\\"" -f 2 | cut -d " " -f 2`
+Depending on your usage context:
 
-LOCAL_IMAGE := ministryofjustice/nvvs/terraforms:latest
-DOCKER_IMAGE := ghcr.io/ministryofjustice/nvvs/terraforms:latest
+#### In GitHub Actions
 
-DOCKER_RUN := @docker run --rm \
-				--env-file <(aws-vault exec $$AWS_PROFILE -- env | grep ^AWS_) \
-				--env-file <(env | grep ^TF_VAR_) \
-				--env-file <(env | grep ^ENV) \
-				-e TFENV_TERRAFORM_VERSION=$(TERRAFORM_VERSION) \
-				-v `pwd`:/data \
-				--workdir /data \
-				--platform linux/amd64 \
-				$(DOCKER_IMAGE)
+1. Navigate to the repository’s **Settings > Secrets and variables > Actions**
+2. Add a new secret:
 
-DOCKER_RUN_IT := @docker run --rm -it \
-				--env-file <(aws-vault exec $$AWS_PROFILE -- env | grep ^AWS_) \
-				--env-file <(env | grep ^TF_VAR_) \
-				--env-file <(env | grep ^ENV) \
-				-e TFENV_TERRAFORM_VERSION=$(TERRAFORM_VERSION) \
-				-v `pwd`:/data \
-				--workdir /data \
-				--platform linux/amd64 \
-				$(DOCKER_IMAGE)
+  * Name: `GH_PAT`
+  * Value: *your copied token*
 
-export DOCKER_DEFAULT_PLATFORM=linux/amd64
+#### In `aws-vault` or `.env` file (for local dev)
 
-.PHONY: debug
-debug:  ## debug
-	@echo "debug"
-	$(info target is $@)
-
-.PHONY: aws
-aws:  ## provide aws cli command as an arg e.g. (make aws AWSCLI_ARGUMENT="s3 ls")
-	$(DOCKER_RUN) /bin/bash -c "aws $$AWSCLI_ARGUMENT"
-
-.PHONY: shell
-shell: ## Run Docker container with interactive terminal
-	$(DOCKER_RUN_IT) /bin/bash
-
-.PHONY: fmt
-fmt: ## terraform fmt
-	$(DOCKER_RUN) terraform fmt --recursive
-
-.PHONY: init
-init: ## terraform init (make init ENV_ARGUMENT=pre-production) NOTE: Will also select the env's workspace.
-
-## INFO: Do not indent the conditional below, make stops with an error.
-ifneq ("$(wildcard .env)","")
-$(info Using config file ".env")
-include .env
-init: -init
-else
-$(info Config file ".env" does not exist.)
-init: -init-gen-env
-endif
-
-.PHONY: -init-gen-env
--init-gen-env:
-	$(MAKE) gen-env
-	$(MAKE) -init
-
-.PHONY: -init
--init:
-	$(DOCKER_RUN) terraform init --backend-config="key=terraform.$$ENV.state"
-	$(MAKE) workspace-select
-
-.PHONY: init-upgrade
-init-upgrade: ## terraform init -upgrade
-	$(DOCKER_RUN) terraform init -upgrade --backend-config="key=terraform.$$ENV.state"
-
-.PHONY: import
-import: ## terraform import e.g. (make import IMPORT_ARGUMENT="module.foo.bar some_resource")
-	$(DOCKER_RUN) terraform import $$IMPORT_ARGUMENT
-
-.PHONY: rm
-rm: ## terraform import e.g. (make rm RM_ARGUMENT="module.foo.bar")
-	$(DOCKER_RUN) terraform state rm $$RM_ARGUMENT
-
-.PHONY: workspace-list
-workspace-list: ## terraform workspace list
-	$(DOCKER_RUN) terraform workspace list
-
-.PHONY: workspace-select
-workspace-select: ## terraform workspace select
-	$(DOCKER_RUN) terraform workspace select $$ENV || \
-	$(DOCKER_RUN) terraform workspace new $$ENV
-
-.PHONY: validate
-validate: ## terraform validate
-	$(DOCKER_RUN) terraform validate
-
-.PHONY: plan-out
-plan-out: ## terraform plan - output to timestamped file
-	$(DOCKER_RUN) terraform plan -no-color > $$ENV.$(CURRENT_TIME).tfplan
-
-.PHONY: plan
-plan: ## terraform plan
-	$(DOCKER_RUN) terraform plan
-
-.PHONY: refresh
-refresh: ## terraform refresh
-	$(DOCKER_RUN) terraform refresh
-
-.PHONY: output
-output: ## terraform output (make output OUTPUT_ARGUMENT='--raw dns_dhcp_vpc_id')
-	$(DOCKER_RUN) terraform output -no-color $$OUTPUT_ARGUMENT
-
-.PHONY: output-bastion-rds-admin
-output-bastion-rds-admin: ## terraform output (make output-bastion-rds-admin)
-	$(DOCKER_RUN) /bin/bash -c "terraform output -no-color -json rds_bastion | jq -r .admin[][]"
-
-.PHONY: output-bastion-rds-server
-output-bastion-rds-server: ## terraform output (make output-bastion-rds-server)
-	$(DOCKER_RUN) /bin/bash -c "terraform output -no-color -json rds_bastion | jq -r .server[][]"
-
-.PHONY: output-bastion-rds-load_testing
-output-bastion-rds-load_testing: ## terraform output (make output-bastion-rds-load_testing)
-	$(DOCKER_RUN) /bin/bash -c "terraform output -no-color -json rds_bastion | jq -r .load_testing[][]"
-
-.PHONY: apply
-apply: ## terraform apply
-	$(DOCKER_RUN_IT) terraform apply
-	$(DOCKER_RUN) /bin/bash -c "./scripts/publish_terraform_outputs.sh"
-
-.PHONY: state-list
-state-list: ## terraform state list
-	$(DOCKER_RUN) terraform state list
-
-.PHONY: show
-show: ## terraform show
-	$(DOCKER_RUN) terraform show -no-color
-
-.PHONY: destroy
-destroy: ## terraform destroy
-	$(DOCKER_RUN) terraform destroy
-
-.PHONY: lock
-lock: ## terraform providers lock (reset hashes after upgrades prior to commit)
-	rm .terraform.lock.hcl
-	$(DOCKER_RUN) terraform providers lock -platform=windows_amd64 -platform=darwin_amd64 -platform=linux_amd64
-
-.PHONY: clean
-clean: ## clean terraform cached providers etc
-	rm -rf .terraform/ terraform.tfstate* .env
-
-.PHONY: gen-env
-gen-env: ## generate a ".env" file with the correct TF_VARS for the environment e.g. (make gen-env ENV_ARGUMENT=pre-production)
-	$(DOCKER_RUN) /bin/bash -c "./scripts/generate-env-file.sh $$ENV_ARGUMENT"
-
-.PHONY: aws_describe_instances
-aws_describe_instances: ## Use AWS CLI to describe EC2 instances - outputs a table with instance id, type, IP and name for current environment
-	$(DOCKER_RUN) /bin/bash -c "./scripts/aws_describe_instances.sh"
-
-.PHONY: aws_ssm_start_session
-aws_ssm_start_session: ## Use AWS CLI to start SSM session on an EC2 instance (make aws_ssm_start_session INSTANCE_ID=i-01d4de517c7336ff3)
-	$(DOCKER_RUN_IT) /bin/bash -c "./scripts/aws_ssm_start_session.sh $$INSTANCE_ID"
-
-.PHONY: tfenv
-tfenv: ## tfenv pin - terraform version from versions.tf
-	tfenv use $(cat versions.tf 2> /dev/null | grep required_version | cut -d "\"" -f 2 | cut -d " " -f 2) && tfenv pin
-
-help:
-	@grep -h -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+```bash
+export GITHUB_TOKEN=your_generated_token
 ```
 
-### README update
+#### For Terraform Provider
 
-Find the appropriate place to add the following snippet into the `README.md` or other documentation file.
+If using the GitHub provider in Terraform:
 
-<pre>
-This file is no longer necessary. The necessary TF*VARS that are required from the SSM Parameter Store and used by Terraform are for local development and testing written to the `.env` file that the Makefile sources. The values are exported in the shell's environment as `TF_VAR*{variable_name}`.
-Provided the following have been set in your shell's environment
-```shell
-export AWS_PROFILE=mojo-shared-services-cli
-```
-You can run from the root of this project the following script.
-```shell
-./scripts/generate-env-file.sh [environment_name: development|pre-production|production]
-```
-An `.env` file will be produced for the environment, if you need to test or check a plan against another environment rerun the script.
-```
-</pre>
-
-
-### Terraform Version
-
-Each Terraform project will have a `version.tf` file as per Hashcorp advised convention in the root of the project. It will have at a minimum a `terraform` block with the `required_version specified`. If the version has already been spefified in the `terraform` block in `main.tf` remove from there and add as illustrated.
-
-```terraform
-terraform {
-  required_version = "1.1.8"
+```hcl
+provider "github" {
+  token = var.github_token
+  owner = "ministryofjustice"
 }
 ```
 
-This convention enables easy retrieval of the Terraform version by automation scripts and for local use with the [`tfenv`](https://github.com/tfutils/tfenv) tool. The alias below will install the required Terraform version loaccly and pin it for the project.
+And in your `terraform.tfvars` or `.env`:
 
-```shell
-alias tfenvuse='tfenv use $(cat versions.tf 2> /dev/null | grep required_version | cut -d "\"" -f 2 | cut -d " " -f 2) && tfenv pin'
+```hcl
+GITHUB_TOKEN="your_generated_token"
 ```
 
+### 3. Test the Token
 
+To verify the token is working:
 
-### Terraform Inputs (TF_VAR)
-
-Getting the correct values for `.env` files and `terraform.tfvars` files from the various locations is time consuming and doesn't allow a new engineer to get familiar with the tooling or project with any confidence. A script will gather the required values and produce an `.env` for the specified environment which will be exported into the shell's environment when a command is run via the `make` target (init, plan, apply etc).
-The script will use the existing information to inform what is necessary, the `env` section of the `buildspec.yml` is the most reliable source of required variables.
-
-Copy the scripts from [network-access-control-infrastructure/scripts](https://github.com/ministryofjustice/network-access-control-infrastructure/tree/main/scripts) to the current project's `scripts` directory (create if not already exists).
-
-```shell
-mkdir -p scripts && \
-cp ../network-access-control-infrastructure/scripts/aws_ssm_get_parameters.sh scripts/ && \
-cp ../network-access-control-infrastructure/scripts/generate-env-file.sh scripts/ && \
-cp ../network-access-control-infrastructure/scripts/generate-github-env.sh scripts/
+```bash
+curl -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/user
 ```
 
-The scripts `generate-env-file.sh` and `generate-github-env.sh` are similar.
-The first is used locally the second within the GitHub Action Workflow file to generate an `.env` file or inject into the special `GITHUB_ENV` variable.
+Should return JSON output of your GitHub user profile.
 
-| Script                 	        | Use                        	| Change         	|
-|--------------------------------   |----------------------------	|----------------	|
-| [aws_ssm_get_parameters.sh][get]	| Retrieve SSM Params        	| most           	|
-| [generate-env-file.sh][env]   	| locally generate an `.env` 	| lines 72 -> 88 	|
-| [generate-github-env.sh][hub] 	| GitHub Action Workflow     	| lines 11 -> 23 	|
+Or with `gh` CLI:
 
-With reference to the `buildspec.yml` up the lines as indicated in the table with the values from the `env:variables:` yaml block in the `generate-*` script files.
-
-The `aws_ssm_get_parameters.sh` needs updating with the values from the `env:parameter-store:` yaml block. The SSM Parameters need to be retrieved in blocks of ten. Due to variable names sometimes changing from parameter store to their use in Terraform a line for each need to be written in which they're mapped into an array for use in the other two scripts.
-Note: start with one param, test then add and test.
-
-```shell
-./scripts/generate-env-file.sh [environment_name: development|pre-production|production]
+```bash
+gh auth login --with-token < your_token.txt
+gh repo list ministryofjustice --limit 5
 ```
 
-Now to run the Terraform the Makefile will only require the `.env` to provide the variables. Test before proceeding.
+### 4. Token Rotation Policy
 
-### GitHub Permissions & GitHub Secrets
+PATs should be rotated **every 90 days** or as per organizational policy. To avoid service disruption:
 
-The GitHub repository will likely need adding to the OIDC Provider and the AWS Role added as a GitHub secret.
-`role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}`
-Checkout the repo [mojo-aws-github-oidc-provider](https://github.com/ministryofjustice/mojo-aws-github-oidc-provider) and add the name of the GitHub repository to the
-[locals.tf](https://github.com/ministryofjustice/mojo-aws-github-oidc-provider/blob/main/locals.tf)
+* Store the expiration date as a calendar reminder
+* Create and test new token before deleting old one
+* Update all relevant secrets or environments
 
-The code needs to be run from your local machine (it can't apply the code to it's self (yet). See that project's README file for full details.
+### 5. Revoking a PAT
 
-### Test GitHub Action on branch
+1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens)
+2. Click **"Revoke"** next to the relevant token
 
-Most project already have GitHub Actions Workflows although they don't require AWS credentials to run such as formatting and Dependabot actions; hence the `.github/workflows` directory will likely already exist. Add the workflow files from [network-access-control-infrastructure/.github/workflows](https://github.com/ministryofjustice/network-access-control-infrastructure/tree/227-update-makefile-readme-1/.github/workflows) to the current project's `scripts` directory (create if not already exists).
-
-```shell
-mkdir -p .github/workflows && \
-cp ../network-access-control-infrastructure/.github/workflows/terraform-apply.yaml .github/workflows/ && \
-cp ../network-access-control-infrastructure/.github/workflows/terraform-static-analysis.yml .github/workflows/
-```
-
-Those file don't need any changes, commit and push them. Currently they will only run `terraform plan` when there is a PR for the `main` branch or a push to a branch ending with `-GHTEST`.
-To test you branch create a temporary branch from your current one and append `-GHTEST`
-
-```shell
-git checkout -b {your_branch_name}-GHTEST
-git push --set-upstream origin {your_branch_name}-GHTEST
-```
-
-Now you should see under the *Actions* tab these two workflows `https://github.com/ministryofjustice/{project_name}/actions`.
-Check the results confirm they run.
-
-
-## Checklist
+### Checklist
 
 <ol>
     <li>
-        <label>Makefile update</label>
+        <label>Navigate to GitHub token settings</label>
         <input type="checkbox" value="completed" name="status">
     </li>
     <li>
-        <label>README update</label>
+        <label>Generate fine-grained PAT with correct scopes</label>
         <input type="checkbox" value="completed" name="status">
     </li>
     <li>
-        <label>Terraform Version</label>
+        <label>Store PAT securely (GitHub Secret / .env / Vault)</label>
         <input type="checkbox" value="completed" name="status">
     </li>
     <li>
-        <label>Terraform Inputs (TF_VAR)</label>
+        <label>Test the token (curl / gh CLI)</label>
         <input type="checkbox" value="completed" name="status">
     </li>
     <li>
-        <label>GitHub Permissions & GitHub Secrets</label>
-        <input type="checkbox" value="completed" name="status">
-    </li>
-    <li>
-        <label>Test GitHub Action on branch</label>
+        <label>Set rotation reminder</label>
         <input type="checkbox" value="completed" name="status">
     </li>
 </ol>
 
-[get]: https://github.com/ministryofjustice/network-access-control-infrastructure/blob/main/scripts/aws_ssm_get_parameters.sh
-[env]: https://github.com/ministryofjustice/network-access-control-infrastructure/blob/main/scripts/generate-env-file.sh
-[hub]: https://github.com/ministryofjustice/network-access-control-infrastructure/blob/main/scripts/generate-github-env.sh
