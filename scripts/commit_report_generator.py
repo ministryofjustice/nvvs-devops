@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 
 # GitHub personal access token (set this to avoid rate limiting)
-GITHUB_TOKEN = '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'
+GITHUB_TOKEN = '<add-your-pat-token>'
 
 HEADERS = {
     "Authorization": f"token {GITHUB_TOKEN}"
