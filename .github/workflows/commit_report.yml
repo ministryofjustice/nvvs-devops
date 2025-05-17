@@ -1,0 +1,39 @@
+# Name of the workflow as it appears in the GitHub Actions UI
+name: Generate Commit Report
+
+# Trigger type: allows manual triggering via the GitHub UI with input fields
+on:
+  workflow_dispatch: # Enables manual execution of the workflow
+    inputs:
+      from_date:       # Start date input for filtering commits
+        description: 'Start date (YYYY-MM-DD)'
+        required: true
+        default: '2024-05-10'
+      to_date:         # End date input for filtering commits
+        description: 'End date (YYYY-MM-DD)'
+        required: true
+        default: '2024-05-17'
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest # Runs the job on the latest Ubuntu runner
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # 📦 Checks out the repo so the script can be accessed
+
+      - name: Set up Python
+        uses: actions/setup-python@v5 # Sets up Python
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip3 install requests # Installs required Python packages (e.g. requests)
+
+      - name: Run commit report generator
+        env:
+          # Securely inject the GitHub token from repository secrets
+          GITHUB_TOKEN: ${{ secrets.TECH_SERVICES_GITHUB_TOKEN }}
+          # Runs the commit counting script with input parameters
+        run: |
+          python3 scripts/commit_report_generator.py ${{ github.event.inputs.from_date }} ${{ github.event.inputs.to_date }}
