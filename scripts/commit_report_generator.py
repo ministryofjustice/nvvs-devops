@@ -5,32 +5,13 @@ from datetime import datetime
 # Get the GitHub token from the environment
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
+# Set headers for the requests
 HEADERS = {
     "Authorization": f"token {GITHUB_TOKEN}"
 }
 
-
 # List of repository URLs
 repos = [
-    # "https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure",
-    # "https://github.com/ministryofjustice/staff-device-dns-dhcp-admin",
-    # "https://github.com/ministryofjustice/staff-device-dhcp-server",
-    # "https://github.com/ministryofjustice/staff-device-dns-server",
-    # "https://github.com/ministryofjustice/staff-device-private-dns-zone",
-    # "https://github.com/ministryofjustice/staff-device-dns-dhcp-disaster-recovery",
-    # "https://github.com/ministryofjustice/staff-device-logging-dns-dhcp-integration-tests",
-    # "https://github.com/ministryofjustice/network-access-control-admin",
-    # "https://github.com/ministryofjustice/network-access-control-disaster-recovery",
-    # "https://github.com/ministryofjustice/network-access-control-infrastructure",
-    # "https://github.com/ministryofjustice/network-access-control-integration-tests",
-    # "https://github.com/ministryofjustice/network-access-control-server",
-    # "https://github.com/ministryofjustice/staff-infrastructure-monitoring-app-reachability",
-    # "https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter",
-    # "https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter",
-    # "https://github.com/ministryofjustice/staff-infrastructure-certificate-services",
-    # "https://github.com/ministryofjustice/staff-infrastructure-network-services",
-    # "https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server"
-
     "https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure",
     "https://github.com/ministryofjustice/staff-device-dns-dhcp-admin",
     "https://github.com/ministryofjustice/staff-device-dhcp-server",
@@ -72,9 +53,14 @@ def get_default_branch(repo_url):
     owner_repo = repo_url.replace("https://github.com/", "")
     api_url = f"https://api.github.com/repos/{owner_repo}"
     response = requests.get(api_url, headers=HEADERS)
+
+    # Debugging log to check what is returned
     if response.status_code == 200:
-        return response.json().get("default_branch", "main")  # fallback to 'main'
+        repo_data = response.json()
+        print(f"Repository data for {repo_url}: {repo_data}")  # Debugging line
+        return repo_data.get("default_branch", "main")  # fallback to 'main'
     else:
+        print(f"Failed to get repo data for {repo_url}: {response.status_code}, {response.text}")
         return None
 
 def get_commit_count_in_date_range(repo_url, since, until):
@@ -82,7 +68,7 @@ def get_commit_count_in_date_range(repo_url, since, until):
     default_branch = get_default_branch(repo_url)
 
     if not default_branch:
-        return "Error: Couldn't get default branch"
+        return f"Error: Couldn't get default branch for {repo_url}"
 
     api_url = f"https://api.github.com/repos/{owner_repo}/commits"
     params = {
@@ -99,7 +85,7 @@ def get_commit_count_in_date_range(repo_url, since, until):
         response = requests.get(api_url, headers=HEADERS, params=params)
 
         if response.status_code != 200:
-            return f"Error: {response.status_code}"
+            return f"Error: {response.status_code} for {repo_url}"
 
         commits = response.json()
         count += len(commits)
