@@ -1,0 +1,26 @@
+# .github/workflows/commit-report.yml
+name: Generate Commit Report
+
+on:
+  workflow_dispatch:  # allows manual triggering
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip3 install requests
+
+      - name: Run commit report generator
+        env:
+          GITHUB_TOKEN: ${{ secrets.TECH_SERVICES_GITHUB_TOKEN }}
+        run: python3 scripts/commit_report_generator.py

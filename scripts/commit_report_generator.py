@@ -1,38 +1,72 @@
+import os
 import requests
 from datetime import datetime
 
-# GitHub personal access token (set this to avoid rate limiting)
-GITHUB_TOKEN = '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'
+# Get the GitHub token from the environment
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
 HEADERS = {
     "Authorization": f"token {GITHUB_TOKEN}"
 }
 
+
 # List of repository URLs
 repos = [
+    # "https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure",
+    # "https://github.com/ministryofjustice/staff-device-dns-dhcp-admin",
+    # "https://github.com/ministryofjustice/staff-device-dhcp-server",
+    # "https://github.com/ministryofjustice/staff-device-dns-server",
+    # "https://github.com/ministryofjustice/staff-device-private-dns-zone",
+    # "https://github.com/ministryofjustice/staff-device-dns-dhcp-disaster-recovery",
+    # "https://github.com/ministryofjustice/staff-device-logging-dns-dhcp-integration-tests",
+    # "https://github.com/ministryofjustice/network-access-control-admin",
+    # "https://github.com/ministryofjustice/network-access-control-disaster-recovery",
+    # "https://github.com/ministryofjustice/network-access-control-infrastructure",
+    # "https://github.com/ministryofjustice/network-access-control-integration-tests",
+    # "https://github.com/ministryofjustice/network-access-control-server",
+    # "https://github.com/ministryofjustice/staff-infrastructure-monitoring-app-reachability",
+    # "https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter",
+    # "https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter",
+    # "https://github.com/ministryofjustice/staff-infrastructure-certificate-services",
+    # "https://github.com/ministryofjustice/staff-infrastructure-network-services",
+    # "https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server"
+
     "https://github.com/ministryofjustice/staff-device-dns-dhcp-infrastructure",
     "https://github.com/ministryofjustice/staff-device-dns-dhcp-admin",
     "https://github.com/ministryofjustice/staff-device-dhcp-server",
     "https://github.com/ministryofjustice/staff-device-dns-server",
-    "https://github.com/ministryofjustice/staff-device-private-dns-zone",
-    "https://github.com/ministryofjustice/staff-device-dns-dhcp-disaster-recovery",
-    "https://github.com/ministryofjustice/staff-device-logging-dns-dhcp-integration-tests",
+    "https://github.com/ministryofjustice/deployment-tgw",
+    "https://github.com/ministryofjustice/diso-devops-ami-builder",
+    "https://github.com/ministryofjustice/diso-devops-module-ssm-bastion",
+    "https://github.com/ministryofjustice/juniper-mist-integration",
+    "https://github.com/ministryofjustice/linuxify",
+    "https://github.com/ministryofjustice/mojo-aws-github-oidc-provider",
     "https://github.com/ministryofjustice/network-access-control-admin",
     "https://github.com/ministryofjustice/network-access-control-disaster-recovery",
     "https://github.com/ministryofjustice/network-access-control-infrastructure",
     "https://github.com/ministryofjustice/network-access-control-integration-tests",
     "https://github.com/ministryofjustice/network-access-control-server",
+    "https://github.com/ministryofjustice/nvvs-containers",
+    "https://github.com/ministryofjustice/nvvs-devops",
+    "https://github.com/ministryofjustice/nvvs-devops-github-actions",
+    "https://github.com/ministryofjustice/nvvs-devops-monitor",
+    "https://github.com/ministryofjustice/staff-device-dns-dhcp-disaster-recovery",
+    "https://github.com/ministryofjustice/staff-device-logging-dns-dhcp-integration-tests",
+    "https://github.com/ministryofjustice/staff-device-logging-infrastructure",
+    "https://github.com/ministryofjustice/staff-device-private-dns-zone",
+    "https://github.com/ministryofjustice/staff-device-shared-services-infrastructure",
+    "https://github.com/ministryofjustice/staff-infrastructure-certificate-services",
     "https://github.com/ministryofjustice/staff-infrastructure-monitoring-app-reachability",
     "https://github.com/ministryofjustice/staff-infrastructure-monitoring-blackbox-exporter",
     "https://github.com/ministryofjustice/staff-infrastructure-monitoring-snmpexporter",
-    "https://github.com/ministryofjustice/staff-infrastructure-certificate-services",
     "https://github.com/ministryofjustice/staff-infrastructure-network-services",
-    "https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server"
+    "https://github.com/ministryofjustice/staff-infrastructure-smtp-relay-server",
+    "https://github.com/ministryofjustice/staff-technology-services-github-teams"
 ]
 
 # Set your custom date range (ISO format: YYYY-MM-DD)
-from_date = "2024-05-01"
-to_date = "2024-05-08"
+from_date = "2024-05-10"
+to_date = "2024-05-17"
 
 def get_default_branch(repo_url):
     owner_repo = repo_url.replace("https://github.com/", "")
